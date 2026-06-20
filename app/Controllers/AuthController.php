@@ -13,7 +13,7 @@ class AuthController extends BaseController
     }
 
     public function login() {
-        // todo: processa o formulário
+        // todo: remover d() e colocar os retornos
 
         $authService = service('auth');
 
@@ -28,6 +28,10 @@ class AuthController extends BaseController
 
     public function logout() {
         // todo: encerra a sessão
+
+        $authService = service('auth');
+
+        $authService->logout();
     }
 
     public function forgotPassword() {

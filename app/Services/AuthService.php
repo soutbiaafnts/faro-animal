@@ -69,4 +69,13 @@ class AuthService
             'user' => $userFound
         ];
     }
+
+    public function logout() {
+        session()->remove([
+            'user_id',
+            'user_name',
+            'user_email',
+            'auth'
+        ]);
+    }
 }
