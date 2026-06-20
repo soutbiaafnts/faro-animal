@@ -5,21 +5,24 @@
 ![Status](https://custom-icon-badges.demolab.com/badge/status-active-success)
 ![Environment](https://custom-icon-badges.demolab.com/badge/environment-development-blue)
 
-Sistema web desenvolvido para o Trabalho Final da disciplina de Desenvolvimento Web II.
+O Faro Animal é um sistema web desenvolvido para auxiliar o gerenciamento interno de uma clínica veterinária.
 
-O Faro Animal é um sistema para gerenciamento de uma clínica veterinária!
+A aplicação permite que veterinários autenticados realizem o cadastro e gerenciamento de animais, organizem consultas veterinárias e mantenham um histórico básico de atendimentos.
+
+O sistema foi desenvolvido utilizando o framework CodeIgniter 4 e segue a arquitetura MVC (Model-View-Controller), com utilização de Services para centralização das regras de negócio.
 
 ---
 
 ## Sumário
 
 - [Requisitos](#requisitos)
-- [Sobre o sistema](#sobre-o-sistema)
+- [Funcionalidades](#funcionalidades)
+- [Fluxo de Funcionamento](#fluxo-de-funcionamento)
 - [Tecnologias](#tecnologias)
 - [Instalação](#instalação)
-- [Configuração do ambiente](#configuração-do-ambiente)
-- [Banco de dados](#banco-de-dados)
-- [Executando o projeto](#executando-o-projeto)
+- [Configuração do Ambiente](#configuração-do-ambiente)
+- [Banco de Dados](#banco-de-dados)
+- [Executando o Projeto](#executando-o-projeto)
 
 ---
 
@@ -44,9 +47,33 @@ O Faro Animal é um sistema para gerenciamento de uma clínica veterinária!
 
 ---
 
-## Sobre o sistema
+## Funcionalidades
 
+- Autenticação de usuários;
+- Recuperação de senha por e-mail;
+- Cadastro e gerenciamento de espécies;
+- Cadastro e gerenciamento de raças;
+- Cadastro e gerenciamento de animais;
+- Cadastro e gerenciamento de consultas veterinárias;
+- Exportação de consultas em PDF;
+- Carregamento dinâmico de raças por espécie utilizando AJAX;
+- Controle de sessão e proteção CSRF;
+- Páginas de erro personalizadas.
 
+---
+
+## Fluxo de Funcionamento
+
+> Página inicial → Cadastro de Usuário → Login → Área restrita → Cadastro de espécies → Cadastro de raças → Cadastro de Pets → Agendamento de consultas → Acompanhamento e histórico → Exportação em PDF
+
+### Cadastro de Pets
+Ao cadastrar um animal, o usuário seleciona uma espécie. Em seguida, o sistema realiza uma requisição Ajax para carregar automaticamente as raças relacionadas à espécie selecionada.
+
+### Consultas Veterinárias
+Cada consulta é vinculada a um pet previamente cadastrado. Durante o atendimento, o veterinário pode registrar informações como motivo da consulta, diagnóstico, prescrição e observações.
+
+### Relatórios
+A listagem de consultas pode ser exportada em formato PDF para impressão ou armazenamento digital.
 
 ---
 
@@ -136,7 +163,7 @@ database.default.port = 3306
 
 ## Banco de Dados
 
-Execute o arquivo `farol_animal.sql` que se encontra em `public/assets/farol_animal.sql`.
+Execute o arquivo `faro_animal.sql` que se encontra em `public/assets/faro_animal.sql`.
 
 ---
 
