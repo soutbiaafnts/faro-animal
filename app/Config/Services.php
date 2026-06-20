@@ -45,4 +45,12 @@ class Services extends BaseService
 
         return new \App\Services\SpecieService();
     }
+
+    public static function breed($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('breed');
+        }
+
+        return new \App\Services\BreedService();
+    }
 }
