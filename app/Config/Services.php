@@ -29,4 +29,44 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+    public static function user($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('user');
+        }
+
+        return new \App\Services\UserService();
+    }
+
+    public static function specie($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('specie');
+        }
+
+        return new \App\Services\SpecieService();
+    }
+
+    public static function breed($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('breed');
+        }
+
+        return new \App\Services\BreedService();
+    }
+
+    public static function pet($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('pet');
+        }
+
+        return new \App\Services\PetService();
+    }
+
+    public static function appointment($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('appointment');
+        }
+
+        return new \App\Services\AppointmentService();
+    }
 }
