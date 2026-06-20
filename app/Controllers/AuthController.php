@@ -7,31 +7,30 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class AuthController extends BaseController
 {
-    public function index()
-    {
-        // todo: view auth/login
+    public function index() {
+        return view('login');
     }
 
     public function login() {
-        // todo: remover d() e colocar os retornos
-
         $authService = service('auth');
 
         $result = $authService->auth($this->request->getPost());
 
         if (!$result['success']) {
-            d($result['errors']);
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('errors', $result['errors']);
         }
 
-        d($result['success']);
+        return redirect()->route('dashboard');
     }
 
     public function logout() {
-        // todo: encerra a sessão
-
         $authService = service('auth');
-
         $authService->logout();
+
+        return redirect()->route('login');
     }
 
     public function forgotPassword() {

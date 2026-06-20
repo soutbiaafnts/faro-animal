@@ -71,11 +71,6 @@ class AuthService
     }
 
     public function logout() {
-        session()->remove([
-            'user_id',
-            'user_name',
-            'user_email',
-            'auth'
-        ]);
+        session()->destroy();
     }
 }
