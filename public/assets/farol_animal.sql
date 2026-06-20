@@ -132,12 +132,14 @@ CREATE TABLE appointments (
 
 -- INSERTS
 
+-- SPECIES
 INSERT INTO species (name, created_at, updated_at) VALUES
 ('Cachorro', NOW(), NOW()),
 ('Gato', NOW(), NOW()),
 ('Pássaro', NOW(), NOW()),
 ('Coelho', NOW(), NOW());
 
+-- BREEDS
 INSERT INTO breeds (species_id, name, created_at, updated_at) VALUES
 (1, 'Labrador Retriever', NOW(), NOW()),
 (1, 'Golden Retriever', NOW(), NOW()),
@@ -161,3 +163,8 @@ INSERT INTO breeds (species_id, name, created_at, updated_at) VALUES
 (4, 'Lionhead', NOW(), NOW()),
 (4, 'Nova Zelândia', NOW(), NOW()),
 (4, 'Holandês', NOW(), NOW());
+
+-- USER
+-- admin123
+INSERT INTO users ( name, email, password, created_at, updated_at ) VALUES
+( 'Administrador', 'admin@faroanimal.com', '$2y$10$4ajD0egB6WX3SSzmqsfZTOG1MsEicPvcGg4HraDYP4lXLXlLucX6u', NOW(), NOW());
