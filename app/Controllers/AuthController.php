@@ -14,6 +14,16 @@ class AuthController extends BaseController
 
     public function login() {
         // todo: processa o formulário
+
+        $authService = service('auth');
+
+        $result = $authService->auth($this->request->getPost());
+
+        if (!$result['success']) {
+            d($result['errors']);
+        }
+
+        d($result['success']);
     }
 
     public function logout() {
