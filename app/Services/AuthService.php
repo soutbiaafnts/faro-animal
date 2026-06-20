@@ -4,14 +4,17 @@ namespace App\Services;
 
 use App\Models\UserModel;
 
-class AuthService {
+class AuthService
+{
     protected UserModel $userModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userModel = new UserModel();
     }
 
-    public function auth(array $data): array {
+    public function auth(array $data): array
+    {
         // validação dos campos
         $validation = service('validation');
 
@@ -36,9 +39,9 @@ class AuthService {
         }
 
         // validação do usuário
-        $user = new UserModel();
-
-        $userFound = $user->where('email', $data['email'])->first();
+        $userFound = $this->userModel
+            ->where('email', $data['email'])
+            ->first();
 
         if (!$userFound) {
             return [
@@ -53,6 +56,13 @@ class AuthService {
                 'errors' => ['email' => 'E-mail ou senha incorretos.']
             ];
         }
+
+        session()->set([
+            'user_id' => $userFound['id'],
+            'user_name' => $userFound['name'],
+            'user_email' => $userFound['email'],
+            'auth' => true
+        ]);
 
         return [
             'success' => true,
