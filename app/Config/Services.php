@@ -37,4 +37,12 @@ class Services extends BaseService
 
         return new \App\Services\UserService();
     }
+
+    public static function specie($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('specie');
+        }
+
+        return new \App\Services\SpecieService();
+    }
 }
