@@ -61,4 +61,12 @@ class Services extends BaseService
 
         return new \App\Services\PetService();
     }
+
+    public static function appointment($getShared = true) {
+        if ($getShared) {
+            return static::getSharedInstance('appointment');
+        }
+
+        return new \App\Services\AppointmentService();
+    }
 }
