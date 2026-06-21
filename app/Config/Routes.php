@@ -13,4 +13,5 @@ $routes->get('/logout', 'AuthController::logout', ['as' => 'logout']);
 // --------------- ROTAS PROTEGIDAS
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/dashboard', 'DashboardController::index', ['as' => 'dashboard']);
+    $routes->get('/me', 'UserController::index', ['as' => 'me']);
 });

@@ -42,5 +42,51 @@ class UserService {
         }
     }
 
-    
+    public function getUserById(int $id) {
+        try {
+            $user = $this->userModel->find($id);
+
+            if (!$user) {
+                return [
+                    'success' => false,
+                    'message' => 'Usuário não encontrado.',
+                ];
+            }
+            
+            $data = [
+                'id' => $user['id'],
+                'name' => $user['name'],
+                'email' => $user['email'],
+            ];
+
+            return [
+                'success' => true,
+                'data' => $data, 
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar usuário: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+    public function getAllUsers() {
+        try {
+            $users = $this->userModel->paginate(10);
+            $pager = $this->userModel->pager;
+
+            return [
+                'success' => true,
+                'pager' => $pager,
+                'data' => $users,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar usuários: ' . $e->getMessage()
+            ];
+        }
+
+    }
 }
