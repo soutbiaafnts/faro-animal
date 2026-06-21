@@ -1,4 +1,4 @@
-<?php $invalidArg = session()->getFlashdata('errors') ?? [] ?>
+<?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
 <?= $this->extend('layouts/main_public'); ?>
 
@@ -11,16 +11,16 @@
     <form action="<?= url_to('auth') ?>" method="post" class="row g-2 mx-auto justify-content-center" style="max-width: 700px">
         <div class="col-md-8 w-100">
             <label for="email" class="form-label">E-mail</label>
-            <input type="text" name="email" id="email" placeholder="Digite seu e-mail" class="form-control <?= isset($invalidArg['email']) ? 'is-invalid' : '' ?>" >
+            <input type="text" name="email" id="email" placeholder="Digite seu e-mail" class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>" >
             <span class="invalid-feedback">
-                <?= $invalidArg['email'] ?? '' ?>
+                <?= $errors['email'] ?? '' ?>
             </span>
         </div>
         <div class="col-md-8 w-100">
             <label for="password" class="form-label">Senha</label>
-            <input type="password" name="password" id="password" placeholder="Digite sua senha" class="form-control <?= isset($invalidArg['password']) ? 'is-invalid' : '' ?>" >
+            <input type="password" name="password" id="password" placeholder="Digite sua senha" class="form-control <?= isset($errors['password']) ? 'is-invalid' : '' ?>" >
             <span class="invalid-feedback">
-                <?= $invalidArg['password'] ?? '' ?>
+                <?= $errors['password'] ?? '' ?>
             </span>
         </div>
 
