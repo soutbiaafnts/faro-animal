@@ -71,22 +71,33 @@ class UserService {
         }
     }
 
-    public function getAllUsers() {
+    public function createUser(array $data) {
         try {
-            $users = $this->userModel->paginate(10);
-            $pager = $this->userModel->pager;
+            $this->validateUserData($data);
+            $newUser = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+            ];
+
+            $this->userModel->insert($newUser);
 
             return [
                 'success' => true,
-                'pager' => $pager,
-                'data' => $users,
+                'message' => 'Usuário criado com sucesso.'
+            ];
+
+        } catch (\InvalidArgumentException $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro de validação. Verifique os campos.',
+                'errors' => json_decode($e->getMessage(), true),
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao buscar usuários: ' . $e->getMessage()
+                'message' => 'Erro ao criar usuário: ' . $e->getMessage(),
             ];
         }
-
     }
 }

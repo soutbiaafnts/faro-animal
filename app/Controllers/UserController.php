@@ -34,6 +34,7 @@ class UserController extends BaseController
     public function create()
     {
         // todo: view user/create
+        return view('users/create', ['title' => 'Cadastre-se']);
     }
 
     public function store()
