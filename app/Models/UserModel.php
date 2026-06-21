@@ -41,12 +41,25 @@ class UserModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
+    protected $beforeInsert   = ['encryptPassword'];
     protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
+    protected $beforeUpdate   = ['encryptPassword'];
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    protected function encryptPassword(array $args)
+    {
+        if (!isset($args['data']['password']))
+            return $args;
+
+        $args['data']['password'] = password_hash(
+            $args['data']['password'],
+            PASSWORD_DEFAULT
+        );
+
+        return $args;
+    }
 }

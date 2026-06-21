@@ -11,7 +11,7 @@ $routes->post('/login', 'AuthController::login', ['as' => 'auth']);
 $routes->get('/logout', 'AuthController::logout', ['as' => 'logout']);
 
 $routes->get('/register', 'UserController::create', ['as' => 'register']);
-$routes->post('/register', 'UserController::store', ['as' => '.user.register']);
+$routes->post('/register', 'UserController::store', ['as' => 'user.register']);
 
 // --------------- ROTAS PROTEGIDAS
 $routes->group('', ['filter' => 'auth'], function ($routes) {

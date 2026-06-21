@@ -14,8 +14,7 @@ class UserController extends BaseController
         $this->userService = service('user');
     }
 
-    public function index()
-    {
+    public function index() {
         // todo: meu perfil
         $userId = session()->get('user_id');
 
@@ -31,29 +30,44 @@ class UserController extends BaseController
         ]);
     }
     
-    public function create()
-    {
-        // todo: view user/create
+    public function create() {
         return view('users/create', ['title' => 'Cadastre-se']);
     }
 
-    public function store()
-    {
-        // todo: inserir novo usuário no bd
+    public function store() {
+        try {
+            $password = $this->request->getPost('password');
+            $confirmPassword = $this->request->getPost('confirmPassword');
+
+            if ($password != $confirmPassword) {
+                return redirect()->back()->withInput()->with('invalidArgs', ['confirmPassword' => 'As senhas não coincidem.']);
+            }
+
+            $result = $this->userService->createUser([
+                'name' => $this->request->getPost('name'),
+                'email' => $this->request->getPost('email'),
+                'password' => $this->request->getPost('password'),
+            ]);
+
+            if (!$result['success']) {
+                return redirect()->back()->withInput()->with('invalidArgs', $result['invalidArgs']);
+            }
+
+            return redirect()->route('login')->with('success', $result['message']);
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('errors', $e->getMessage());
+        }
     }
    
-    public function edit(int $id)
-    {
+    public function edit(int $id) {
         // todo: view user/edit
     }
    
-    public function update(int $id)
-    {
+    public function update(int $id) {
         // todo: atualizar usuário do bd de acordo com o id
     }
 
-    public function delete(int $id)
-    {
+    public function delete(int $id) {
         // todo: deletar usuário do bd de acordo com o id
     }
 }

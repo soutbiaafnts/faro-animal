@@ -11,7 +11,7 @@ class UserService {
         $this->userModel = new UserModel();
     }
 
-    private function validateUserData(array $data): void {
+    private function validateUserData(array $data): array {
         $validation = service('validation');
 
         $validation->setRules([
@@ -21,8 +21,8 @@ class UserService {
         ], [
             'name' => [
                 'required' => 'O campo nome é obrigatório.',
-                'min_length[3]' => 'O nome precisa ter pelo menos 3 caracteres.',
-                'max_length[120]' => 'O nome precisa ter no máximo 120 caracteres.',
+                'min_length' => 'O nome precisa ter pelo menos 3 caracteres.',
+                'max_length' => 'O nome precisa ter no máximo 120 caracteres.',
             ],
             'email' => [
                 'required' => 'O campo email é obrigatório.',
@@ -31,15 +31,21 @@ class UserService {
             ],
             'password' => [
                 'required' => 'O campo email é obrigatório.',
-                'min_length[8]' => 'A senha precisa ter no mínimo 8 caracteres.',
+                'min_length' => 'A senha precisa ter no mínimo 8 caracteres.',
             ],
         ]);
 
         if (!$validation->run($data)) {
-            throw new \InvalidArgumentException(
-                json_decode($validation->getErrors())
-            );
+            return [
+                'success' => false,
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => $validation->getErrors(),
+            ];
         }
+
+        return [
+            'success' => true,
+        ];
     }
 
     public function getUserById(int $id) {
@@ -49,7 +55,7 @@ class UserService {
             if (!$user) {
                 return [
                     'success' => false,
-                    'message' => 'Usuário não encontrado.',
+                    'errors' => 'Usuário não encontrado.',
                 ];
             }
             
@@ -66,18 +72,23 @@ class UserService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao buscar usuário: ' . $e->getMessage(),
+                'errors' => 'Erro ao buscar usuário: ' . $e->getMessage(),
             ];
         }
     }
 
     public function createUser(array $data) {
         try {
-            $this->validateUserData($data);
+            $validation = $this->validateUserData($data);
+
+            if (!$validation['success']) {
+                return $validation;
+            }
+
             $newUser = [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+                'password' => $data['password'],
             ];
 
             $this->userModel->insert($newUser);
@@ -87,16 +98,11 @@ class UserService {
                 'message' => 'Usuário criado com sucesso.'
             ];
 
-        } catch (\InvalidArgumentException $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro de validação. Verifique os campos.',
-                'errors' => json_decode($e->getMessage(), true),
-            ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao criar usuário: ' . $e->getMessage(),
+                'message' => 'Erro ao criar usuário: ',
+                'errors' => $e->getMessage(),
             ];
         }
     }
