@@ -9,7 +9,10 @@ class DashboardController extends BaseController
 {
     public function index()
     {
-        // todo: tela inicial após login
-        return view('auth/dashboard');
+        $data = [
+            'title' => 'Dashboard'
+        ];
+
+        return view('auth/dashboard', $data);
     }
 }

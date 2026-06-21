@@ -7,11 +7,17 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class AuthController extends BaseController
 {
-    public function index() {
-        return view('login');
+    public function index()
+    {
+        $data = [
+            'title' => 'Login'
+        ];
+
+        return view('login', $data);
     }
 
-    public function login() {
+    public function login()
+    {
         $authService = service('auth');
 
         $result = $authService->auth($this->request->getPost());
@@ -26,26 +32,31 @@ class AuthController extends BaseController
         return redirect()->route('dashboard');
     }
 
-    public function logout() {
+    public function logout()
+    {
         $authService = service('auth');
         $authService->logout();
 
         return redirect()->route('login');
     }
 
-    public function forgotPassword() {
+    public function forgotPassword()
+    {
         // todo: view auth/forgot-password
     }
 
-    public function sendResetLink() {
+    public function sendResetLink()
+    {
         // todo: enviar email
     }
 
-    public function resetPassword(string $token) {
+    public function resetPassword(string $token)
+    {
         // todo: view auth/reset-password
     }
 
-    public function updatePassword() {
+    public function updatePassword()
+    {
         // todo: salva a nova senha
     }
 }

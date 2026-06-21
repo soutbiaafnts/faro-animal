@@ -2,8 +2,6 @@
 
 <?= $this->section('content'); ?>
 
-<form action="<?= url_to('logout') ?>" method="get">
-    <button type="submit">Sair</button>
-</form>
+<h1>Home</h1>
 
 <?= $this->endSection('content'); ?>
