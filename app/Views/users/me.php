@@ -44,7 +44,7 @@
                 <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto" style="max-width: 700px">
                     <div class="">
                         <label for="currentPassword" class="form-label">Senha atual</label>
-                        <input name="currentPassword" type="password" id="currentPassword" placeholder="Crie uma senha"
+                        <input name="currentPassword" type="password" id="currentPassword" placeholder="Informe a senha atual"
                             class="form-control <?= isset($invalidArgs['currentPassword']) ? 'is-invalid' : '' ?>">
                         <span class="invalid-feedback">
                             <?= $invalidArgs['currentPassword'] ?? '' ?>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="">
                         <label for="newPassword" class="form-label">Nova senha</label>
-                        <input name="newPassword" type="password" id="newPassword" placeholder="Crie uma senha"
+                        <input name="newPassword" type="password" id="newPassword" placeholder="Informe a nova senha"
                             class="form-control <?= isset($invalidArgs['newPassword']) ? 'is-invalid' : '' ?>">
                         <span class="invalid-feedback">
                             <?= $invalidArgs['newPassword'] ?? '' ?>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="">
                         <label for="confirmNewPassword" class="form-label">Confirme a senha</label>
-                        <input name="confirmNewPassword" type="password" id="confirmNewPassword" placeholder="Digite a senha novamente"
+                        <input name="confirmNewPassword" type="password" id="confirmNewPassword" placeholder="Digite a nova senha novamente"
                             class="form-control <?= isset($invalidArgs['confirmNewPassword']) ? 'is-invalid' : '' ?>">
                         <span class="invalid-feedback">
                             <?= $invalidArgs['confirmNewPassword'] ?? '' ?>
