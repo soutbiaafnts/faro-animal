@@ -13,12 +13,12 @@
         />
     </head>
 
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <header>
             <?= $this->include('partials/navbar_public'); ?>
         </header>
         
-        <main>
+        <main class="flex-grow-1 d-flex flex-column justify-content-center pt-5">
             <?= $this->renderSection('content'); ?>
         </main>
         
@@ -30,5 +30,6 @@
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"
         ></script>
+        <script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>
     </body>
 </html>

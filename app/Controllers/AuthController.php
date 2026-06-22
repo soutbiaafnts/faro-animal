@@ -37,7 +37,7 @@ class AuthController extends BaseController
         $authService = service('auth');
         $authService->logout();
 
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 
     public function forgotPassword()
