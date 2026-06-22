@@ -15,13 +15,12 @@ class UserController extends BaseController
     }
 
     public function index() {
-        // todo: meu perfil
         $userId = session()->get('user_id');
 
         $user = $this->userService->getUserById($userId);
 
         if ($user['success'] === false) {
-            return redirect()->route('users')->with('error', $user['message']);
+            return redirect()->route('users')->with('message', $user['message'])->with('errors', $user['errors']);
         }
 
         return view('users/me', [
@@ -50,21 +49,55 @@ class UserController extends BaseController
             ]);
 
             if (!$result['success']) {
-                return redirect()->back()->withInput()->with('invalidArgs', $result['invalidArgs']);
+                return redirect()->back()
+                    ->withInput()
+                    ->with('message', $result['message'])
+                    ->with('invalidArgs', $result['invalidArgs'])
+                    ->with('errors', $result['errors']);
             }
 
-            return redirect()->route('login')->with('success', $result['message']);
+            return redirect()->route('login')->with('message', $result['message']);
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('errors', $e->getMessage());
+            return redirect()->back()->withInput()->with('message', 'Erro:')->with('errors', $e->getMessage());
         }
     }
    
-    public function edit(int $id) {
-        // todo: view user/edit
+    public function update() {
+        $userId = session()->get('user_id');
+
+        $result = $this->userService->updateProfile($userId, [
+            'name' => $this->request->getPost('name')
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('me')->with('message', $result['message']);
     }
    
-    public function update(int $id) {
-        // todo: atualizar usuário do bd de acordo com o id
+    public function updatePassword() {
+        $userId = session()->get('user_id');
+
+        $result = $this->userService->updatePassword($userId, [
+            'currentPassword' => $this->request->getPost('currentPassword'),
+            'newPassword' => $this->request->getPost('newPassword'),
+            'confirmNewPassword' => $this->request->getPost('confirmNewPassword'),
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('me')->with('message', $result['message']);
     }
 
     public function delete(int $id) {

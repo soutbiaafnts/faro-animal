@@ -19,4 +19,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     
     // ---- USERS
     $routes->get('/me', 'UserController::index', ['as' => 'me']);
+    $routes->post('/me', 'UserController::update', ['as' => 'me.update']);
+    $routes->post('/me/password', 'UserController::updatePassword', ['as' => 'me.password']);
 });
