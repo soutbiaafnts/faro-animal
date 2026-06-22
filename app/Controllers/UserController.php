@@ -100,7 +100,21 @@ class UserController extends BaseController
         return redirect()->route('me')->with('message', $result['message']);
     }
 
-    public function delete(int $id) {
+    public function delete() {
         // todo: deletar usuário do bd de acordo com o id
+
+        $userId = session()->get('user_id');
+
+        $result = $this->userService->deleteUser($userId);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('message', $result['message'])
+                ->with('errors', $result['errors']);
+        }
+
+        session()->destroy();
+
+        return redirect()->route('home')->with('message', $result['message']);
     }
 }

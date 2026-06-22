@@ -305,7 +305,7 @@ class UserService {
 
             return [
                 'success' => true,
-                'Message' => 'Conta excluída com sucesso',
+                'message' => 'Conta excluída com sucesso',
             ];
         } catch (\Exception $e) {
             return [
