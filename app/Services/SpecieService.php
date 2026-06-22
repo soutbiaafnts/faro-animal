@@ -96,4 +96,35 @@ class SpecieService {
             ];
         }
     }
+
+    public function updateSpecie(int $id, array $data) {
+        try {
+            $validation = $this->validateSpecieData($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $this->specieModel->update($id, [
+                'name' => $data['name']
+            ]);
+
+            return [
+                'success' => true,
+                'message' => 'Espécie alterada com sucesso!'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao editar espécie: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
