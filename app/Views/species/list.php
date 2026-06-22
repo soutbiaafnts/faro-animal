@@ -16,7 +16,7 @@
         <div class="card-body">
             <h5 class="card-title">Lista de <?= $title ?></h5>
             <p class="card-text">Aqui você pode criar, visualizar, editar e até deletar as espécies!</p>
-            <a href="#" class="btn btn-secondary px-4">Nova Espécie</a>
+            <a href="<?=url_to('species.create')?>" class="btn btn-primary px-4">Nova Espécie</a>
 
             <hr>
             
@@ -46,7 +46,7 @@
                                 <?= $specie['updated_at'] ?>
                             </td>
                             <td class="d-flex justify-content-center gap-2">
-                                <a href="#" class="btn btn-sm btn-info px-4">Editar</a>
+                                <a href="#" class="btn btn-sm btn-secondary px-4">Editar</a>
                                 <a href="#" class="btn btn-sm btn-danger px-4">Deletar</a>
                             </td>
                         </tr>

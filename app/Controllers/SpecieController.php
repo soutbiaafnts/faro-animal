@@ -16,7 +16,6 @@ class SpecieController extends BaseController
 
     public function index()
     {
-        // todo: listar as espécies
         $species = $this->specieService->getAllSpecies();
 
         if (!$species['success']) {
@@ -36,7 +35,7 @@ class SpecieController extends BaseController
     }
 
     public function create() {
-        // todo: view specie/create
+        return view('species/create', ['title' => 'Nova Espécie']);
     }
 
     public function store() {
