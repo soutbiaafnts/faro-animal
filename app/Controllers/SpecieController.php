@@ -39,7 +39,24 @@ class SpecieController extends BaseController
     }
 
     public function store() {
-        // todo: inserir nova espécie no bd
+        try {
+            $result = $this->specieService->createSpecie([
+                'name' => $this->request->getPost('name'),
+            ]);
+
+            if (!$result['success']) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('message', $result['message'])
+                    ->with('invalidArgs', $result['invalidArgs'])
+                    ->with('errors', $result['errors']);
+            }
+
+            return redirect()->back()->with('message', $result['message']);
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('message', 'Erro:')->with('errors', $e->getMessage());
+        }
     }
 
     public function edit(int $id) {
