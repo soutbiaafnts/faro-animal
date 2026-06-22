@@ -15,7 +15,7 @@
             </div>
 
             <div class="card-body">
-                <form action="<?= url_to('me.update') ?>" method="post" class="" style="max-width: 700px">
+                <form action="<?= url_to('me.update') ?>" method="post" class="">
                     <div class="">
                         <label for="name" class="form-label">Nome</label>
                         <input name="name" type="text" id="name" value="<?= old('name', $user['name']) ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
@@ -70,6 +70,25 @@
                     <div class="mt-4">
                         <button class="btn btn-primary w-100" type="submit">Salvar</button>
                     </div>
+                </form>
+            </div>
+
+        </div>
+        
+        <div class="card border-danger w-100">
+            <div class="card-header bg-danger text-white">
+                Zona de Perigo
+            </div>
+
+            <div class="card-body">
+                <p>
+                    Esta ação é irreversível. Todos os seus dados serão removidos.
+                </p>
+
+                <form action="<?= url_to('me.delete') ?>" method="post">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.')">
+                        Excluir minha conta
+                    </button>
                 </form>
             </div>
         </div>
