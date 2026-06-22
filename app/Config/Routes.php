@@ -22,4 +22,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/me', 'UserController::update', ['as' => 'me.update']);
     $routes->post('/me/password', 'UserController::updatePassword', ['as' => 'me.password']);
     $routes->post('/me/delete', 'UserController::delete', ['as' => 'me.delete']);
+
+    // ---- SPECIES
+    $routes->get('/species', 'SpecieController::index', ['as' => 'species']);
 });
