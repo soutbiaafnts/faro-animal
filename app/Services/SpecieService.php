@@ -39,4 +39,27 @@ class SpecieService {
             'message' => 'Espécie criada com sucesso!',
         ];
     }
+
+    // ------- CRUD
+    public function getAllSpecies() {
+        try {
+            $species = $this->specieModel->paginate(10);
+            $pager = $this->specieModel->pager;
+
+            return [
+                'success' => true,
+                'message' => 'Busca realizada com sucesso!',
+                'pager' => $pager,
+                'species' => $species,
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar espécies:',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
