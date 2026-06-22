@@ -287,4 +287,33 @@ class UserService {
             ];
         }
     }
+
+    public function deleteUser(int $id) {
+        try {
+            $user = $this->userModel->find($id);
+
+            if (!$user) {
+                return [
+                    'success' => false,
+                    'message' => 'Usuário não encontrado.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $this->userModel->delete($id);
+
+            return [
+                'success' => true,
+                'Message' => 'Conta excluída com sucesso',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao excluir usuário',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
