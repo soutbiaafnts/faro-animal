@@ -25,4 +25,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
     // ---- SPECIES
     $routes->get('/species', 'SpecieController::index', ['as' => 'species']);
+    $routes->get('/species/create', 'SpecieController::create', ['as' => 'species.create']);
+    $routes->post('/species/store', 'SpecieController::store', ['as' => 'species.store']);
 });
