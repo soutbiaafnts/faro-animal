@@ -62,4 +62,38 @@ class SpecieService {
             ];
         }
     }
+
+    public function createSpecie(array $data) {
+        try {
+            $validation = $this->validateSpecieData($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $newSpecie = [
+                'name' => $data['name'],
+            ];
+
+            $this->specieModel->insert($newSpecie);
+
+            return [
+                'success' => true,
+                'message' => $validation['message'],
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao criar espécie: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
