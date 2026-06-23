@@ -63,6 +63,39 @@ class SpecieService {
         }
     }
 
+    public function getSpecieById(int $id): array {
+        try {
+            $specieFound = $this->specieModel->find($id);
+
+            if (!$specieFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Espécie não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $specie = [
+                'id' => $specieFound['id'],
+                'name' => $specieFound['name'],
+            ];
+
+            return [
+                'success' => true,
+                'specie' => $specie,
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar espécie: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
     public function createSpecie(array $data) {
         try {
             $validation = $this->validateSpecieData($data);

@@ -60,11 +60,42 @@ class SpecieController extends BaseController
     }
 
     public function edit(int $id) {
-        return view('species/edit', ['title' => 'Editar Espécie']);
+        $specie = $this->specieService->getSpecieById($id);
+
+        if (!$specie['success']) {
+            if (!$specie['success']) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('message', $specie['message'])
+                    ->with('invalidArgs', $specie['invalidArgs'])
+                    ->with('errors', $specie['errors']);
+            }
+        }
+
+        return view('species/edit', [
+            'title' => 'Editar Espécie',
+            'specie' => $specie['specie'],
+        ]);
     }
 
     public function update(int $id) {
-        // todo: atualizar espécie do bd de acordo com o id
+        try {
+            $result = $this->specieService->updateSpecie($id, [
+                'name' => $this->request->getPost('name')
+            ]);
+
+            if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('species')->with('message', $result['message']);
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('message', 'Erro:')->with('errors', $e->getMessage());
+        }
     }
 
     public function delete(int $id) {

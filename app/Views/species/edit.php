@@ -14,11 +14,11 @@
             <?= $title ?>
         </h5>
         <div class="card-body">
-            <form action="#" method="post" class="row g2 mx-auto">
+            <form action="<?= url_to('species.update', $specie['id']) ?>" method="post" class="row g2 mx-auto">
                 <div class="col-md-6">
                     <label for="name" class="form-label">Nome</label>
                     <input name="name" type="text" id="name" placeholder="Digite o nome da espécie"
-                        value="<?= old('name') ?>"
+                        value="<?= old('name', $specie['name']) ?>"
                         class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['name'] ?? '' ?>

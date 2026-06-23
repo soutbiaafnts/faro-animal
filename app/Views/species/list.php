@@ -46,7 +46,7 @@
                                 <?= $specie['updated_at'] ?>
                             </td>
                             <td class="d-flex justify-content-center gap-2">
-                                <a href="#" class="btn btn-sm btn-secondary px-4">Editar</a>
+                                <a href="<?= url_to('species.edit', $specie['id']) ?>" class="btn btn-sm btn-secondary px-4">Editar</a>
                                 <a href="#" class="btn btn-sm btn-danger px-4">Deletar</a>
                             </td>
                         </tr>
