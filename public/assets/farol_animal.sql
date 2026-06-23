@@ -31,7 +31,7 @@ CREATE TABLE users (
 CREATE TABLE species (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 
-    name VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
 
     created_at DATETIME NULL,
     updated_at DATETIME NULL, 

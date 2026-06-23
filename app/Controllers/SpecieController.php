@@ -52,7 +52,7 @@ class SpecieController extends BaseController
                     ->with('errors', $result['errors']);
             }
 
-            return redirect()->back()->with('message', $result['message']);
+            return redirect()->route('species')->with('message', $result['message']);
 
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('message', 'Erro:')->with('errors', $e->getMessage());
@@ -99,6 +99,14 @@ class SpecieController extends BaseController
     }
 
     public function delete(int $id) {
-        // todo: deletar espécie do bd de acordo com o id
+        $result = $this->specieService->deleteSpecie($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('message', $result['message'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('species')->with('message', $result['message']);
     }
 }

@@ -16,12 +16,11 @@ class SpecieService {
         $validation = service('validation');
 
         $validation->setRules([
-            'name' => 'required|min_length[3]|is_unique[species.name]',
+            'name' => 'required|min_length[3]|',
         ], [
             'name' => [
                 'required' => 'Este campo é obrigatório.',
                 'min_length' => 'O nome precisa ter pelo menos 3 caracteres.',
-                'is_unique' => 'Espécie já cadastrada.'
             ],
         ]);
 
@@ -30,6 +29,22 @@ class SpecieService {
                 'success' => false,
                 'message' => 'Verifique os campos.',
                 'invalidArgs' => $validation->getErrors(),
+                'errors' => null,
+            ];
+        }
+
+        $existing = $this->specieModel
+            ->where('name', $data['name'])
+            ->where('deleted_at', null)
+            ->first();
+
+        if ($existing) {
+            return [
+                'success' => false,
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => [
+                    'name' => 'Espécie já cadastrada.'
+                ],
                 'errors' => null,
             ];
         }
@@ -155,6 +170,36 @@ class SpecieService {
             return [
                 'success' => false,
                 'message' => 'Erro ao editar espécie: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function deleteSpecie(int $id) {
+        try {
+            $specie = $this->specieModel->find($id);
+
+            if (!$specie) {
+                return [
+                    'success' => false,
+                    'message' => 'Espécie não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $this->specieModel->delete($id);
+
+            return [
+                'success' => true,
+                'message' => 'Espécie excluída com sucesso!',
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao excluir espécie',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];

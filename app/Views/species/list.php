@@ -47,7 +47,11 @@
                             </td>
                             <td class="d-flex justify-content-center gap-2">
                                 <a href="<?= url_to('species.edit', $specie['id']) ?>" class="btn btn-sm btn-secondary px-4">Editar</a>
-                                <a href="#" class="btn btn-sm btn-danger px-4">Deletar</a>
+                                
+                                <form action="<?= url_to('species.delete', $specie['id'])?>" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-sm btn-danger px-4">Deletar</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
