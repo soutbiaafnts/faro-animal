@@ -60,7 +60,7 @@ class SpecieController extends BaseController
     }
 
     public function edit(int $id) {
-        // todo: view specie/edit
+        return view('species/edit', ['title' => 'Editar Espécie']);
     }
 
     public function update(int $id) {
