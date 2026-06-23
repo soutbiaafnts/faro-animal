@@ -50,7 +50,7 @@
                                 
                                 <form action="<?= url_to('species.delete', $specie['id'])?>" method="post">
                                     <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-sm btn-danger px-4">Deletar</button>
+                                    <button type="submit" class="btn btn-sm btn-danger px-4" onclick="return confirm('Tem certeza que deseja excluir essa espécie? Esta ação não poderá ser desfeita.')">Deletar</button>
                                 </form>
                             </td>
                         </tr>
