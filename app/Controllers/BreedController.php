@@ -3,37 +3,44 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Services\BreedService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class BreedController extends BaseController
 {
+    private BreedService $breedService;
+
+    public function __construct() {
+        $this->breedService = service('breed');
+    }
+
     public function index()
     {
-        // todo: listar as raças
+        // [] listar as raças
     }
 
     public function create()
     {
-        // todo: view breed/create
+        // [] view breed/create
     }
 
     public function store()
     {
-        // todo: inserir nova raça no bd
+        // [] inserir nova raça no bd
     }
 
     public function edit(int $id)
     {
-        // todo: view breed/edit
+        // [] view breed/edit
     }
 
     public function update(int $id)
     {
-        // todo: atualizar raça do bd de acordo com o id
+        // [] atualizar raça do bd de acordo com o id
     }
 
     public function delete(int $id)
     {
-        // todo: deletar raça do bd de acordo com o id
+        // [] deletar raça do bd de acordo com o id
     }
 }
