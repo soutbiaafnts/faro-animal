@@ -34,4 +34,37 @@ class BreedService {
             ];
         }
     }
+
+    // - VALIDAÇÕES
+    private function validateCreateBreed(array $data): array {
+        $validation = service('validation');
+
+        $validation->setRules([
+            'species_id' => 'required|integer',
+            'name' => 'required|min_length[3]|max_length[100]',
+        ], [
+            'species_id' => [
+                'required' => 'Este campo obrigatório.',
+                'integer' => 'A raça precisa ser um número inteiro.',
+            ],
+            'name' => [
+                'required' => 'Este campo obrigatório.',
+                'min_length' => 'O nome da raça precisa ter pelo menos 3 caracteres.',
+                'max_length' => 'O nome da raça precisa ter no máximo 100 caracteres.',
+            ],
+        ]);
+
+        if (!$validation->run($data)) {
+            return [
+                'success' => false,
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => $validation->getErrors(),
+                'errors' => null,
+            ];
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
 }
