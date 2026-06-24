@@ -13,7 +13,10 @@ class BreedService {
 
     public function getAllBreeds() {
         try {
-            $breeds = $this->breedModel->paginate(10);
+            $breeds = $this->breedModel
+                ->select('breeds.*, species.name AS specie_name')
+                ->join('species', 'species.id = breeds.species_id', 'left')
+                ->paginate(10);
             $pager = $this->breedModel->pager;
 
             return [

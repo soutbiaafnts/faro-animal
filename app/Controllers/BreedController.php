@@ -16,7 +16,21 @@ class BreedController extends BaseController
 
     public function index()
     {
-        // [] listar as raças
+        $result = $this->breedService->getAllBreeds();
+
+        if (!$result['success']) {
+            return redirect()->back()->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('breeds/list', [
+            'title' => 'Raças',
+            'message' => $result['message'],
+            'breeds' => $result['breeds'],
+            'pager' => $result['pager'],
+        ]);
     }
 
     public function create()
