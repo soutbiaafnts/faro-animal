@@ -83,4 +83,39 @@ class BreedService {
             'success' => true,
         ];
     }
+
+    public function createBreed(array $data)
+    {
+        try {
+            $validation = $this->validateCreateBreed($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $newBreed = [
+                'species_id' => $data['species_id'],
+                'name' => $data['name'],
+            ];
+
+            $this->breedModel->insert($newBreed);
+
+            return [
+                'success' => true,
+                'message' => $validation['message'],
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao criar espécie: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
