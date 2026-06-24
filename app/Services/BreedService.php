@@ -63,6 +63,22 @@ class BreedService {
             ];
         }
 
+        $existing = $this->breedModel
+            ->where('name', $data['name'])
+            ->where('deleted_at', null)
+            ->first();
+
+        if ($existing) {
+            return [
+                'success' => false,
+                'message' => 'verifique os campos.',
+                'invalidArgs' => [
+                    'name' => 'Raça já cadastrada.'
+                ],
+                'errors' => null,
+            ];
+        }
+
         return [
             'success' => true,
         ];
