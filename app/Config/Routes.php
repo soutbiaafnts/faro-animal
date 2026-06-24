@@ -30,4 +30,12 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/species/edit/(:num)', 'SpecieController::edit/$1', ['as' => 'species.edit']);
     $routes->post('/species/edit/(:num)', 'SpecieController::update/$1', ['as' => 'species.update']);
     $routes->delete('/species/delete/(:num)', 'SpecieController::delete/$1', ['as' => 'species.delete']);
+
+    // ---- BREEDS
+    $routes->get('/breeds', 'BreedController::index', ['as' => 'breeds']);
+    $routes->get('/breeds/create', 'BreedController::create', ['as' => 'breeds.create']);
+    $routes->post('/breeds/store', 'BreedController::store', ['as' => 'breeds.store']);
+    $routes->get('/breeds/edit(:num)', 'BreedController::edit/$1', ['as' => 'breeds.edit']);
+    $routes->post('/breeds/update(:num)', 'BreedController::update/$1', ['as' => 'breeds.update']);
+    $routes->delete('/breeds/delete(:num)', 'BreedController::delete/$1', ['as' => 'breeds.delete']);
 });
