@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Services\BreedService;
+use App\Services\SpecieService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class BreedController extends BaseController
 {
     private BreedService $breedService;
+    private SpecieService $specieService;
 
     public function __construct() {
         $this->breedService = service('breed');
+        $this->specieService = service('specie');
     }
 
     public function index()
@@ -35,7 +38,7 @@ class BreedController extends BaseController
 
     public function create()
     {
-        // [] view breed/create
+        return view('breeds/create', ['title' => 'Nova Raça']);
     }
 
     public function store()
