@@ -17,8 +17,7 @@ class BreedController extends BaseController
         $this->specieService = service('specie');
     }
 
-    public function index()
-    {
+    public function index() {
         $result = $this->breedService->getAllBreeds();
 
         if (!$result['success']) {
@@ -36,9 +35,20 @@ class BreedController extends BaseController
         ]);
     }
 
-    public function create()
-    {
-        return view('breeds/create', ['title' => 'Nova Raça']);
+    public function create() {
+        $result = $this->specieService->getAllSpecies();
+
+        if (!$result['success']) {
+            return redirect()->back()->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('breeds/create', [
+            'title' => 'Nova Raça',
+            'species' => $result['species'],
+        ]);
     }
 
     public function store()

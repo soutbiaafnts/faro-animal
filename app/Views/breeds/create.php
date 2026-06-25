@@ -14,7 +14,7 @@
             <?= $title ?>
         </h5>
         <div class="card-body">
-            <form action="<?= url_to('breeds.store') ?>" method="post" class="row g2 mx-auto">
+            <form action="<?= url_to('breeds.store') ?>" method="post" class="row g-2 mx-auto">
                 <div class="col-md-6">
                     <label for="name" class="form-label">Nome</label>
                     <input name="name" type="text" id="name" placeholder="Digite o nome da raça"
@@ -25,7 +25,19 @@
                     </span>
                 </div>
 
-                // [] select specie
+                <div class="col-md-6">
+                    <label for="specie_id" class="form-label">Espécie</label>
+                    <select name="species_id" id="specie_id" class="form-select" aria-label="Multiple select ">
+                       <option selected">Selecione uma espécie</option>
+   
+                       <?php foreach ($species as $specie): ?>
+                           <option value="<?= $specie['id'] ?>">
+                               <?= $specie['name'] ?>
+                           </option>
+                       <?php endforeach; ?>
+   
+                    </select>
+                </div>
 
                 <div class="d-flew flex-col gap-2 mt-3">
                     <a href="<?= url_to('breeds') ?>" class="btn btn-sm btn-secondary px-4">Voltar</a>

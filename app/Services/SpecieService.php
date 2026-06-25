@@ -15,6 +15,7 @@ class SpecieService {
     private function validateSpecieData(array $data): array {
         $validation = service('validation');
 
+        // [] validar max_length[100]
         $validation->setRules([
             'name' => 'required|min_length[3]|',
         ], [
