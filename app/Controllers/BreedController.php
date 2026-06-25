@@ -53,7 +53,20 @@ class BreedController extends BaseController
 
     public function store()
     {
-        // [] inserir nova raça no bd
+        $result = $this->breedService->createBreed([
+            'species_id' => $this->request->getPost('species_id'),
+            'name' => $this->request->getPost('name'),
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('breeds')->with('message', $result['message']);
     }
 
     public function edit(int $id)

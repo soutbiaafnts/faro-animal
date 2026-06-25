@@ -81,6 +81,7 @@ class BreedService {
 
         return [
             'success' => true,
+            'message' => 'Raça cadastrada com sucesso!',
         ];
     }
 
@@ -112,7 +113,7 @@ class BreedService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao criar espécie: ',
+                'message' => 'Erro ao criar raça: ',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
