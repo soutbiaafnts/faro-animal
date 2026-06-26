@@ -119,4 +119,35 @@ class BreedService {
             ];
         }
     }
+
+    public function updateBreed(int $id, array $data) {
+        try {
+            $validation = $this->validateCreateBreed($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $this->breedModel->update($id, [
+                'name' => $data['name'],
+            ]);
+
+            return [
+                'success' => true,
+                'message' => 'Raça editada com sucesso!',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao editar raça:',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
