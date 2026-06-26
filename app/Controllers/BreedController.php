@@ -3,37 +3,118 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Services\BreedService;
+use App\Services\SpecieService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class BreedController extends BaseController
 {
-    public function index()
-    {
-        // todo: listar as raças
+    private BreedService $breedService;
+    private SpecieService $specieService;
+
+    public function __construct() {
+        $this->breedService = service('breed');
+        $this->specieService = service('specie');
     }
 
-    public function create()
-    {
-        // todo: view breed/create
+    public function index() {
+        $result = $this->breedService->getAllBreeds();
+
+        if (!$result['success']) {
+            return redirect()->back()->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('breeds/list', [
+            'title' => 'Raças',
+            'message' => $result['message'],
+            'breeds' => $result['breeds'],
+            'pager' => $result['pager'],
+        ]);
+    }
+
+    public function create() {
+        $result = $this->specieService->getAllSpecies();
+
+        if (!$result['success']) {
+            return redirect()->back()->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('breeds/create', [
+            'title' => 'Nova Raça',
+            'species' => $result['species'],
+        ]);
     }
 
     public function store()
     {
-        // todo: inserir nova raça no bd
+        $result = $this->breedService->createBreed([
+            'species_id' => $this->request->getPost('species_id'),
+            'name' => $this->request->getPost('name'),
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('breeds')->with('message', $result['message']);
     }
 
     public function edit(int $id)
     {
-        // todo: view breed/edit
+        $breed = $this->breedService->getBreedById($id);
+
+        if (!$breed['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $breed['message'])
+                ->with('invalidArgs', $breed['invalidArgs'])
+                ->with('errors', $breed['errors']);
+        }
+
+        return view('breeds/edit', [
+            'title' => 'Editar Raça',
+            'breed' => $breed['breed'],
+        ]);
     }
 
     public function update(int $id)
     {
-        // todo: atualizar raça do bd de acordo com o id
+        $result = $this->breedService->updateBreed($id, [
+            'name' => $this->request->getPost('name'),
+            'species_id' => $this->request->getPost('species_id'),
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('breeds')->with('message', $result['message']);
     }
 
     public function delete(int $id)
     {
-        // todo: deletar raça do bd de acordo com o id
+        $result = $this->breedService->deleteBreed($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('message', $result['message'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('species')->with('message', $result['message']);
     }
 }
