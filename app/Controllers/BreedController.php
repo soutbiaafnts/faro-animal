@@ -107,6 +107,14 @@ class BreedController extends BaseController
 
     public function delete(int $id)
     {
-        // [] deletar raça do bd de acordo com o id
+        $result = $this->breedService->deleteBreed($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('message', $result['message'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('species')->with('message', $result['message']);
     }
 }

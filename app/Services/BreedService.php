@@ -188,4 +188,34 @@ class BreedService {
             ];
         }
     }
+
+    public function deleteBreed(int $id) {
+        try {
+            $breed = $this->breedModel->find($id);
+
+            if (!$breed) {
+                return [
+                    'success' => false,
+                    'message' => 'Espécie não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $this->breedModel->delete($id);
+
+            return [
+                'success' => true,
+                'message' => 'Raça excluída com sucesso!',
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao excluir raça',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
