@@ -16,11 +16,12 @@ class SpecieService {
         $validation = service('validation');
 
         $validation->setRules([
-            'name' => 'required|min_length[3]|',
+            'name' => 'required|min_length[3]|max_length[100]',
         ], [
             'name' => [
                 'required' => 'Este campo é obrigatório.',
                 'min_length' => 'O nome precisa ter pelo menos 3 caracteres.',
+                'max_length' => 'O nome precisa ter no máximo 100 caracteres.',
             ],
         ]);
 
