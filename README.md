@@ -49,11 +49,12 @@ O sistema foi desenvolvido utilizando o framework CodeIgniter 4 e segue a arquit
 
 ## Funcionalidades
 
+- Cadastro e gerenciamento de usuários;
 - Autenticação de usuários;
 - Recuperação de senha por e-mail;
 - Cadastro e gerenciamento de espécies;
 - Cadastro e gerenciamento de raças;
-- Cadastro e gerenciamento de animais;
+- Cadastro e gerenciamento de pets;
 - Cadastro e gerenciamento de consultas veterinárias;
 - Exportação de consultas em PDF;
 - Carregamento dinâmico de raças por espécie utilizando AJAX;
