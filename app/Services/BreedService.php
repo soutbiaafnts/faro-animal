@@ -35,6 +35,39 @@ class BreedService {
         }
     }
 
+    public function getBreedById(int $id): array {
+        try {
+            $breedFound = $this->breedModel->find($id);
+
+            if (!$breedFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Raça não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $breed = [
+                'id' => $breedFound['id'],
+                'name' => $breedFound['name'],
+                'species_id' => $breedFound['species_id'],
+            ];
+
+            return [
+                'success' => true,
+                'breed' => $breed,
+            ];
+       } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar espécie: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ]; 
+       }
+    }
+
     // - VALIDAÇÕES
     private function validateCreateBreed(array $data): array {
         $validation = service('validation');
