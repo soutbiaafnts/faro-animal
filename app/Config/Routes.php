@@ -35,7 +35,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/breeds', 'BreedController::index', ['as' => 'breeds']);
     $routes->get('/breeds/create', 'BreedController::create', ['as' => 'breeds.create']);
     $routes->post('/breeds/store', 'BreedController::store', ['as' => 'breeds.store']);
-    $routes->get('/breeds/edit(:num)', 'BreedController::edit/$1', ['as' => 'breeds.edit']);
-    $routes->post('/breeds/update(:num)', 'BreedController::update/$1', ['as' => 'breeds.update']);
-    $routes->delete('/breeds/delete(:num)', 'BreedController::delete/$1', ['as' => 'breeds.delete']);
+    $routes->get('/breeds/edit/(:num)', 'BreedController::edit/$1', ['as' => 'breeds.edit']);
+    $routes->post('/breeds/update/(:num)', 'BreedController::update/$1', ['as' => 'breeds.update']);
+    $routes->delete('/breeds/delete/(:num)', 'BreedController::delete/$1', ['as' => 'breeds.delete']);
 });
