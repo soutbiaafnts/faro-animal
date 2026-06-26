@@ -71,12 +71,38 @@ class BreedController extends BaseController
 
     public function edit(int $id)
     {
-        // [] view breed/edit
+        $breed = $this->breedService->getBreedById($id);
+
+        if (!$breed['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $breed['message'])
+                ->with('invalidArgs', $breed['invalidArgs'])
+                ->with('errors', $breed['errors']);
+        }
+
+        return view('breeds/edit', [
+            'title' => 'Editar Raça',
+            'breed' => $breed['breed'],
+        ]);
     }
 
     public function update(int $id)
     {
-        // [] atualizar raça do bd de acordo com o id
+        $result = $this->breedService->updateBreed($id, [
+            'name' => $this->request->getPost('name'),
+            'species_id' => $this->request->getPost('species_id'),
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('breeds')->with('message', $result['message']);
     }
 
     public function delete(int $id)

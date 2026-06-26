@@ -37,7 +37,10 @@ class BreedService {
 
     public function getBreedById(int $id): array {
         try {
-            $breedFound = $this->breedModel->find($id);
+            $breedFound = $this->breedModel
+                ->select('breeds.*, species.name as specie_name')
+                ->join('species', 'species_id = breeds.species_id')
+                ->find($id);
 
             if (!$breedFound) {
                 return [
@@ -52,6 +55,7 @@ class BreedService {
                 'id' => $breedFound['id'],
                 'name' => $breedFound['name'],
                 'species_id' => $breedFound['species_id'],
+                'specie_name' => $breedFound['specie_name'],
             ];
 
             return [
@@ -168,6 +172,7 @@ class BreedService {
 
             $this->breedModel->update($id, [
                 'name' => $data['name'],
+                'species_id' => $data['species_id'],
             ]);
 
             return [

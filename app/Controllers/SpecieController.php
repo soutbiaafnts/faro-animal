@@ -62,6 +62,7 @@ class SpecieController extends BaseController
     public function edit(int $id) {
         $specie = $this->specieService->getSpecieById($id);
 
+        // ? here are 2 if doing the same thing FIX IT
         if (!$specie['success']) {
             if (!$specie['success']) {
                 return redirect()->back()
