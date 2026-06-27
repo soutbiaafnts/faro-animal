@@ -94,4 +94,33 @@ class PetService {
             'success' => true,
         ];
     }
+
+    public function createPet(array $data) {
+        try {
+            $validation = $this->validateCreatePet($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $this->petModel->insert($data);
+
+            return [
+                'success' => true,
+                'message' => 'Pet criado com sucesso!',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao criar pet: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
