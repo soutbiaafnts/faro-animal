@@ -21,10 +21,10 @@ class PetService {
             'sex' => 'required|in_list[F,M]',
             'birth_date' => 'required|valid_date[Y-m-d]|before_date[today]',
             'weight' => 'required|greater_than[0]',
-            'notes' => 'min_length[3]|max_length[5000]',
+            'notes' => 'min_length[3]|max_length[1000]',
             'owner_name' => 'required|min_length[3]|max_length[120]',
             // [] pesquisar mais sobre o regex para telefone
-            'owner_phone' => 'exact_length[11]|regex_match[/^\([1-9]{2}\) 9[0-9]{4}-[0-9]{4}$/]',
+            'owner_phone' => 'exact_length[11]|regex_match[/^\([1-9]{2}\)9[0-9]{4}-[0-9]{4}$/]',
         ], [
             'breed_id' => [
                 'required' => 'Este campo é obrigatório.',
