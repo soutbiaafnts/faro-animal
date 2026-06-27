@@ -3,10 +3,20 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Services\BreedService;
+use App\Services\PetService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class PetController extends BaseController
 {
+    private PetService $petService;
+    private BreedService $breedService;
+
+    public function __construct() {
+        $this->petService = service('pet');
+        $this->breedService = service('breed');
+    }
+
     public function index()
     {
         // todo: listar as pets
@@ -14,7 +24,7 @@ class PetController extends BaseController
 
     public function create()
     {
-        // todo: view pet/create
+        
     }
 
     public function store()
