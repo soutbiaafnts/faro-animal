@@ -1,7 +1,7 @@
 # Faro Animal
 
 ![PHP](https://custom-icon-badges.demolab.com/badge/PHP-8.2+-777BB4?logo=php&logoColor=white)
-![CodeIgniter](https://custom-icon-badges.demolab.com/badge/CodeIgniter-4-DD4814?logo=codeigniter&logoColor=white)
+![CodeIgniter](https://custom-icon-badges.demolab.com/badge/CodeIgniter-4.7.3-DD4814?logo=codeigniter&logoColor=white)
 ![Status](https://custom-icon-badges.demolab.com/badge/status-active-success)
 ![Environment](https://custom-icon-badges.demolab.com/badge/environment-development-blue)
 
