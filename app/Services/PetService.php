@@ -13,18 +13,17 @@ class PetService {
 
     // - VALIDAÇÕES
     private function validateCreatePet(array $data): array {
-        $validation = service('pet');
+        $validation = service('validation');
 
         $validation->setRules([
             'breed_id' => 'required|integer',
             'name' => 'required|min_length[3]|max_length[100]',
             'sex' => 'required|in_list[F,M]',
-            'birth_date' => 'required|valid_date[Y-m-d]|before_date[today]',
+            'birth_date' => 'required|valid_date[Y-m-d]',
             'weight' => 'required|greater_than[0]',
             'notes' => 'min_length[3]|max_length[1000]',
             'owner_name' => 'required|min_length[3]|max_length[120]',
-            // [] pesquisar mais sobre o regex para telefone
-            'owner_phone' => 'exact_length[11]|regex_match[/^\([1-9]{2}\)9[0-9]{4}-[0-9]{4}$/]',
+            'owner_phone' => 'regex_match[/^\([1-9]{2}\) 9[0-9]{4}-[0-9]{4}$/]',
         ], [
             'breed_id' => [
                 'required' => 'Este campo é obrigatório.',
@@ -42,7 +41,6 @@ class PetService {
             'birth_date' => [
                 'required' => 'Este campo é obrigatório.',
                 'valid_date' => 'Data inválida.',
-                'before_date' => 'A data não pode ser futura.',
             ],
             'weight' => [
                 'required' => 'Este campo é obrigatório.',
@@ -54,12 +52,10 @@ class PetService {
             ],
             'owner_name' => [
                 'required' => 'Este campo é obrigatório.',
-                'min_length' => 'O nome do dono precisa ter pelo menos 3 caracteres.',
-                'max_length' => 'O nome do dono precisa ter no máximo 120 caracteres.',
+                'min_length' => 'O nome do tutor precisa ter pelo menos 3 caracteres.',
+                'max_length' => 'O nome do tutor precisa ter no máximo 120 caracteres.',
             ],
             'owner_phone' => [
-                'min_length' => 'O número do dono precisa ter pelo menos 10 caracteres.',
-                'max_length' => 'O número do dono precisa ter no máximo 11 caracteres.',
                 'regex_match' => 'Número de telefone inválido.',
             ],
         ]);
@@ -69,6 +65,17 @@ class PetService {
                 'success' => false,
                 'message' => 'Verifique os campos',
                 'invalidArgs' => $validation->getErrors(),
+                'errors' => null,
+            ];
+        }
+
+        if (strtotime($data['birth_date']) > strtotime(date('Y-m-d'))) {
+            return [
+                'success' => false,
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => [
+                    'birth_date' => 'A data não pode ser futura.'
+                ],
                 'errors' => null,
             ];
         }
