@@ -17,56 +17,37 @@
 
             <hr>
             
-            <table class="table table-sm table-striped table-bordered w-100">
-                <thead class="table-light">
-                    <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">Espécie</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Data de Criação</th>
-                        <th scope="col">Data de Atualização</th>
-                        <th scope="col">Ações</th>
+            <table data-toggle="table" data-locale="pt-BR" data-pagination="true" data-search="true" data-page-size="10">
+                <thead>
+                    <tr>
+                        <th data-field="id" class="text-center">#</th>
+                        <th data-field="specie_name">Espécie</th>
+                        <th data-field="name">Nome</th>
+                        <th data-field="created_at">Data de Criação</th>
+                        <th data-field="updated_at">Data de Atualização</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($breeds as $breed): ?>
-                            <tr class="align-middle text-center">
-                                <th scope="row">
-                                    <?= $breed['id'] ?>
-                                </th>
-                                <td>
-                                    <?= $breed['specie_name'] ?>
-                                </td>
-                                <td>
-                                    <?= $breed['name'] ?>
-                                </td>
-                                <td>
-                                    <?= $breed['created_at'] ?>
-                                </td>
-                                <td>
-                                    <?= $breed['updated_at'] ?>
-                                </td>
-                                <td class="d-flex justify-content-center gap-2">
-                                    <a href="<?= url_to('breeds.edit', $breed['id']) ?>" class="btn btn-sm btn-secondary px-4">Editar</a>
-                                
-                                    <form action="<?= url_to('breeds.delete', $breed['id']) ?>" method="post">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button 
-                                            type="submit" 
-                                            class="btn btn-sm btn-danger px-4" 
-                                            onclick="return confirm('Tem certeza que deseja excluir essa raça? Esta ação não poderá ser desfeita.')">Deletar</button>
-                                    </form>
-                                </td>
-                            </tr>
+                   <?php foreach ($breeds as $breed): ?>
+                        <tr>
+                            <th class="text-center"><?= $breed['id'] ?></th>
+                            <td><?= $breed['specie_name'] ?></td>
+                            <td><?= $breed['name'] ?></td>
+                            <td><?= $breed['created_at'] ?></td>
+                            <td><?= $breed['updated_at'] ?></td>
+                            <td class="text-center">
+                                <a href="<?= url_to('breeds.edit', $breed['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                <form action="<?= url_to('breeds.delete', $breed['id']) ?>" method="post" class="d-inline">
+                                    <input type="hidden" name="_method" value="DELETE">
+
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir essa raça?')"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            
-            <div class="container d-flex justify-content-center">
-                <ul class="pagination">
-                    <?= $pager->links('default') ?>
-                </ul>
-            </div>
         </div>
     </div>
 

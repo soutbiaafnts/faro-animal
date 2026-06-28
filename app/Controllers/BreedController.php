@@ -31,7 +31,6 @@ class BreedController extends BaseController
             'title' => 'Raças',
             'message' => $result['message'],
             'breeds' => $result['breeds'],
-            'pager' => $result['pager'],
         ]);
     }
 
@@ -115,7 +114,7 @@ class BreedController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('species')->with('message', $result['message']);
+        return redirect()->route('breeds')->with('message', $result['message']);
     }
 
     public function getBySpecie($specieId) {
