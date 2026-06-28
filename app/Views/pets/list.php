@@ -29,7 +29,7 @@
                         <th data-field="owner_name">Nome do tutor</th>
                         <th data-field="owner_phone">Telefone do tutor</th>
                         <th data-field="notes">Anotações</th>
-                        <th>Ações</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +47,7 @@
                             <td><?= $pet['owner_phone'] ?></td>
                             <td><?= $pet['notes'] ?></td>
                             <td class="text-center">
+                                <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a>
                                 <a href="<?= url_to('pets.edit', $pet['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                 <form action="<?= url_to('pets.delete', $pet['id']) ?>" method="post" class="d-inline">
                                     <input type="hidden" name="_method" value="DELETE">

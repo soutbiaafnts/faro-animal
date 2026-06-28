@@ -77,12 +77,43 @@ class PetController extends BaseController
 
     public function edit(int $id)
     {
-        // todo: view pet/edit
+        $result = $this->petService->getPetById($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('pets/edit', [
+            'title' => 'Editar Pet',
+            'pet' => $result['pet'],
+        ]);
     }
 
     public function update(int $id)
     {
-        // todo: atualizar pet do bd de acordo com o id
+        $result = $this->petService->updatePet($id, [
+            'name' => $this->request->getPost('name'),
+            'sex' => $this->request->getPost('sex'),
+            'birth_date' => $this->request->getPost('birth_date'),
+            'weight' => $this->request->getPost('weight'),
+            'notes' => $this->request->getPost('notes'),
+            'owner_name' => $this->request->getPost('owner_name'),
+            'owner_phone' => $this->request->getPost('owner_phone')
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('pets')->with('message', $result['message']);
     }
 
     public function delete(int $id)

@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Models\PetModel;
+use App\Models\SpecieModel;
 
 class PetService {
     protected PetModel $petModel;
+    protected SpecieModel $specieModel;
 
     public function __construct() {
         $this->petModel = new PetModel();
@@ -166,23 +168,6 @@ class PetService {
             ];
         }
 
-        $existing = $this->petModel
-            ->where('name', $data['name'])
-            ->where('owner_name', $data['owner_name'])
-            ->where('deleted_at', null)
-            ->first();
-
-        if ($existing) {
-            return [
-                'success' => false,
-                'message' => 'Verifique os campos',
-                'invalidArgs' => [
-                    'name' => 'Pet já cadastrado.'
-                ],
-                'errors' => null,
-            ];
-        }
-
         return [
             'success' => true,
         ];
@@ -216,8 +201,14 @@ class PetService {
     public function getPetById(int $id): array {
         try {
             $petFound = $this->petModel
-                ->select('pets.*, breeds.name AS breed_name')
-                ->join('breeds', 'breed_id = pets.breed_id')
+                ->select('
+                pets.*,
+                breeds.name AS breed_name,
+                species.id AS species_id,
+                species.name AS specie_name
+                ')
+                ->join('breeds', 'breeds.id = pets.breed_id')
+                ->join('species', 'species.id = breeds.species_id')
                 ->find($id);
 
             if (!$petFound) {
