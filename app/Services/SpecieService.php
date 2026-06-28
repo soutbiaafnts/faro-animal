@@ -59,13 +59,11 @@ class SpecieService {
     // ------- CRUD
     public function getAllSpecies() {
         try {
-            $species = $this->specieModel->paginate(10);
-            $pager = $this->specieModel->pager;
+            $species = $this->specieModel->findAll();
 
             return [
                 'success' => true,
                 'message' => 'Busca realizada com sucesso!',
-                'pager' => $pager,
                 'species' => $species,
             ];
 

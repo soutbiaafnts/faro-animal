@@ -30,7 +30,6 @@ class SpecieController extends BaseController
             'title' => 'Espécies',
             'message' => $species['message'],
             'species' => $species['species'],
-            'pager' => $species['pager'],
         ]);
     }
 

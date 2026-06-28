@@ -17,7 +17,7 @@
 
             <hr>
             
-            <table data-toggle="table" data-locale="pt-BR" data-pagination="true" data-search="true" data-page-size="10">
+            <table data-toggle="table" data-locale="pt-BR" data-pagination="true" data-search="true" data-page-size="5">
                 <thead>
                     <tr>
                         <th data-field="id" class="text-center">#</th>
