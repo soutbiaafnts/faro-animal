@@ -8,7 +8,13 @@
                 <a href="<?= url_to('dashboard') ?>" class="nav-link text-body-secondary">Painel</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-body-secondary">Pets</a>
+                <a href="<?= url_to('species') ?>" class="nav-link text-body-secondary">Espécies</a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= url_to('breeds') ?>" class="nav-link text-body-secondary">Raças</a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= url_to('pets') ?>" class="nav-link text-body-secondary">Pets</a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link text-body-secondary">Consultas</a>
