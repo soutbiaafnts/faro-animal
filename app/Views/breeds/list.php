@@ -1,6 +1,6 @@
 <?php $errors = session()->getFlashdata('errors') ?? [] ?> 
 
-<?= $this->extend('layouts/main_auth'); ?>
+<?= $this->extend('layouts/main'); ?>
 
 <?= $this->section('content'); ?>
 

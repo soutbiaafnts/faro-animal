@@ -3,7 +3,7 @@
 <!-- todo: colocar alerta para as mensagens de erro -->
 <?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
-<?= $this->extend('layouts/main_auth'); ?>
+<?= $this->extend('layouts/main'); ?>
 
 <?= $this->section('content'); ?>
 

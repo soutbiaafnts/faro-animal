@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/main_public'); ?>
+<?= $this->extend('layouts/main'); ?>
 
 <?= $this->section('content'); ?>
 

@@ -10,12 +10,12 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/bootstrap-table.min.css">
     </head>
 
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <header>
-            <?= $this->include('partials/navbar_auth'); ?>
+            <?= $this->include('partials/navbar'); ?>
         </header>
 
-        <main>
+        <main class="flex-grow-1 d-flex flex-column justify-content-center pt-2">
             <?= $this->renderSection('content'); ?>
         </main>
 
