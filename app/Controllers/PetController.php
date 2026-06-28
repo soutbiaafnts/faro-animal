@@ -18,9 +18,22 @@ class PetController extends BaseController
         $this->specieService = service('specie');
     }
 
-    public function index()
-    {
-        // todo: listar as pets
+    public function index() {
+        $result = $this->petService->getAllPets();
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('pets/list', [
+            'title' => 'Pets',
+            'message' => $result['message'],
+            'pets' => $result['pets'],
+        ]);
     }
 
     public function create() {

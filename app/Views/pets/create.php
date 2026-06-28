@@ -84,7 +84,7 @@
                 <div class="col-md-4">
                     <label for="owner_name" class="form-label">Nome do tutor</label>
                     <input name="owner_name" type="text" id="owner_name" placeholder="Digite o nome do tutor"
-                        value="<?= old('name') ?>"
+                        value="<?= old('owner_name') ?>"
                         class="form-control <?= isset($invalidArgs['owner_name']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['owner_name'] ?? '' ?>
@@ -94,7 +94,7 @@
                 <div class="col-md-4">
                     <label for="owner_phone" class="form-label">Contato do tutor</label>
                     <input name="owner_phone" type="text" id="owner_phone" placeholder="(00) 00000-0000"
-                        value="<?= old('name') ?>"
+                        value="<?= old('owner_phone') ?>"
                         class="form-control <?= isset($invalidArgs['owner_phone']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['owner_phone'] ?? '' ?>

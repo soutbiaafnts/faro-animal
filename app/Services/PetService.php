@@ -102,6 +102,31 @@ class PetService {
         ];
     }
 
+    // - CRUD
+
+    public function getAllPets() {
+        try {
+            $pets = $this->petModel
+                ->select('pets.*, breeds.name AS breed_name')
+                ->join('breeds', 'breeds.id = pets.breed_id', 'left')
+                ->findAll();
+
+            return [
+                'success' => true,
+                'message' => 'Busca realizada com sucesso!',
+                'pets' => $pets,
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar pets:',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
     public function createPet(array $data) {
         try {
             $validation = $this->validateCreatePet($data);
