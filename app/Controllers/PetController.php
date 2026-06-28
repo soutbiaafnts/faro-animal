@@ -116,8 +116,15 @@ class PetController extends BaseController
         return redirect()->route('pets')->with('message', $result['message']);
     }
 
-    public function delete(int $id)
-    {
-        // todo: deletar pet do bd de acordo com o id
+    public function delete(int $id) {
+        $result = $this->petService->deletePet($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('message', $result['message'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('pets')->with('message', $result['message']);
     }
 }

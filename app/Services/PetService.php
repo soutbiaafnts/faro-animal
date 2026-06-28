@@ -291,4 +291,33 @@ class PetService {
             ];
         }
     }
+
+    public function deletePet(int $id) {
+        try {
+            $pet = $this->petModel->find($id);
+
+            if (!$pet) {
+                return [
+                    'success' => false,
+                    'message' => 'Pet não encontrado.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $this->petModel->delete($id);
+
+            return [
+                'success' => true,
+                'message' => 'Pet excluído com sucesso!',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao excluir pet',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
