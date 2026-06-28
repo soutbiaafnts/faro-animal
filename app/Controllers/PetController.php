@@ -23,8 +23,7 @@ class PetController extends BaseController
         // todo: listar as pets
     }
 
-    public function create()
-    {
+    public function create() {
         $result = $this->specieService->getAllSpecies();
 
         if (!$result['success']) {
@@ -40,10 +39,28 @@ class PetController extends BaseController
         ]);
     }
 
-    public function store()
-    {
-        // todo: inserir novo pet no bd
-    }
+    public function store() {
+        $result = $this->petService->createPet([
+            'breed_id' => $this->request->getPost('breed_id'),
+            'name' => $this->request->getPost('name'),
+            'sex' => $this->request->getPost('sex'),
+            'birth_date' => $this->request->getPost('birth_date'),
+            'weight' => $this->request->getPost('weight'),
+            'notes' => $this->request->getPost('notes'),
+            'owner_name' => $this->request->getPost('owner_name'),
+            'owner_phone' => $this->request->getPost('owner_phone')
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('pets')->with('message', $result['message']);
+    }     
 
     public function edit(int $id)
     {
