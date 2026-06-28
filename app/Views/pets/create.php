@@ -53,7 +53,7 @@
 
                 <div class="col-md-4">
                     <label for="birth_date" class="form-label">Data de nascimento</label>
-                    <input name="birth_date" type="date" id="birth_date" value="<?= old('name') ?>"
+                    <input name="birth_date" type="date" id="birth_date" value="<?= old('birth_date') ?>"
                         class="form-control <?= isset($invalidArgs['birth_date']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['birth_date'] ?? '' ?>
@@ -62,10 +62,22 @@
                 
                 <div class="col-md-4">
                     <label for="weight" class="form-label">Peso</label>
-                    <input name="weight" type="number" step="0.01" min="0.00" placeholder="0.01 kg" id="weight" value="<?= old('name') ?>"
+                    <input name="weight" type="number" step="0.01" min="0.00" placeholder="0.01 kg" id="weight" value="<?= old('weight') ?>"
                         class="form-control <?= isset($invalidArgs['weight']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['weight'] ?? '' ?>
+                    </span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="sex" class="form-label">Sexo</label>
+                    <select name="sex" id="sex"  class="form-select <?= isset($invalidArgs['sex']) ? 'is-invalid' : '' ?>">
+                        <option selected value="">Selecione o sexo</option>
+                        <option value="F">Fêmea</option>
+                        <option value="M">Macho</option>
+                    </select>
+                    <span class="invalid-feedback">
+                        <?= $invalidArgs['sex'] ?? '' ?>
                     </span>
                 </div>
 
@@ -89,11 +101,10 @@
                     </span>
                 </div>
                 
-                <div class="col-md-4">
+                <div class="w-50">
                     <label for="notes" class="form-label">Anotações</label>
                     <textarea name="notes" type="number" maxlength="1000" placeholder="Faça as anotações..." id="notes" style="height: 200px" value="<?= old('name') ?>"
-                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>">
-                    </textarea>
+                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>"/></textarea>
                     <div class="form-text"><span id="count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['notes'] ?? '' ?>
