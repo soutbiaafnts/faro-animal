@@ -3,37 +3,128 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Services\BreedService;
+use App\Services\PetService;
+use App\Services\SpecieService;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class PetController extends BaseController
 {
-    public function index()
-    {
-        // todo: listar as pets
+    private PetService $petService;
+    private SpecieService $specieService;
+
+    public function __construct() {
+        $this->petService = service('pet');
+        $this->specieService = service('specie');
     }
 
-    public function create()
-    {
-        // todo: view pet/create
+    public function index() {
+        $result = $this->petService->getAllPets();
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('pets/list', [
+            'title' => 'Pets',
+            'message' => $result['message'],
+            'pets' => $result['pets'],
+        ]);
     }
 
-    public function store()
-    {
-        // todo: inserir novo pet no bd
+    public function create() {
+        $result = $this->specieService->getAllSpecies();
+
+        if (!$result['success']) {
+            return redirect()->back()->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('pets/create', [
+            'title' => 'Novo Pet',
+            'species' => $result['species'],
+        ]);
     }
+
+    public function store() {
+        $result = $this->petService->createPet([
+            'breed_id' => $this->request->getPost('breed_id'),
+            'name' => $this->request->getPost('name'),
+            'sex' => $this->request->getPost('sex'),
+            'birth_date' => $this->request->getPost('birth_date'),
+            'weight' => $this->request->getPost('weight'),
+            'notes' => $this->request->getPost('notes'),
+            'owner_name' => $this->request->getPost('owner_name'),
+            'owner_phone' => $this->request->getPost('owner_phone')
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('pets')->with('message', $result['message']);
+    }     
 
     public function edit(int $id)
     {
-        // todo: view pet/edit
+        $result = $this->petService->getPetById($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('pets/edit', [
+            'title' => 'Editar Pet',
+            'pet' => $result['pet'],
+        ]);
     }
 
     public function update(int $id)
     {
-        // todo: atualizar pet do bd de acordo com o id
+        $result = $this->petService->updatePet($id, [
+            'name' => $this->request->getPost('name'),
+            'sex' => $this->request->getPost('sex'),
+            'birth_date' => $this->request->getPost('birth_date'),
+            'weight' => $this->request->getPost('weight'),
+            'notes' => $this->request->getPost('notes'),
+            'owner_name' => $this->request->getPost('owner_name'),
+            'owner_phone' => $this->request->getPost('owner_phone')
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('pets')->with('message', $result['message']);
     }
 
-    public function delete(int $id)
-    {
-        // todo: deletar pet do bd de acordo com o id
+    public function delete(int $id) {
+        $result = $this->petService->deletePet($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('message', $result['message'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('pets')->with('message', $result['message']);
     }
 }

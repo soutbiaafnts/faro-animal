@@ -34,8 +34,17 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // ---- BREEDS
     $routes->get('/breeds', 'BreedController::index', ['as' => 'breeds']);
     $routes->get('/breeds/create', 'BreedController::create', ['as' => 'breeds.create']);
+    $routes->get('/breeds/specie/(:num)', 'BreedController::getBySpecie/$1');
     $routes->post('/breeds/store', 'BreedController::store', ['as' => 'breeds.store']);
     $routes->get('/breeds/edit/(:num)', 'BreedController::edit/$1', ['as' => 'breeds.edit']);
     $routes->post('/breeds/update/(:num)', 'BreedController::update/$1', ['as' => 'breeds.update']);
     $routes->delete('/breeds/delete/(:num)', 'BreedController::delete/$1', ['as' => 'breeds.delete']);
+    
+    // ---- PETS
+    $routes->get('/pets', 'PetController::index', ['as' => 'pets']);
+    $routes->get('/pets/create', 'PetController::create', ['as' => 'pets.create']);
+    $routes->post('/pets/store', 'PetController::store', ['as' => 'pets.store']);
+    $routes->get('/pets/edit/(:num)', 'PetController::edit/$1', ['as' => 'pets.edit']);
+    $routes->post('/pets/update/(:num)', 'PetController::update/$1', ['as' => 'pets.update']);
+    $routes->delete('/pets/delete/(:num)', 'PetController::delete/$1', ['as' => 'pets.delete']);
 });

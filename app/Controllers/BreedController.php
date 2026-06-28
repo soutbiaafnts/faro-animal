@@ -117,4 +117,14 @@ class BreedController extends BaseController
 
         return redirect()->route('species')->with('message', $result['message']);
     }
+
+    public function getBySpecie($specieId) {
+        if (!$this->request->isAJAX()) {
+            return $this->response->setStatusCode(403)->setBody('Acesso não autorizado.');
+        }
+
+        $result = $this->breedService->getBreedsBySpecie($specieId);
+
+        return $this->response->setJSON($result);
+    }
 }
