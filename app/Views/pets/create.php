@@ -31,10 +31,9 @@
                     </span>
                 </div>
                 
-                <!-- // [] fazer ele ficar desabilitado se não tiver selecionado uma espécie, com a mensagem "Selecione primeiro a espécie" -->
                 <div class="col-md-4">
                     <label for="breed_id" class="form-label">Raça</label>
-                    <select name="breed_id" id="breed_id"  class="form-select <?= isset($invalidArgs['breed_id']) ? 'is-invalid' : '' ?>">
+                    <select name="breed_id" id="breed_id"  class="form-select <?= isset($invalidArgs['breed_id']) ? 'is-invalid' : '' ?>" disabled>
                         <!-- Populado pela requisição AJAX -->
                     </select>
                     <span class="invalid-feedback">
@@ -133,12 +132,22 @@
     document.addEventListener('DOMContentLoaded', function () {
         const specieSelect = document.getElementById('specie_id');
         const breedSelect = document.getElementById('breed_id');
+
+        breedSelect.innerHTML = '<option>Selecione uma espécie primeiro</option>';
         
         specieSelect.addEventListener('change', function() {
-            const specieId = this.value;
-            breedSelect.innerHTML = '<option>Selecione uma raça</option>';
+            if (breedSelect.disabled == false) {
+                breedSelect.disabled = true;
+                breedSelect.innerHTML = '<option>Selecione uma espécie primeiro</option>';
+            }
 
-            if (specieId) {
+            const specieId = this.value;
+            
+            if (specieId != "") {
+                breedSelect.innerHTML = '<option>Selecione uma raça</option>';
+                
+                breedSelect.disabled = false;
+                
                 fetch(`${BASE_URL}/breeds/specie/${specieId}`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
@@ -149,7 +158,7 @@
                     const success = data.success;
                     const message = data.message;
                     const breeds = data.breeds;
-
+                    
                     for (const breed of breeds) {
                         const option = document.createElement('option');
                         option.value = breed.id;
