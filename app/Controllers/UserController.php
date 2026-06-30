@@ -10,11 +10,13 @@ class UserController extends BaseController
 {
     protected UserService $userService;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userService = service('user');
     }
 
-    public function index() {
+    public function index()
+    {
         $userId = session()->get('user_id');
 
         $user = $this->userService->getUserById($userId);
@@ -28,12 +30,14 @@ class UserController extends BaseController
             'title' => 'Meu perfil',
         ]);
     }
-    
-    public function create() {
+
+    public function create()
+    {
         return view('users/create', ['title' => 'Cadastre-se']);
     }
 
-    public function store() {
+    public function store()
+    {
         try {
             $password = $this->request->getPost('password');
             $confirmPassword = $this->request->getPost('confirmPassword');
@@ -61,8 +65,9 @@ class UserController extends BaseController
             return redirect()->back()->withInput()->with('message', 'Erro:')->with('errors', $e->getMessage());
         }
     }
-   
-    public function update() {
+
+    public function update()
+    {
         $userId = session()->get('user_id');
 
         $result = $this->userService->updateProfile($userId, [
@@ -79,8 +84,9 @@ class UserController extends BaseController
 
         return redirect()->route('me')->with('message', $result['message']);
     }
-   
-    public function updatePassword() {
+
+    public function updatePassword()
+    {
         $userId = session()->get('user_id');
 
         $result = $this->userService->updatePassword($userId, [
@@ -100,9 +106,8 @@ class UserController extends BaseController
         return redirect()->route('me')->with('message', $result['message']);
     }
 
-    public function delete() {
-        // todo: deletar usuário do bd de acordo com o id
-
+    public function delete()
+    {
         $userId = session()->get('user_id');
 
         $result = $this->userService->deleteUser($userId);

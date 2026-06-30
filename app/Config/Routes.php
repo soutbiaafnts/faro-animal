@@ -10,13 +10,18 @@ $routes->get('/login', 'AuthController::index', ['as' => 'login']);
 $routes->post('/login', 'AuthController::login', ['as' => 'auth']);
 $routes->get('/logout', 'AuthController::logout', ['as' => 'logout']);
 
+$routes->get('/forgot/password', 'AuthController::forgotPassword', ['as' => 'forgot']);
+$routes->post('/forgot', 'AuthController::sendResetLink', ['as' => 'forgot.send']);
+$routes->get('/reset/(:alphanum)', 'AuthController::resetPassword/$1', ['as' => 'forgot.reset']);
+$routes->post('/forgot/update/(:alphanum)', 'AuthController::updatePassword/$1', ['as' => 'forgot.update']);
+
 $routes->get('/register', 'UserController::create', ['as' => 'register']);
 $routes->post('/register', 'UserController::store', ['as' => 'user.register']);
 
 // --------------- ROTAS PROTEGIDAS
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/dashboard', 'DashboardController::index', ['as' => 'dashboard']);
-    
+
     // ---- USERS
     $routes->get('/me', 'UserController::index', ['as' => 'me']);
     $routes->post('/me', 'UserController::update', ['as' => 'me.update']);
@@ -39,7 +44,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/breeds/edit/(:num)', 'BreedController::edit/$1', ['as' => 'breeds.edit']);
     $routes->post('/breeds/update/(:num)', 'BreedController::update/$1', ['as' => 'breeds.update']);
     $routes->delete('/breeds/delete/(:num)', 'BreedController::delete/$1', ['as' => 'breeds.delete']);
-    
+
     // ---- PETS
     $routes->get('/pets', 'PetController::index', ['as' => 'pets']);
     $routes->get('/pets/create', 'PetController::create', ['as' => 'pets.create']);

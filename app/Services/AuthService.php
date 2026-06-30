@@ -13,29 +13,43 @@ class AuthService
         $this->userModel = new UserModel();
     }
 
-    public function auth(array $data): array
+    public function validateAuth(array $data): array
     {
-        // validação dos campos
         $validation = service('validation');
 
         $validation->setRules([
             'email' => 'required|valid_email',
-            'password' => 'required'
+            'password' => 'required',
         ], [
             'email' => [
                 'required' => 'O campo e-mail é obrigatório.',
-                'valid_email' => 'E-mail inválido.'
+                'valid_email' => 'E-mail inválido.',
             ],
             'password' => [
-                'required' => 'O campo senha é obrigatório.'
-            ]
+                'required' => 'O campo senha é obrigatório.',
+            ],
         ]);
 
         if (!$validation->run($data)) {
             return [
                 'success' => false,
-                'errors' => $validation->getErrors()
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => $validation->getErrors(),
+                'errors' => null,
             ];
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
+
+    public function auth(array $data): array
+    {
+        $validation = $this->validateAuth($data);
+
+        if (!$validation['success']) {
+            return $validation;
         }
 
         // validação do usuário
@@ -46,14 +60,22 @@ class AuthService
         if (!$userFound) {
             return [
                 'success' => false,
-                'errors' => ['email' => 'E-mail ou senha incorretos.']
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => [
+                    'email' => 'E-mail ou senha incorretos.'
+                ],
+                'errors' => null,
             ];
         }
 
         if (!password_verify($data['password'], $userFound['password'])) {
             return [
                 'success' => false,
-                'errors' => ['email' => 'E-mail ou senha incorretos.']
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => [
+                    'email' => 'E-mail ou senha incorretos.'
+                ],
+                'errors' => null,
             ];
         }
 
@@ -61,16 +83,17 @@ class AuthService
             'user_id' => $userFound['id'],
             'user_name' => $userFound['name'],
             'user_email' => $userFound['email'],
-            'auth' => true
+            'auth' => true,
         ]);
 
         return [
             'success' => true,
-            'user' => $userFound
+            'user' => $userFound,
         ];
     }
 
-    public function logout() {
+    public function logout()
+    {
         session()->destroy();
     }
 }
