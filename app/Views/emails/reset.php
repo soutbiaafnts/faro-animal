@@ -1,3 +1,10 @@
+<?php
+
+/** @var string $name */
+/** @var string $token */ 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

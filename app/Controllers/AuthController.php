@@ -69,43 +69,39 @@ class AuthController extends BaseController
                 ->with('invalidArgs', $result['invalidArgs'])
                 ->with('errors', $result['errors']);
         }
-
         return redirect()->back()->withInput()->with('success', $result['success'])->with('message', $result['message']);
     }
 
+    /**
+     * Summary of resetPassword
+     * @param string $token
+     * @return string|\CodeIgniter\HTTP\RedirectResponse
+     */
     public function resetPassword(string $token)
     {
-        if (!$token) {
-            session()->setFlashdata('token_not_found', 'Token não existe ou não é válido.');
-            return redirect()->route('forgot');
-        }
+        $result = $this->authService->validateToken($token);
 
-        $user = new UserModel();
-        $userFound = $user->where('reset_token', $token)->first();
-
-        if (!$userFound) {
-            session()->setFlashdata('token_not_found', 'Token não existe ou não é válido.');
-            return redirect()->route('forgot');
-        }
-
-        $expiration = new DateTime($userFound['reset_expires_at']);
-        $now = new DateTime('now');
-
-        if ($now > $expiration) {
-            session()->setFlashdata('token_not_found', 'Token não existe ou não é válido.');
-            return redirect()->route('forgot');
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('success', $result['success'])
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
         }
 
         return view('reset', [
             'title' => 'Recuperação de senha',
             'token' => $token,
+            'success' => $result['success'],
+            'message' => $result['message'],
         ]);
     }
 
     public function updatePassword(string $token)
     {
         $password = $this->request->getPost('password');
-        
+
         $user = new UserModel();
         $userFound = $user->where('reset_token', $token)->first();
 

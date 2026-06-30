@@ -15,7 +15,7 @@ class AuthService
         $this->userModel = new UserModel();
     }
 
-    public function validateAuthData(array $data): array
+    private function validateAuthData(array $data): array
     {
         $validation = service('validation');
 
@@ -46,7 +46,7 @@ class AuthService
         ];
     }
 
-    public function validateSendEmailData(array $data): array
+    private function validateSendEmailData(array $data): array
     {
         $validation = service('validation');
 
@@ -95,6 +95,11 @@ class AuthService
         }
     }
 
+    /**
+     * Summary of auth
+     * @param array $data
+     * @return array|array{errors: null, invalidArgs: array{email: string, message: string, success: bool}|array{success: bool, user: array<bool|float|int|object|string|null>|object}}
+     */
     public function auth(array $data): array
     {
         $validation = $this->validateAuthData($data);
@@ -143,11 +148,20 @@ class AuthService
         ];
     }
 
+    /**
+     * Summary of logout
+     * @return void
+     */
     public function logout()
     {
         session()->destroy();
     }
 
+    /**
+     * Summary of createResetToken
+     * @param array $user
+     * @return array{errors: string, invalidArgs: array, message: string, success: bool|array{expires: DateTime, success: bool, token: string}}
+     */
     public function createResetToken(array $user): array
     {
         $expires = new DateTime();
@@ -177,7 +191,12 @@ class AuthService
 
     }
 
-    public function sendTokenLink(array $data):array
+    /**
+     * Summary of sendTokenLink
+     * @param array $data
+     * @return array{errors: mixed, invalidArgs: mixed, message: mixed, success: bool|array{errors: null, invalidArgs: array, message: string, success: bool}|array{errors: string, invalidArgs: array, message: string, success: bool}|array{message: string, success: bool}}
+     */
+    public function sendTokenLink(array $data): array
     {
         $validation = $this->validateSendEmailData($data);
 
@@ -230,6 +249,57 @@ class AuthService
                 'message' => 'Enviamos um link de redefinição se senha para o seu e-mail!'
             ];
 
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao enviar e-mail: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of validateToken
+     * @param string $resetToken
+     * @return array{errors: null, invalidArgs: array, message: string, success: bool|array{errors: string, invalidArgs: array, message: string, success: bool}|array{success: bool}}
+     */
+    public function validateToken(string $resetToken)
+    {
+        if (!$resetToken) {
+            return [
+                'success' => false,
+                'message' => 'Token inexistente ou inválido.',
+                'invalidArgs' => [],
+                'errors' => null,
+            ];
+        }
+
+        try {
+            $userFound = $this->userModel->where('reset_token', $resetToken)->first();
+
+            if (!$userFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Token inexistente ou inválido.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $expiration = new DateTime($userFound['reset_expires_at']);
+            $now = new DateTime('now');
+
+            if ($now > $expiration) {
+                return [
+                    'success' => false,
+                    'message' => 'Token inexistente ou inválido.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            return ['success' => true];
         } catch (\Exception $e) {
             return [
                 'success' => false,

@@ -1,5 +1,7 @@
-<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? [] ?>
-
+<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
+<?php $message = session()->getFlashdata('message') ?? ''; ?>
+<?php $success = session()->getFlashdata('success'); ?>
+<?php /** @var string $token */ ?>
 <!-- todo: colocar alerta para as mensagens de erro -->
 <?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
@@ -7,11 +9,32 @@
 
 <?= $this->section('content'); ?>
 
-<div class="container py-5">
+<div class="container py-5" style="max-width: 700px">
+
+    <?php if ($message && !$success): ?>
+        <div class="alert alert-danger text-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <h4 class="alert-heading">Erro!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php elseif ($message && $success): ?>
+        <div class="alert alert-success text-center" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <h4 class="alert-heading">Sucesso!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php endif; ?>
 
     <h2 class="text-center mb-4">Crie uma nova senha</h2>
 
-    <form action="<?= url_to('forgot.update', $token) ?>" method="post" class="row g-2 mx-auto" style="max-width: 700px">
+    <form action="<?= url_to('forgot.update', $token) ?>" method="post" class="row g-2 mx-auto"
+        style="max-width: 700px">
         <div class="col-md-6">
             <label for="password" class="form-label">Nova senha</label>
             <input name="password" type="password" id="password" placeholder="Crie uma senha"

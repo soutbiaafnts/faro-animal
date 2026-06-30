@@ -1,5 +1,4 @@
 <?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
-<?php $errors = session()->getFlashdata('errors') ?? []; ?>
 <?php $message = session()->getFlashdata('message') ?? ''; ?>
 <?php $success = session()->getFlashdata('success'); ?>
 
@@ -45,7 +44,6 @@
         </div>
 
         <div class="col-12 text-center mt-3">
-
 
             <button class="btn btn-primary w-100" type="submit">Continuar</button>
 
