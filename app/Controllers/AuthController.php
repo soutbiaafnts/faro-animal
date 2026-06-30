@@ -57,43 +57,20 @@ class AuthController extends BaseController
     {
         $email = $this->request->getPost('email');
 
-        $user = new UserModel();
-        $userFound = $user->where('email', $email)->first();
+        $result = $this->authService->sendTokenLink([
+            'email' => $email,
+        ]);
 
-        if (!$userFound) {
-            session()->setFlashdata('error', 'Não encontramos seu email.');
-            return redirect()->back()->withInput();
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('success', $result['success'])
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
         }
 
-        $expires = new DateTime();
-        $expires->modify('+5 minutes');
-
-        $token = md5(uniqid());
-        $user->where('id', $userFound['id'])
-            ->set([
-                'reset_token' => $token,
-                'reset_expires_at' => $expires->format('Y-m-d H:i:s')
-            ])
-            ->update();
-
-
-        $mail = new Mail;
-        $mail->setFrom([
-            'name' => 'Faro Animal',
-            'email' => 'bianca.fontes.dev@gmail.com',
-        ]);
-        $mail->setTo($email);
-        $mail->setSubject('Recuperação de senha');
-        $mail->setTemplate('emails/reset', [
-            'name' => $userFound['name'],
-            'token' => $token,
-        ]);
-
-        ($mail->send()) ?
-            session()->setFlashdata('forgot_sent', 'Enviamos um link de recuperação se senha para o seu e-mail.') :
-            session()->setFlashdata('forgot_not_sent', 'Ocorreu um erro ao enviar o e-mail. Tente novamente em alguns segundos.');
-
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function resetPassword(string $token)
