@@ -35,12 +35,20 @@
 
     <form action="<?= url_to('forgot.update', $token) ?>" method="post" class="row g-2 mx-auto"
         style="max-width: 700px">
-        <div class="col-md-6">
+        <div class="col-md-8 w-100">
             <label for="password" class="form-label">Nova senha</label>
             <input name="password" type="password" id="password" placeholder="Crie uma senha"
                 class="form-control <?= isset($invalidArgs['password']) ? 'is-invalid' : '' ?>">
             <span class="invalid-feedback">
                 <?= $invalidArgs['password'] ?? '' ?>
+            </span>
+        </div>
+        <div class="col-md-8 w-100">
+            <label for="confirmPass" class="form-label">Nova senha</label>
+            <input name="confirmPass" type="password" id="confirmPass" placeholder="Crie uma senha"
+                class="form-control <?= isset($invalidArgs['confirmPass']) ? 'is-invalid' : '' ?>">
+            <span class="invalid-feedback">
+                <?= $invalidArgs['confirmPass'] ?? '' ?>
             </span>
         </div>
 

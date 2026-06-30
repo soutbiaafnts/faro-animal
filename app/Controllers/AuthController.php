@@ -2,10 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Libraries\Mail;
-use App\Models\UserModel;
 use App\Services\AuthService;
-use DateTime;
 
 class AuthController extends BaseController
 {
@@ -48,11 +45,21 @@ class AuthController extends BaseController
         return redirect()->route('home');
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function forgotPassword()
     {
         return view('forgot', ['title' => 'Esqueci a senha']);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function sendResetLink()
     {
         $email = $this->request->getPost('email');
@@ -79,7 +86,7 @@ class AuthController extends BaseController
      */
     public function resetPassword(string $token)
     {
-        $result = $this->authService->validateToken($token);
+        $result = $this->authService->sendToken($token);
 
         if (!$result['success']) {
             return redirect()->back()
@@ -94,34 +101,29 @@ class AuthController extends BaseController
             'title' => 'Recuperação de senha',
             'token' => $token,
             'success' => $result['success'],
-            'message' => $result['message'],
         ]);
     }
 
-    public function updatePassword(string $token)
-    {
+    /**
+     * Summary of updatePassword
+     *
+     * @param string $token
+     * @return void
+     */
+    public function updatePassword(string $token){
         $password = $this->request->getPost('password');
+        $confirmPass = $this->request->getPost('confirmPass');
 
-        $user = new UserModel();
-        $userFound = $user->where('reset_token', $token)->first();
+        $result = $this->authService->updatePassword($token, $password, $confirmPass);
 
-        if (!$userFound) {
-            session()->setFlashdata('token_not_found', 'Token não existe ou não é válido.');
-            return redirect()->route('forgot');
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('success', $result['success'])
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
         }
 
-        $updated = $user->update($userFound['id'], [
-            'password' => $password,
-            'reset_token' => null,
-            'reset_expires_at' => null,
-        ]);
-
-        d($updated);
-
-        ($updated) ?
-            session()->setFlashdata('updated', 'Senha atualizada com sucesso!') :
-            session()->setFlashdata('not_updated', 'A senha não foi atualizada.');
-
-        return redirect()->route('forgot');
+        return redirect()->route('forgot')->with('success', $result['success'])->with('message', $result['message']);
     }
 }

@@ -172,7 +172,7 @@ class AuthService
         try {
             $this->userModel->update($user['id'], [
                 'reset_token' => $token,
-                'reset_espires_at' => $expires->format('Y-m-d H:i:s'),
+                'reset_expires_at' => $expires->format('Y-m-d H:i:s'),
             ]);
 
             return [
@@ -188,7 +188,6 @@ class AuthService
                 'errors' => $e->getMessage(),
             ];
         }
-
     }
 
     /**
@@ -246,9 +245,8 @@ class AuthService
 
             return [
                 'success' => true,
-                'message' => 'Enviamos um link de redefinição se senha para o seu e-mail!'
+                'message' => 'Enviamos um link de redefinição de senha para o seu e-mail!'
             ];
-
         } catch (\Exception $e) {
             return [
                 'success' => false,
@@ -260,11 +258,11 @@ class AuthService
     }
 
     /**
-     * Summary of validateToken
+     * Summary of sendToken
      * @param string $resetToken
      * @return array{errors: null, invalidArgs: array, message: string, success: bool|array{errors: string, invalidArgs: array, message: string, success: bool}|array{success: bool}}
      */
-    public function validateToken(string $resetToken)
+    public function sendToken(string $resetToken)
     {
         if (!$resetToken) {
             return [
@@ -304,6 +302,100 @@ class AuthService
             return [
                 'success' => false,
                 'message' => 'Erro ao enviar e-mail: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    private function validateNewPassword(array $data): array
+    {
+        $validation = service('validation');
+        $validation->setRules([
+            'password' => 'required|min_length[8]|matches[confirmPass]',
+            'confirmPass' => 'required',
+        ], [
+            'password' => [
+                'required' => 'Defina uma nova senha.',
+                'min_length' => 'A nova senha deve possuir pelo menos 8 caracteres',
+                'matches' => 'As senhas não coincidem.',
+            ],
+            'confirmPass' => [
+                'required' => 'Confirme a senha.'
+            ],
+        ]);
+
+        if (!$validation->run($data)) {
+            return [
+                'success' => false,
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => $validation->getErrors(),
+                'errors' => null,
+            ];
+        }
+
+        return ['success' => true];
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $resetToken
+     * @param string $newPassword
+     * @param string $confirmPass
+     * @return array
+     */
+    public function updatePassword(string $resetToken, string $newPassword, string $confirmPass): array
+    {
+        $validation = $this->validateNewPassword([
+            'password' => $newPassword,
+            'confirmPass' => $confirmPass,
+        ]);
+
+        if (!$validation['success']) {
+            return [
+                'success' => false,
+                'message' => $validation['message'],
+                'invalidArgs' => $validation['invalidArgs'],
+                'errors' => $validation['errors'],
+            ];
+        }
+
+        try {
+            $userFound = $this->userModel->where('reset_token', $resetToken)->first();
+
+            if (!$userFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Token inexistente ou inválido.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $userUpdated = $this->userModel->update($userFound['id'], [
+                'password' => $newPassword,
+                'reset_token' => null,
+                'reset_expires_at' => null,
+            ]);
+
+            if (!$userUpdated) {
+                return [
+                    'success' => false,
+                    'message' => 'Erro ao atualizar a senha.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Senha atualizada com sucesso',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao atualizar a senha.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
