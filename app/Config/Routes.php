@@ -52,4 +52,13 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/pets/edit/(:num)', 'PetController::edit/$1', ['as' => 'pets.edit']);
     $routes->post('/pets/update/(:num)', 'PetController::update/$1', ['as' => 'pets.update']);
     $routes->delete('/pets/delete/(:num)', 'PetController::delete/$1', ['as' => 'pets.delete']);
+
+    // ---- APPOINTMENTS
+    $routes->get('/appointments', 'AppointmentController::index', ['as' => 'appointments']);
+    $routes->get('/appointments/create', 'AppointmentController::create', ['as' => 'appointments.create']);
+    $routes->post('/appointments/store', 'AppointmentController::store', ['as' => 'appointments.store']);
+    $routes->get('/appointments/edit/(:num)', 'AppointmentController::edit/$1', ['as' => 'appointments.edit']);
+    $routes->post('/appointments/update/(:num)', 'AppointmentController::update/$1', ['as' => 'appointments.update']);
+    $routes->post('/appointments/delete/(:num)', 'AppointmentController::delete/$1', ['as' => 'appointments.delete']);
+
 });
