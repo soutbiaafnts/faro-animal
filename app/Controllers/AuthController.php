@@ -2,15 +2,21 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
+use App\Services\AuthService;
 
 class AuthController extends BaseController
 {
+    protected AuthService $authService;
+
+    public function __construct()
+    {
+        $this->authService = service('auth');
+    }
+
     public function index()
     {
         $data = [
-            'title' => 'Login'
+            'title' => 'Login',
         ];
 
         return view('login', $data);
@@ -18,14 +24,14 @@ class AuthController extends BaseController
 
     public function login()
     {
-        $authService = service('auth');
-
-        $result = $authService->auth($this->request->getPost());
+        $result = $this->authService->auth($this->request->getPost());
 
         if (!$result['success']) {
             return redirect()
                 ->back()
                 ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
                 ->with('errors', $result['errors']);
         }
 
@@ -34,29 +40,90 @@ class AuthController extends BaseController
 
     public function logout()
     {
-        $authService = service('auth');
-        $authService->logout();
+        $this->authService->logout();
 
         return redirect()->route('home');
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function forgotPassword()
     {
-        // todo: view auth/forgot-password
+        return view('forgot', ['title' => 'Esqueci a senha']);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function sendResetLink()
     {
-        // todo: enviar email
+        $email = $this->request->getPost('email');
+
+        $result = $this->authService->sendTokenLink([
+            'email' => $email,
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('success', $result['success'])
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+        return redirect()->back()->withInput()->with('success', $result['success'])->with('message', $result['message']);
     }
 
+    /**
+     * Summary of resetPassword
+     * @param string $token
+     * @return string|\CodeIgniter\HTTP\RedirectResponse
+     */
     public function resetPassword(string $token)
     {
-        // todo: view auth/reset-password
+        $result = $this->authService->sendToken($token);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('success', $result['success'])
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('reset', [
+            'title' => 'Recuperação de senha',
+            'token' => $token,
+            'success' => $result['success'],
+        ]);
     }
 
-    public function updatePassword()
-    {
-        // todo: salva a nova senha
+    /**
+     * Summary of updatePassword
+     *
+     * @param string $token
+     * @return void
+     */
+    public function updatePassword(string $token){
+        $password = $this->request->getPost('password');
+        $confirmPass = $this->request->getPost('confirmPass');
+
+        $result = $this->authService->updatePassword($token, $password, $confirmPass);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('success', $result['success'])
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('forgot')->with('success', $result['success'])->with('message', $result['message']);
     }
 }
