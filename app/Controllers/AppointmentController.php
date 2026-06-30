@@ -3,10 +3,17 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
+use App\Services\AppointmentService;
 
 class AppointmentController extends BaseController
 {
+    private AppointmentService $appointmentService;
+    
+    public function __construct()
+    {
+        $this->appointmentService = service('appointment');
+    }
+
     public function index()
     {
         // todo: listar as consultas
