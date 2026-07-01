@@ -1,4 +1,4 @@
-<?php $logged = session()->has('user_id');?>
+<?php $logged = session()->has('user_id'); ?>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container justify-content-between">
@@ -16,7 +16,7 @@
                     <a class="nav-link" aria-current="page" href="<?= url_to('home') ?>">Início</a>
                 </li>
                 <li class="nav-item <?= !$logged ? 'disabled' : '' ?>">
-                    <a class="nav-link" href=" <?= url_to('dashboard') ?>" >Painel</a>
+                    <a class="nav-link" href=" <?= url_to('dashboard') ?>">Painel</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -65,43 +65,43 @@
                         Consultas
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Listar todas</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('appointments') ?>">Listar todas</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Nova consulta</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('appointments.create') ?>">Nova consulta</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav justify-content-end gap-2 align-items-center">
 
-            <?php if ($logged): ?>
+                <?php if ($logged): ?>
 
-                <li class="nav-item">
-                    <form action="<?= url_to('me') ?>" class="d-flex">
-                        <button type="submit" class="btn btn-outline-primary btn-sm"><i class="bi bi-person-circle"></i></button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form action="<?= url_to('logout') ?>" class="d-flex">
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-escape"></i></button>
-                    </form>
-                </li>
+                    <li class="nav-item">
+                        <form action="<?= url_to('me') ?>" class="d-flex">
+                            <button type="submit" class="btn btn-outline-primary btn-sm"><i class="bi bi-person-circle"></i></button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form action="<?= url_to('logout') ?>" class="d-flex">
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-escape"></i></button>
+                        </form>
+                    </li>
 
-            <?php else: ?>
+                <?php else: ?>
 
-                <li class="nav-item">
-                <form action="<?= url_to('register') ?>" class="d-flex">
-                        <button type="submit" class="btn btn-outline-primary btn-sm">Cadastre-se</button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form action="<?= url_to('login') ?>" class="d-flex">
-                        <button type="submit" class="btn btn-primary btn-sm px-3">Entrar</button>
-                    </form>
-                </li>
+                    <li class="nav-item">
+                        <form action="<?= url_to('register') ?>" class="d-flex">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">Cadastre-se</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form action="<?= url_to('login') ?>" class="d-flex">
+                            <button type="submit" class="btn btn-primary btn-sm px-3">Entrar</button>
+                        </form>
+                    </li>
 
-            <?php endif; ?>
+                <?php endif; ?>
 
             </ul>
 

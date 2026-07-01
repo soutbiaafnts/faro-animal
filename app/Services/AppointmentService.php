@@ -42,7 +42,7 @@ class AppointmentService
                 'valid_date' => 'Informe uma data válida.'
             ],
             'reason' => [
-                'max_length' => 'Este campo deve possuir no máximo 1000 caracteres.',
+                'max_length' => 'Este campo deve possuir no máximo 255 caracteres.',
             ],
             'diagnosis' => [
                 'max_length' => 'Este campo deve possuir no máximo 1000 caracteres.',
@@ -76,7 +76,8 @@ class AppointmentService
         }
         
         $petFound = $this->petService->getPetById($data['pet_id']);
-        if (!$petFound) {
+
+        if (!$petFound['success']) {
             return [
                 'success' => false,
                 'message' => 'Pet não encontrado.',
@@ -94,7 +95,7 @@ class AppointmentService
         if ($existing) {
             return [
                 'success' => false,
-                'message' => 'Já existe uma consulta nesse horário para esse pet.',
+                'message' => 'Já existe uma consulta neste horário para esse pet.',
                 'invalidArgs' => [],
                 'errors' => null,
             ];

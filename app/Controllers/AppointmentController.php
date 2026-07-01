@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Services\AppointmentService;
+use App\Services\PetService;
 
 class AppointmentController extends BaseController
 {
     private AppointmentService $appointmentService;
+    private PetService $petService;
     
     public function __construct()
     {
         $this->appointmentService = service('appointment');
+        $this->petService = service('pet');
     }
 
     public function index()
@@ -21,7 +24,19 @@ class AppointmentController extends BaseController
 
     public function create()
     {
-        // todo: view appointment/create
+        $result = $this->petService->getAllPets();
+
+        if (!$result['success']) {
+            return redirect()->back()->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('appointments/create', [
+            'title' => 'Nova Consulta',
+            'pets' => $result['pets'],
+        ]);;
     }
 
     public function store()
