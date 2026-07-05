@@ -17,6 +17,8 @@
             <div class="card-body">
                 <form action="<?= url_to('me.update') ?>" method="post" class="">
                     <div class="">
+                        <?= csrf_field() ?>
+                        
                         <label for="name" class="form-label">Nome</label>
                         <input name="name" type="text" id="name" value="<?= old('name', $user['name']) ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                         <span class="invalid-feedback">
@@ -27,7 +29,7 @@
                         <label for="email" class="form-label">E-mail</label>
                         <input name="email" type="text" id="email" value="<?= esc($user['email']) ?>" class="form-control readonly" readonly>
                     </div>
-                
+
                     <div class="mt-4">
                         <button class="btn btn-primary w-100" type="submit">Salvar</button>
                     </div>
@@ -66,7 +68,7 @@
                             <?= $invalidArgs['confirmNewPassword'] ?? '' ?>
                         </span>
                     </div>
-                
+
                     <div class="mt-4">
                         <button class="btn btn-primary w-100" type="submit">Salvar</button>
                     </div>
@@ -74,7 +76,7 @@
             </div>
 
         </div>
-        
+
         <div class="card border-danger w-100">
             <div class="card-header bg-danger text-white">
                 Zona de Perigo
