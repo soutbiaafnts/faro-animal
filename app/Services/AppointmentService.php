@@ -268,11 +268,13 @@ class AppointmentService
                 ->select('
                 appointments.*,
                 pets.name AS pet_name,
+                pets.owner_name AS owner_name,
                 users.name AS user_name,
                 ')
                 ->join('pets', 'pets.id = appointments.pet_id')
                 ->join('users', 'users.id = appointments.user_id')
-                ->find($id);
+                ->where('appointments.id', $id)
+                ->first();
 
             if (!$appointmentFound) {
                 return [

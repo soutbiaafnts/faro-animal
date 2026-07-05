@@ -47,17 +47,18 @@
                             <td><?= $appointment['user_name'] ?></td>
                             <td><?= $appointment['appointment_date'] ?></td>
                             <td><?php if ($appointment['status'] == 'scheduled') {
-                                echo 'Agendada';
-                            } elseif ($appointment['status'] == 'completed') {
+                                    echo 'Agendada';
+                                } elseif ($appointment['status'] == 'completed') {
                                     echo 'Realizada';
-                            } else { echo 'Cancelada';
-                            }?></td>
+                                } else {
+                                    echo 'Cancelada';
+                                } ?></td>
                             <td><?= $appointment['reason'] ?></td>
                             <td><?= $appointment['diagnosis'] ?></td>
                             <td><?= $appointment['prescription'] ?></td>
                             <td><?= $appointment['notes'] ?></td>
                             <td class="text-center">
-                                <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                <a target="_blank" href="<?= url_to('appointments.export', $appointment['id']) ?>" class="btn btn-outline-secondary btn-sm"><i class="bi bi-printer-fill"></i></a>
                                 <a href="<?= url_to('appointments.edit', $appointment['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                 <form action="<?= url_to('appointments.delete', $appointment['id']) ?>" method="post" class="d-inline">
                                     <input type="hidden" name="_method" value="DELETE">

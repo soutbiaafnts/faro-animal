@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Services\AppointmentService;
 use App\Services\PetService;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class AppointmentController extends BaseController
 {
@@ -34,6 +36,40 @@ class AppointmentController extends BaseController
             'message' => $result['message'],
             'appointments' => $result['data'],
         ]);
+    }
+
+    public function export(int $id)
+    {
+        $result = $this->appointmentService->getAppointmentById($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('error', $result['message']);
+        }
+
+        $appointment = $result['data'];
+
+        $html = view('appointments/export', [
+            'appointment' => $appointment,
+        ]);
+
+        $options = new Options();
+
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+        $dompdf->stream(
+            'consulta-'.$appointment['id'].'.pdf',
+            [
+                'Attachment' => false,
+            ]
+        );
+
     }
 
     public function create()

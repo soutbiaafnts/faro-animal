@@ -60,5 +60,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/appointments/edit/(:num)', 'AppointmentController::edit/$1', ['as' => 'appointments.edit']);
     $routes->post('/appointments/update/(:num)', 'AppointmentController::update/$1', ['as' => 'appointments.update']);
     $routes->delete('/appointments/delete/(:num)', 'AppointmentController::delete/$1', ['as' => 'appointments.delete']);
+    $routes->get('/appointments/export/(:num)', 'AppointmentController::export/$1', ['as' => 'appointments.export']);
 
 });
