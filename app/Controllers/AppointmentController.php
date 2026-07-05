@@ -10,7 +10,7 @@ class AppointmentController extends BaseController
 {
     private AppointmentService $appointmentService;
     private PetService $petService;
-    
+
     public function __construct()
     {
         $this->appointmentService = service('appointment');
@@ -97,7 +97,24 @@ class AppointmentController extends BaseController
 
     public function update(int $id)
     {
-        // todo: atualizar consulta do bd de acordo com o id
+        $result = $this->appointmentService->updateAppointment($id, [
+            'appointment_date' => $this->request->getPost('appointment_date'),
+            'reason' => $this->request->getPost('reason'),
+            'diagnosis' => $this->request->getPost('diagnosis'),
+            'prescription' => $this->request->getPost('prescription'),
+            'notes' => $this->request->getPost('notes'),
+            'status' => $this->request->getPost('status'),
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('appointments')->with('message', $result['message']);
     }
 
     public function delete(int $id)

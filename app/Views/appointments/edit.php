@@ -43,17 +43,17 @@
                 <div class="col-md-3">
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-select <?= isset($invalidArgs['status']) ? 'is-invalid' : '' ?>">
-                        <option selected value="<?= old('status', $appointment['status']) ?>"><?php if (old('status', $appointment['status']) == 'scheduled') {
-                                                                                                    echo 'Agendada';
-                                                                                                } elseif (old('status', $appointment['status']) == 'completed') {
-                                                                                                    echo 'Realizada';
-                                                                                                } else {
-                                                                                                    echo 'Cancelada';
-                                                                                                } ?></option>
-                        <option value="scheduled">Agendada</option>
-                        <option value="completed">Realizada</option>
-                        <option value="cancelled">Cancelada</option>
+                        <option value="scheduled" <?= old('status', $appointment['status']) === 'scheduled' ? 'selected' : '' ?>>
+                            Agendada
+                        </option>
 
+                        <option value="completed" <?= old('status', $appointment['status']) === 'completed' ? 'selected' : '' ?>>
+                            Realizada
+                        </option>
+
+                        <option value="cancelled" <?= old('status', $appointment['status']) === 'cancelled' ? 'selected' : '' ?>>
+                            Cancelada
+                        </option>
                     </select>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['status'] ?? '' ?>

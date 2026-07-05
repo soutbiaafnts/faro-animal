@@ -86,7 +86,7 @@ class AppointmentService
                 'errors' => null,
             ];
         }
-        
+
         $petFound = $this->petService->getPetById($data['pet_id']);
 
         if (!$petFound['success']) {
@@ -126,7 +126,7 @@ class AppointmentService
      * @param array $data
      * @return array
      */
-    private function validateUpdateData(array $data): array
+    private function validateUpdateData(int $id, array $data): array
     {
         $validation = service('validation');
 
@@ -169,7 +169,22 @@ class AppointmentService
             ];
         }
 
-        $userFound = $this->userService->getUserById($data['user_id']);
+        $appointment = $this->appointmentModel->find($id);
+
+        if (!$appointment) {
+            return [
+                'success' => false,
+                'message' => 'Consulta não encontrada.',
+                'invalidArgs' => [],
+                'errors' => null,
+            ];
+        }
+
+        $userId = $appointment['user_id'];
+        $petId = $appointment['pet_id'];
+
+        $userFound = $this->userService->getUserById($userId);
+
         if (!$userFound['success']) {
             return [
                 'success' => false,
@@ -179,7 +194,7 @@ class AppointmentService
             ];
         }
 
-        $petFound = $this->petService->getPetById($data['pet_id']);
+        $petFound = $this->petService->getPetById($petId);
 
         if (!$petFound['success']) {
             return [
@@ -191,8 +206,9 @@ class AppointmentService
         }
 
         $existing = $this->appointmentModel
-            ->where('user_id', $data['user_id'])
+            ->where('user_id', $userId)
             ->where('appointment_date', $data['appointment_date'])
+            ->where('id !=', $id)
             ->where('deleted_at', null)
             ->first();
 
@@ -228,7 +244,6 @@ class AppointmentService
                 'message' => 'Busca realizada com sucesso!',
                 'data' => $appointments,
             ];
-
         } catch (\Exception $e) {
             return [
                 'success' => false,
@@ -318,9 +333,9 @@ class AppointmentService
     }
 
     public function updateAppointment(int $id, array $data)
-    {   
+    {
         try {
-            $validation = $this->validateUpdateData($data);
+            $validation = $this->validateUpdateData($id, $data);
 
             if (!$validation['success']) {
                 return [
@@ -331,7 +346,14 @@ class AppointmentService
                 ];
             }
 
-            $this->appointmentModel->update($id, $data);
+            $this->appointmentModel->update($id, [
+                'appointment_date' => $data['appointment_date'],
+                'reason' => $data['reason'],
+                'diagnosis' => $data['diagnosis'],
+                'prescription' => $data['prescription'],
+                'notes' => $data['notes'],
+                'status' => $data['status'],
+            ]);
 
             return [
                 'success' => true,
