@@ -368,4 +368,34 @@ class AppointmentService
             ];
         }
     }
+
+    public function deleteAppointment(int $id)
+    {
+        try {
+            $appointment = $this->appointmentModel->find($id);
+
+            if (!$appointment) {
+                return [
+                    'success' => false,
+                    'message' => 'Consulta não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $this->appointmentModel->delete($id);
+
+            return [
+                'success' => true,
+                'message' => 'Consulta excluída com sucesso!',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao excluir consulta',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
