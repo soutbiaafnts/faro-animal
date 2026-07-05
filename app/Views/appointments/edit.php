@@ -9,7 +9,7 @@
 
 <?php /**
  *  @var string $title 
- *  @var array $pets
+ *  @var array $appointment
  * */
 ?>
 
@@ -20,17 +20,11 @@
             <?= $title ?>
         </h5>
         <div class="card-body">
-            <form action="<?= url_to('appointments.store') ?>" method="post" class="row mx-auto gap-2 justify-content-center">
+            <form action="<?= url_to('appointments.update', $appointment['id']) ?>" method="post" class="row mx-auto gap-2 justify-content-center">
                 <div class="col-md-3">
                     <label for="pet_id" class="form-label">Pet</label>
-                    <select name="pet_id" id="pet_id" class="form-select <?= isset($invalidArgs['pet_id']) ? 'is-invalid' : '' ?>">
-                        <option selected value="">Selecione um pet</option>
-
-                        <?php foreach ($pets as $pet): ?>
-                            <option value="<?= $pet['id'] ?>">
-                                <?= $pet['name'] ?> - (<?= $pet['owner_name'] ?>)
-                            </option>
-                        <?php endforeach; ?>
+                    <select name="pet_id" id="pet_id" class="form-select <?= isset($invalidArgs['pet_id']) ? 'is-invalid' : '' ?>" disabled>
+                        <option selected value=""><?= old('pet_id', $appointment['pet_name']) ?></option>
                     </select>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['pet_id'] ?? '' ?>
@@ -39,7 +33,7 @@
 
                 <div class="col-md-3">
                     <label for="appointment_date" class="form-label">Data da consulta</label>
-                    <input name="appointment_date" type="datetime-local" id="appointment_date" value="<?= old('appointment_date') ?>"
+                    <input name="appointment_date" type="datetime-local" id="appointment_date" value="<?= old('appointment_date', $appointment['appointment_date']) ?>"
                         class="form-control <?= isset($invalidArgs['appointment_date']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['appointment_date'] ?? '' ?>
@@ -49,7 +43,13 @@
                 <div class="col-md-3">
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-select <?= isset($invalidArgs['status']) ? 'is-invalid' : '' ?>">
-                        <option selected value="">Selecione o status</option>
+                        <option selected value="<?= old('status', $appointment['status']) ?>"><?php if (old('status', $appointment['status']) == 'scheduled') {
+                                                                                                    echo 'Agendada';
+                                                                                                } elseif (old('status', $appointment['status']) == 'completed') {
+                                                                                                    echo 'Realizada';
+                                                                                                } else {
+                                                                                                    echo 'Cancelada';
+                                                                                                } ?></option>
                         <option value="scheduled">Agendada</option>
                         <option value="completed">Realizada</option>
                         <option value="cancelled">Cancelada</option>
@@ -63,7 +63,7 @@
                 <div class="w-75">
                     <label for="reason" class="form-label">Razão</label>
                     <textarea name="reason" type="text" maxlength="255" placeholder="Descreva a razão da consulta..." id="reason" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['reason']) ? 'is-invalid' : '' ?>" /><?= old('reason') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['reason']) ? 'is-invalid' : '' ?>" /><?= old('reason', $appointment['reason']) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 255 caracteres</div>
                     <span class="invalid-feedback ">
                         <?= $invalidArgs['reason'] ?? '' ?>
@@ -73,17 +73,17 @@
                 <div class="w-75">
                     <label for="diagnosis" class="form-label">Diagnóstico</label>
                     <textarea name="diagnosis" type="text" maxlength="1000" placeholder="Faça as anotações..." id="diagnosis" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['diagnosis']) ? 'is-invalid' : '' ?>" /><?= old('diagnosis') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['diagnosis']) ? 'is-invalid' : '' ?>" /><?= old('diagnosis', $appointment['diagnosis']) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['diagnosis'] ?? '' ?>
                     </span>
                 </div>
-                
+
                 <div class="w-75">
                     <label for="prescription" class="form-label">Prescrição</label>
                     <textarea name="prescription" type="text" maxlength="1000" placeholder="Faça as anotações..." id="prescription" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['prescription']) ? 'is-invalid' : '' ?>" /><?= old('prescription') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['prescription']) ? 'is-invalid' : '' ?>" /><?= old('prescription', $appointment['prescription']) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['prescription'] ?? '' ?>
@@ -93,7 +93,7 @@
                 <div class="w-75">
                     <label for="notes" class="form-label">Anotações</label>
                     <textarea name="notes" type="text" maxlength="1000" placeholder="Faça as anotações..." id="notes" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /><?= old('notes') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /><?= old('notes', $appointment['notes']) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['notes'] ?? '' ?>
@@ -102,7 +102,7 @@
 
                 <div class="d-flew flex-col gap-2 mt-3 text-center">
                     <a href="<?= url_to('appointments') ?>" class="btn btn-sm btn-secondary px-4">Voltar</a>
-                    <button class="btn btn-sm btn-primary px-4" type="submit">Cadastrar</button>
+                    <button class="btn btn-sm btn-primary px-4" type="submit">Editar</button>
                 </div>
             </form>
         </div>

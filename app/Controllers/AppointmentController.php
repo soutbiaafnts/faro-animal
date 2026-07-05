@@ -79,7 +79,20 @@ class AppointmentController extends BaseController
 
     public function edit(int $id)
     {
-        // todo: view appointment/edit 
+        $result = $this->appointmentService->getAppointmentById($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('appointments/edit', [
+            'title' => 'Editar Consulta',
+            'appointment' => $result['data'],
+        ]);
     }
 
     public function update(int $id)
