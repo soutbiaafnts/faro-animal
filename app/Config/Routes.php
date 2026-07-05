@@ -18,6 +18,13 @@ $routes->post('/forgot/update/(:alphanum)', 'AuthController::updatePassword/$1',
 $routes->get('/register', 'UserController::create', ['as' => 'register']);
 $routes->post('/register', 'UserController::store', ['as' => 'user.register']);
 
+
+$routes->set404Override(static function () {
+    service('response')->setStatusCode(404);
+
+    return view('errors/custom404');
+});
+
 // --------------- ROTAS PROTEGIDAS
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/dashboard', 'DashboardController::index', ['as' => 'dashboard']);
