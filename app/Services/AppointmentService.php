@@ -105,4 +105,34 @@ class AppointmentService
             'success' => true,
         ];
     }
+
+    public function createAppointment(array $data)
+    {
+        try {
+            $validation = $this->validateCreateData($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $this->appointmentModel->insert($data);
+
+            return [
+                'success' => true,
+                'message' => 'Consulta criada com sucesso!',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao criar pet: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
 }
