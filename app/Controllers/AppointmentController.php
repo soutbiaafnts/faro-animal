@@ -119,6 +119,14 @@ class AppointmentController extends BaseController
 
     public function delete(int $id)
     {
-        // todo: deletar consulta do bd de acordo com o id
+        $result = $this->appointmentService->deleteAppointment($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('message', $result['message'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('appointments')->with('message', $result['message']);
     }
 }

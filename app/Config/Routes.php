@@ -59,6 +59,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/appointments/store', 'AppointmentController::store', ['as' => 'appointments.store']);
     $routes->get('/appointments/edit/(:num)', 'AppointmentController::edit/$1', ['as' => 'appointments.edit']);
     $routes->post('/appointments/update/(:num)', 'AppointmentController::update/$1', ['as' => 'appointments.update']);
-    $routes->post('/appointments/delete/(:num)', 'AppointmentController::delete/$1', ['as' => 'appointments.delete']);
+    $routes->delete('/appointments/delete/(:num)', 'AppointmentController::delete/$1', ['as' => 'appointments.delete']);
 
 });
