@@ -46,7 +46,7 @@
                 <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto" style="max-width: 700px">
                     <div class="">
                         <?= csrf_field() ?>
-                        
+
                         <label for="currentPassword" class="form-label">Senha atual</label>
                         <input name="currentPassword" type="password" id="currentPassword" placeholder="Informe a senha atual"
                             class="form-control <?= isset($invalidArgs['currentPassword']) ? 'is-invalid' : '' ?>">
@@ -90,6 +90,8 @@
                 </p>
 
                 <form action="<?= url_to('me.delete') ?>" method="post">
+                    <?= csrf_field() ?>
+                    
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.')">
                         Excluir minha conta
                     </button>
