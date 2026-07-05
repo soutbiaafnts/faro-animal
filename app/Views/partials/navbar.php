@@ -15,9 +15,6 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<?= url_to('home') ?>">Início</a>
                 </li>
-                <li class="nav-item <?= !$logged ? 'disabled' : '' ?>">
-                    <a class="nav-link" href=" <?= url_to('dashboard') ?>">Painel</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">

@@ -27,8 +27,6 @@ $routes->set404Override(static function () {
 
 // --------------- ROTAS PROTEGIDAS
 $routes->group('', ['filter' => 'auth'], function ($routes) {
-    $routes->get('/dashboard', 'DashboardController::index', ['as' => 'dashboard']);
-
     // ---- USERS
     $routes->get('/me', 'UserController::index', ['as' => 'me']);
     $routes->post('/me', 'UserController::update', ['as' => 'me.update', 'filter' => 'csrf']);

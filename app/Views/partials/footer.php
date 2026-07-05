@@ -5,9 +5,6 @@
                 <a href="<?= url_to('home') ?>" class="nav-link text-body-secondary">Início</a>
             </li>
             <li class="nav-item">
-                <a href="<?= url_to('dashboard') ?>" class="nav-link text-body-secondary">Painel</a>
-            </li>
-            <li class="nav-item">
                 <a href="<?= url_to('species') ?>" class="nav-link text-body-secondary">Espécies</a>
             </li>
             <li class="nav-item">
