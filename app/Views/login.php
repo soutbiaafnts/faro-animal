@@ -10,6 +10,8 @@
 
     <form action="<?php echo url_to('auth'); ?>" method="post" class="row g-2 mx-auto justify-content-center"
         style="max-width: 700px">
+        <?= csrf_field() ?>
+
         <div class="col-md-8 w-100">
             <label for="email" class="form-label">E-mail</label>
             <input type="text" name="email" id="email" placeholder="Digite seu e-mail" value="<?= old('email') ?>"
