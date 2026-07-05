@@ -118,6 +118,31 @@ class AppointmentService
         ];
     }
 
+    public function getAllAppointments()
+    {
+        try {
+            $appointments = $this->appointmentModel
+                ->select('appointments.*, pets.name  AS pet_name, users.name AS user_name')
+                ->join('pets', 'pets.id = appointments.pet_id', 'left')
+                ->join('users', 'users.id = appointments.user_id', 'left')
+                ->findAll();
+
+            return [
+                'success' => true,
+                'message' => 'Busca realizada com sucesso!',
+                'data' => $appointments,
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar pets:',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
     /**
      * Summary createAppointment
      *
