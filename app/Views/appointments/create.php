@@ -20,7 +20,7 @@
             <?= $title ?>
         </h5>
         <div class="card-body">
-            <form action="<?= url_to('pets.store') ?>" method="post" class="row mx-auto gap-2 justify-content-center">
+            <form action="<?= url_to('appointments.store') ?>" method="post" class="row mx-auto gap-2 justify-content-center">
                 <div class="col-md-3">
                     <label for="pet_id" class="form-label">Pet</label>
                     <select name="pet_id" id="pet_id" class="form-select <?= isset($invalidArgs['pet_id']) ? 'is-invalid' : '' ?>">
@@ -39,7 +39,7 @@
 
                 <div class="col-md-3">
                     <label for="appointment_date" class="form-label">Data da consulta</label>
-                    <input name="appointment_date" type="date" id="appointment_date" value="<?= old('appointment_date') ?>"
+                    <input name="appointment_date" type="datetime-local" id="appointment_date" value="<?= old('appointment_date') ?>"
                         class="form-control <?= isset($invalidArgs['appointment_date']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['appointment_date'] ?? '' ?>
@@ -77,6 +77,16 @@
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['diagnosis'] ?? '' ?>
+                    </span>
+                </div>
+                
+                <div class="w-75">
+                    <label for="prescription" class="form-label">Prescrição</label>
+                    <textarea name="prescription" type="text" maxlength="1000" placeholder="Faça as anotações..." id="prescription" style="height: 200px" value=""
+                        class="form-control <?= isset($invalidArgs['prescription']) ? 'is-invalid' : '' ?>" /><?= old('prescription') ?></textarea>
+                    <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
+                    <span class="invalid-feedback">
+                        <?= $invalidArgs['prescription'] ?? '' ?>
                     </span>
                 </div>
 

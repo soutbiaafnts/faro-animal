@@ -18,6 +18,12 @@ class AppointmentService
         $this->petService = service('pet');
     }
 
+    /**
+     * Summary validateCreateData
+     *
+     * @param array $data
+     * @return array
+     */
     private function validateCreateData(array $data): array
     {
         $validation = service('validation');
@@ -28,6 +34,7 @@ class AppointmentService
             'appointment_date' => 'required|valid_date',
             'reason' => 'max_length[255]',
             'diagnosis' => 'max_length[1000]',
+            'prescription' => 'max_length[100]',
             'notes' => 'max_length[1000]',
             'status' => 'required|in_list[scheduled,completed,cancelled]',
         ], [
@@ -47,6 +54,9 @@ class AppointmentService
             'diagnosis' => [
                 'max_length' => 'Este campo deve possuir no máximo 1000 caracteres.',
             ],
+            'prescription' => [
+                'max_length' => 'Este campo deve possuir no máximo 1000 caracteres.',
+            ],
             'notes' => [
                 'max_length' => 'Este campo deve possuir no máximo 1000 caracteres.',
             ],
@@ -59,14 +69,14 @@ class AppointmentService
         if (!$validation->run($data)) {
             return [
                 'success' => false,
-                'message' => 'Verifique os campos',
+                'message' => 'Verifique os campos.',
                 'invalidArgs' => $validation->getErrors(),
                 'errors' => null,
             ];
         }
 
         $userFound = $this->userService->getUserById($data['user_id']);
-        if (!$userFound) {
+        if (!$userFound['success']) {
             return [
                 'success' => false,
                 'message' => 'Usuário não encontrado.',
@@ -87,7 +97,7 @@ class AppointmentService
         }
 
         $existing = $this->appointmentModel
-            ->where('pet_id', $petFound['id'])
+            ->where('user_id', $data['user_id'])
             ->where('appointment_date', $data['appointment_date'])
             ->where('deleted_at', null)
             ->first();
@@ -95,8 +105,10 @@ class AppointmentService
         if ($existing) {
             return [
                 'success' => false,
-                'message' => 'Já existe uma consulta neste horário para esse pet.',
-                'invalidArgs' => [],
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => [
+                    'appointment_date' => 'Você já tem uma consulta para esse horário.'
+                ],
                 'errors' => null,
             ];
         }
@@ -106,7 +118,13 @@ class AppointmentService
         ];
     }
 
-    public function createAppointment(array $data)
+    /**
+     * Summary createAppointment
+     *
+     * @param array $data
+     * @return array
+     */
+    public function createAppointment(array $data): array
     {
         try {
             $validation = $this->validateCreateData($data);
@@ -129,7 +147,7 @@ class AppointmentService
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao criar pet: ',
+                'message' => 'Erro ao criar consulta: ',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];

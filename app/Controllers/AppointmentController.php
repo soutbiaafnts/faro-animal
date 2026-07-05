@@ -41,7 +41,26 @@ class AppointmentController extends BaseController
 
     public function store()
     {
-        // todo: inserir nova consulta no bd
+        $result = $this->appointmentService->createAppointment([
+            'pet_id' => $this->request->getPost('pet_id'),
+            'user_id' => session()->get('user_id'),
+            'appointment_date' => $this->request->getPost('appointment_date'),
+            'status' => $this->request->getPost('status'),
+            'reason' => $this->request->getPost('reason'),
+            'diagnosis' => $this->request->getPost('diagnosis'),
+            'prescription' => $this->request->getPost('prescription'),
+            'notes' => $this->request->getPost('notes'),
+        ]);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return redirect()->route('appointments')->with('message', $result['message']);
     }
 
     public function edit(int $id)
