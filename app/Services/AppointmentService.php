@@ -123,6 +123,7 @@ class AppointmentService
     /**
      * Summary validateUpdateData
      *
+     * @param integer $id
      * @param array $data
      * @return array
      */
@@ -332,7 +333,14 @@ class AppointmentService
         }
     }
 
-    public function updateAppointment(int $id, array $data)
+    /**
+     * Summary updateAppointment
+     *
+     * @param integer $id
+     * @param array $data
+     * @return array
+     */
+    public function updateAppointment(int $id, array $data): array
     {
         try {
             $validation = $this->validateUpdateData($id, $data);
@@ -369,7 +377,13 @@ class AppointmentService
         }
     }
 
-    public function deleteAppointment(int $id)
+    /**
+     * Summary deleteAppointment
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function deleteAppointment(int $id): array
     {
         try {
             $appointment = $this->appointmentModel->find($id);

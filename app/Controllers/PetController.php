@@ -3,10 +3,8 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Services\BreedService;
 use App\Services\PetService;
 use App\Services\SpecieService;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class PetController extends BaseController
 {
