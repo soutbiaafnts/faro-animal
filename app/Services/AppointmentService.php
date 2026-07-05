@@ -268,6 +268,7 @@ class AppointmentService
                 ->select('
                 appointments.*,
                 pets.name AS pet_name,
+                pets.owner_name AS owner_name,
                 users.name AS user_name,
                 ')
                 ->join('pets', 'pets.id = appointments.pet_id')
