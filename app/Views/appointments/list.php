@@ -62,7 +62,7 @@
                                 <form action="<?= url_to('appointments.delete', $appointment['id']) ?>" method="post" class="d-inline">
                                     <input type="hidden" name="_method" value="DELETE">
 
-                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esse pet?')"><i class="bi bi-trash"></i></button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir essa consulta?')"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
