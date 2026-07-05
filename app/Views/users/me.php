@@ -18,7 +18,7 @@
                 <form action="<?= url_to('me.update') ?>" method="post" class="">
                     <div class="">
                         <?= csrf_field() ?>
-                        
+
                         <label for="name" class="form-label">Nome</label>
                         <input name="name" type="text" id="name" value="<?= old('name', $user['name']) ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                         <span class="invalid-feedback">
@@ -45,6 +45,8 @@
             <div class="card-body">
                 <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto" style="max-width: 700px">
                     <div class="">
+                        <?= csrf_field() ?>
+                        
                         <label for="currentPassword" class="form-label">Senha atual</label>
                         <input name="currentPassword" type="password" id="currentPassword" placeholder="Informe a senha atual"
                             class="form-control <?= isset($invalidArgs['currentPassword']) ? 'is-invalid' : '' ?>">
