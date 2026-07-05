@@ -15,6 +15,8 @@
         </h5>
         <div class="card-body">
             <form action="<?= url_to('breeds.store') ?>" method="post" class="row g-2 mx-auto">
+                <?= csrf_field() ?>
+
                 <div class="col-md-6">
                     <label for="name" class="form-label">Nome</label>
                     <input name="name" value="<?= old('name') ?>" type="text" id="name" placeholder="Digite o nome da raça" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
@@ -25,14 +27,14 @@
 
                 <div class="col-md-6">
                     <label for="specie_id" class="form-label">Espécie</label>
-                    <select name="species_id" id="specie_id"  class="form-select <?= isset($invalidArgs['species_id']) ? 'is-invalid' : '' ?>">
-                       <option selected value="">Selecione uma espécie</option>
-   
-                       <?php foreach ($species as $specie): ?>
-                           <option value="<?= $specie['id'] ?>">
-                               <?= $specie['name'] ?>
-                           </option>
-                       <?php endforeach; ?>
+                    <select name="species_id" id="specie_id" class="form-select <?= isset($invalidArgs['species_id']) ? 'is-invalid' : '' ?>">
+                        <option selected value="">Selecione uma espécie</option>
+
+                        <?php foreach ($species as $specie): ?>
+                            <option value="<?= $specie['id'] ?>">
+                                <?= $specie['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['species_id'] ?? '' ?>
