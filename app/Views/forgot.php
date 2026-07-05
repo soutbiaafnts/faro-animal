@@ -38,7 +38,7 @@
         <div class="col-md-8 w-100">
             <label for="email" class="form-label">E-mail</label>
             <input type="text" name="email" id="email" placeholder="Digite seu e-mail"
-                value="<?php echo old('email'); ?>"
+                value="<?=  esc(old('email')) ?>"
                 class="form-control <?php echo isset($invalidArgs['email']) ? 'is-invalid' : ''; ?>">
             <span class="invalid-feedback">
                 <?php echo $invalidArgs['email'] ?? ''; ?>

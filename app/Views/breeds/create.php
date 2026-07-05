@@ -19,7 +19,7 @@
 
                 <div class="col-md-6">
                     <label for="name" class="form-label">Nome</label>
-                    <input name="name" value="<?= old('name') ?>" type="text" id="name" placeholder="Digite o nome da raça" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
+                    <input name="name" value="<?= esc(old('name')) ?>" type="text" id="name" placeholder="Digite o nome da raça" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['name'] ?? '' ?>
                     </span>
@@ -31,8 +31,8 @@
                         <option selected value="">Selecione uma espécie</option>
 
                         <?php foreach ($species as $specie): ?>
-                            <option value="<?= $specie['id'] ?>">
-                                <?= $specie['name'] ?>
+                            <option value="<?= esc($specie['id']) ?>">
+                                <?= esc($specie['name']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

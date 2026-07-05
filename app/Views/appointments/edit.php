@@ -26,7 +26,7 @@
                 <div class="col-md-3">
                     <label for="pet_id" class="form-label">Pet</label>
                     <select name="pet_id" id="pet_id" class="form-select <?= isset($invalidArgs['pet_id']) ? 'is-invalid' : '' ?>" disabled>
-                        <option selected value=""><?= old('pet_id', $appointment['pet_name']) ?></option>
+                        <option selected value=""><?= esc(old('pet_id', $appointment['pet_name'])) ?></option>
                     </select>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['pet_id'] ?? '' ?>
@@ -35,7 +35,7 @@
 
                 <div class="col-md-3">
                     <label for="appointment_date" class="form-label">Data da consulta</label>
-                    <input name="appointment_date" type="datetime-local" id="appointment_date" value="<?= old('appointment_date', $appointment['appointment_date']) ?>"
+                    <input name="appointment_date" type="datetime-local" id="appointment_date" value="<?= esc(old('appointment_date', $appointment['appointment_date'])) ?>"
                         class="form-control <?= isset($invalidArgs['appointment_date']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['appointment_date'] ?? '' ?>
@@ -45,15 +45,15 @@
                 <div class="col-md-3">
                     <label for="status" class="form-label">Status</label>
                     <select name="status" id="status" class="form-select <?= isset($invalidArgs['status']) ? 'is-invalid' : '' ?>">
-                        <option value="scheduled" <?= old('status', $appointment['status']) === 'scheduled' ? 'selected' : '' ?>>
+                        <option value="scheduled" <?= esc(old('status', $appointment['status']) === 'scheduled' ? 'selected' : '') ?>>
                             Agendada
                         </option>
 
-                        <option value="completed" <?= old('status', $appointment['status']) === 'completed' ? 'selected' : '' ?>>
+                        <option value="completed" <?= esc(old('status', $appointment['status']) === 'completed' ? 'selected' : '') ?>>
                             Realizada
                         </option>
 
-                        <option value="cancelled" <?= old('status', $appointment['status']) === 'cancelled' ? 'selected' : '' ?>>
+                        <option value="cancelled" <?= esc(old('status', $appointment['status']) === 'cancelled' ? 'selected' : '') ?>>
                             Cancelada
                         </option>
                     </select>
@@ -65,7 +65,7 @@
                 <div class="w-75">
                     <label for="reason" class="form-label">Razão</label>
                     <textarea name="reason" type="text" maxlength="255" placeholder="Descreva a razão da consulta..." id="reason" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['reason']) ? 'is-invalid' : '' ?>" /><?= old('reason', $appointment['reason']) ?></textarea>
+                        class="form-control <?= isset($invalidArgs['reason']) ? 'is-invalid' : '' ?>" /><?= esc(old('reason', $appointment['reason'])) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 255 caracteres</div>
                     <span class="invalid-feedback ">
                         <?= $invalidArgs['reason'] ?? '' ?>
@@ -75,7 +75,7 @@
                 <div class="w-75">
                     <label for="diagnosis" class="form-label">Diagnóstico</label>
                     <textarea name="diagnosis" type="text" maxlength="1000" placeholder="Faça as anotações..." id="diagnosis" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['diagnosis']) ? 'is-invalid' : '' ?>" /><?= old('diagnosis', $appointment['diagnosis']) ?></textarea>
+                        class="form-control <?= isset($invalidArgs['diagnosis']) ? 'is-invalid' : '' ?>" /><?= esc(old('diagnosis', $appointment['diagnosis'])) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['diagnosis'] ?? '' ?>
@@ -85,7 +85,7 @@
                 <div class="w-75">
                     <label for="prescription" class="form-label">Prescrição</label>
                     <textarea name="prescription" type="text" maxlength="1000" placeholder="Faça as anotações..." id="prescription" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['prescription']) ? 'is-invalid' : '' ?>" /><?= old('prescription', $appointment['prescription']) ?></textarea>
+                        class="form-control <?= isset($invalidArgs['prescription']) ? 'is-invalid' : '' ?>" /><?= esc(old('prescription', $appointment['prescription'])) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['prescription'] ?? '' ?>
@@ -95,7 +95,7 @@
                 <div class="w-75">
                     <label for="notes" class="form-label">Anotações</label>
                     <textarea name="notes" type="text" maxlength="1000" placeholder="Faça as anotações..." id="notes" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /><?= old('notes', $appointment['notes']) ?></textarea>
+                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /><?= esc(old('notes', $appointment['notes'])) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['notes'] ?? '' ?>

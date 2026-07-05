@@ -20,7 +20,7 @@
 
                     <label for="name" class="form-label">Nome</label>
                     <input name="name" type="text" id="name" placeholder="Digite o nome da espécie"
-                        value="<?= old('name') ?>"
+                        value="<?= esc(old('name')) ?>"
                         class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['name'] ?? '' ?>

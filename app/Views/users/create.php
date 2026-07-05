@@ -16,14 +16,14 @@
             <?= csrf_field() ?>
 
             <label for="name" class="form-label">Nome</label>
-            <input name="name" type="text" id="name" placeholder="Digite seu nome" value="<?= old('name') ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
+            <input name="name" type="text" id="name" placeholder="Digite seu nome" value="<?= esc(old('name')) ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
             <span class="invalid-feedback">
                 <?= $invalidArgs['name'] ?? '' ?>
             </span>
         </div>
         <div class="col-md-6">
             <label for="email" class="form-label">E-mail</label>
-            <input name="email" type="text" id="email" placeholder="exemplo@exemplo.com" value="<?= old('email') ?>" class="form-control <?= isset($invalidArgs['email']) ? 'is-invalid' : '' ?>">
+            <input name="email" type="text" id="email" placeholder="exemplo@exemplo.com" value="<?= esc(old('email')) ?>" class="form-control <?= isset($invalidArgs['email']) ? 'is-invalid' : '' ?>">
             <span class="invalid-feedback">
                 <?= $invalidArgs['email'] ?? '' ?>
             </span>

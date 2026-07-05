@@ -29,8 +29,8 @@
                         <option selected value="">Selecione um pet</option>
 
                         <?php foreach ($pets as $pet): ?>
-                            <option value="<?= $pet['id'] ?>">
-                                <?= $pet['name'] ?> - (<?= $pet['owner_name'] ?>)
+                            <option value="<?= esc($pet['id']) ?>">
+                                <?= esc($pet['name']) ?> - (<?= esc($pet['owner_name']) ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -41,7 +41,7 @@
 
                 <div class="col-md-3">
                     <label for="appointment_date" class="form-label">Data da consulta</label>
-                    <input name="appointment_date" type="datetime-local" id="appointment_date" value="<?= old('appointment_date') ?>"
+                    <input name="appointment_date" type="datetime-local" id="appointment_date" value="<?= esc(old('appointment_date')) ?>"
                         class="form-control <?= isset($invalidArgs['appointment_date']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['appointment_date'] ?? '' ?>
@@ -65,7 +65,7 @@
                 <div class="w-75">
                     <label for="reason" class="form-label">Razão</label>
                     <textarea name="reason" type="text" maxlength="255" placeholder="Descreva a razão da consulta..." id="reason" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['reason']) ? 'is-invalid' : '' ?>" /><?= old('reason') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['reason']) ? 'is-invalid' : '' ?>" /><?= esc(old('reason')) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 255 caracteres</div>
                     <span class="invalid-feedback ">
                         <?= $invalidArgs['reason'] ?? '' ?>
@@ -75,7 +75,7 @@
                 <div class="w-75">
                     <label for="diagnosis" class="form-label">Diagnóstico</label>
                     <textarea name="diagnosis" type="text" maxlength="1000" placeholder="Faça as anotações..." id="diagnosis" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['diagnosis']) ? 'is-invalid' : '' ?>" /><?= old('diagnosis') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['diagnosis']) ? 'is-invalid' : '' ?>" /><?= esc(old('diagnosis')) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['diagnosis'] ?? '' ?>
@@ -85,7 +85,7 @@
                 <div class="w-75">
                     <label for="prescription" class="form-label">Prescrição</label>
                     <textarea name="prescription" type="text" maxlength="1000" placeholder="Faça as anotações..." id="prescription" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['prescription']) ? 'is-invalid' : '' ?>" /><?= old('prescription') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['prescription']) ? 'is-invalid' : '' ?>" /><?= esc(old('prescription')) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['prescription'] ?? '' ?>
@@ -95,7 +95,7 @@
                 <div class="w-75">
                     <label for="notes" class="form-label">Anotações</label>
                     <textarea name="notes" type="text" maxlength="1000" placeholder="Faça as anotações..." id="notes" style="height: 200px" value=""
-                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /><?= old('notes') ?></textarea>
+                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /><?= esc(old('notes')) ?></textarea>
                     <div class="form-text"><span class="char-count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['notes'] ?? '' ?>

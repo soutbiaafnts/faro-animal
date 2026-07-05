@@ -23,8 +23,8 @@
                         <option selected value="">Selecione uma espécie</option>
 
                         <?php foreach ($species as $specie): ?>
-                            <option value="<?= $specie['id'] ?>">
-                                <?= $specie['name'] ?>
+                            <option value="<?= esc($specie['id']) ?>">
+                                <?= esc($specie['name']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -46,7 +46,7 @@
                 <div class="col-md-4">
                     <label for="name" class="form-label">Nome</label>
                     <input name="name" type="text" id="name" placeholder="Digite o nome do pet"
-                        value="<?= old('name') ?>"
+                        value="<?= esc(old('name')) ?>"
                         class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['name'] ?? '' ?>
@@ -55,7 +55,7 @@
 
                 <div class="col-md-4">
                     <label for="birth_date" class="form-label">Data de nascimento</label>
-                    <input name="birth_date" type="date" id="birth_date" value="<?= old('birth_date') ?>"
+                    <input name="birth_date" type="date" id="birth_date" value="<?= esc(old('birth_date')) ?>"
                         class="form-control <?= isset($invalidArgs['birth_date']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['birth_date'] ?? '' ?>
@@ -64,7 +64,7 @@
 
                 <div class="col-md-4">
                     <label for="weight" class="form-label">Peso</label>
-                    <input name="weight" type="number" step="0.01" min="0.00" placeholder="0.01 kg" id="weight" value="<?= old('weight') ?>"
+                    <input name="weight" type="number" step="0.01" min="0.00" placeholder="0.01 kg" id="weight" value="<?= esc(old('weight')) ?>"
                         class="form-control <?= isset($invalidArgs['weight']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['weight'] ?? '' ?>
@@ -86,7 +86,7 @@
                 <div class="col-md-4">
                     <label for="owner_name" class="form-label">Nome do tutor</label>
                     <input name="owner_name" type="text" id="owner_name" placeholder="Digite o nome do tutor"
-                        value="<?= old('owner_name') ?>"
+                        value="<?= esc(old('owner_name')) ?>"
                         class="form-control <?= isset($invalidArgs['owner_name']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['owner_name'] ?? '' ?>
@@ -96,7 +96,7 @@
                 <div class="col-md-4">
                     <label for="owner_phone" class="form-label">Contato do tutor</label>
                     <input name="owner_phone" type="text" id="owner_phone" placeholder="(00) 00000-0000"
-                        value="<?= old('owner_phone') ?>"
+                        value="<?= esc(old('owner_phone')) ?>"
                         class="form-control <?= isset($invalidArgs['owner_phone']) ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $invalidArgs['owner_phone'] ?? '' ?>
@@ -105,7 +105,7 @@
 
                 <div class="w-50">
                     <label for="notes" class="form-label">Anotações</label>
-                    <textarea name="notes" type="text" maxlength="1000" placeholder="Faça as anotações..." id="notes" style="height: 200px" value="<?= old('notes') ?>"
+                    <textarea name="notes" type="text" maxlength="1000" placeholder="Faça as anotações..." id="notes" style="height: 200px" value="<?= esc(old('notes')) ?>"
                         class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /></textarea>
                     <div class="form-text"><span id="count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">

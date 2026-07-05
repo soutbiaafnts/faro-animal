@@ -7,7 +7,7 @@
 <?= $this->section('content'); ?>
 
 <div class="container py-4">
-    <h2>Olá, <?= $user['name'] ?></h2>
+    <h2>Olá, <?= esc($user['name']) ?></h2>
     <div class="d-flex flex-col gap-2 w-100">
         <div class="card w-100">
             <div class="card-header">
@@ -20,7 +20,7 @@
                         <?= csrf_field() ?>
 
                         <label for="name" class="form-label">Nome</label>
-                        <input name="name" type="text" id="name" value="<?= old('name', $user['name']) ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
+                        <input name="name" type="text" id="name" value="<?= esc(old('name', $user['name'])) ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                         <span class="invalid-feedback">
                             <?= $invalidArgs['name'] ?? '' ?>
                         </span>
