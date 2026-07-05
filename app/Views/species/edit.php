@@ -16,6 +16,8 @@
         <div class="card-body">
             <form action="<?= url_to('species.update', $specie['id']) ?>" method="post" class="row g2 mx-auto">
                 <div class="col-md-6">
+                    <?= csrf_field() ?>
+
                     <label for="name" class="form-label">Nome</label>
                     <input name="name" type="text" id="name" placeholder="Digite o nome da espécie"
                         value="<?= old('name', $specie['name']) ?>"
