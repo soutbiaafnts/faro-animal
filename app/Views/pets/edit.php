@@ -15,19 +15,21 @@
         </h5>
         <div class="card-body">
             <form action="<?= url_to('pets.update', $pet['id']) ?>" method="post" class="row mx-auto gap-2 justify-content-center">
+                <?= csrf_field() ?>
+
                 <div class="col-md-4">
                     <label for="specie_id" class="form-label">Espécie</label>
-                    <select name="species_id" id="specie_id"  class="form-select <?= isset($invalidArgs['species_id']) ? 'is-invalid' : '' ?>" disabled>
-                       <option selected value=""><?= old('species_id', $pet['specie_name']) ?></option>
+                    <select name="species_id" id="specie_id" class="form-select <?= isset($invalidArgs['species_id']) ? 'is-invalid' : '' ?>" disabled>
+                        <option selected value=""><?= old('species_id', $pet['specie_name']) ?></option>
                     </select>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['species_id'] ?? '' ?>
                     </span>
                 </div>
-                
+
                 <div class="col-md-4">
                     <label for="breed_id" class="form-label">Raça</label>
-                    <select name="breed_id" id="breed_id"  class="form-select <?= isset($invalidArgs['breed_id']) ? 'is-invalid' : '' ?>" disabled>
+                    <select name="breed_id" id="breed_id" class="form-select <?= isset($invalidArgs['breed_id']) ? 'is-invalid' : '' ?>" disabled>
                         <option selected value=""><?= old('breed_name', $pet['breed_name']) ?></option>
                     </select>
                     <span class="invalid-feedback">
@@ -53,7 +55,7 @@
                         <?= $invalidArgs['birth_date'] ?? '' ?>
                     </span>
                 </div>
-                
+
                 <div class="col-md-4">
                     <label for="weight" class="form-label">Peso</label>
                     <input name="weight" type="number" step="0.01" min="0.00" placeholder="0.01 kg" id="weight" value="<?= old('weight', $pet['weight']) ?>"
@@ -65,7 +67,7 @@
 
                 <div class="col-md-4">
                     <label for="sex" class="form-label">Sexo</label>
-                    <select name="sex" id="sex"  class="form-select <?= isset($invalidArgs['sex']) ? 'is-invalid' : '' ?>">
+                    <select name="sex" id="sex" class="form-select <?= isset($invalidArgs['sex']) ? 'is-invalid' : '' ?>">
                         <option selected value="<?= old('sex', $pet['sex']) ?>"><?= old('sex', $pet['sex'] == 'F' ? "Fêmea" : "Macho") ?></option>
                         <option value="F">Fêmea</option>
                         <option value="M">Macho</option>
@@ -84,7 +86,7 @@
                         <?= $invalidArgs['owner_name'] ?? '' ?>
                     </span>
                 </div>
-                
+
                 <div class="col-md-4">
                     <label for="owner_phone" class="form-label">Contato do tutor</label>
                     <input name="owner_phone" type="text" id="owner_phone" placeholder="(00) 00000-0000"
@@ -94,11 +96,11 @@
                         <?= $invalidArgs['owner_phone'] ?? '' ?>
                     </span>
                 </div>
-                
+
                 <div class="w-50">
                     <label for="notes" class="form-label">Anotações</label>
                     <textarea name="notes" type="text" maxlength="1000" placeholder="Faça as anotações..." id="notes" style="height: 200px" value="<?= old('notes', $pet['notes']) ?>"
-                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>"/><?= old('notes', $pet['notes']) ?></textarea>
+                        class="form-control <?= isset($invalidArgs['notes']) ? 'is-invalid' : '' ?>" /><?= old('notes', $pet['notes']) ?></textarea>
                     <div class="form-text"><span id="count">0</span> / 1000 caracteres</div>
                     <span class="invalid-feedback">
                         <?= $invalidArgs['notes'] ?? '' ?>
@@ -116,19 +118,19 @@
 
 <script>
     // - máscara para número de telefone
-    document.getElementById('owner_phone').addEventListener('input', function (event) {
-      let inputValue = event.target.value.replace(/\D/g, '');
-      inputValue = inputValue.substring(0, 11);
+    document.getElementById('owner_phone').addEventListener('input', function(event) {
+        let inputValue = event.target.value.replace(/\D/g, '');
+        inputValue = inputValue.substring(0, 11);
 
-      if (inputValue.length > 10) {
-        inputValue = inputValue.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-      } else if (inputValue.length > 6) {
-        inputValue = inputValue.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-      } else if (inputValue.length > 2) {
-        inputValue = inputValue.replace(/(\d{2})(\d{0,5})/, '($1) $2');
-      }
+        if (inputValue.length > 10) {
+            inputValue = inputValue.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+        } else if (inputValue.length > 6) {
+            inputValue = inputValue.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+        } else if (inputValue.length > 2) {
+            inputValue = inputValue.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+        }
 
-      event.target.value = inputValue;
+        event.target.value = inputValue;
     });
 
     // - contador de caracteres da anotação

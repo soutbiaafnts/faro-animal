@@ -21,6 +21,8 @@
         </h5>
         <div class="card-body">
             <form action="<?= url_to('appointments.update', $appointment['id']) ?>" method="post" class="row mx-auto gap-2 justify-content-center">
+                <?= csrf_field() ?>
+
                 <div class="col-md-3">
                     <label for="pet_id" class="form-label">Pet</label>
                     <select name="pet_id" id="pet_id" class="form-select <?= isset($invalidArgs['pet_id']) ? 'is-invalid' : '' ?>" disabled>

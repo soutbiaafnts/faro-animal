@@ -21,6 +21,8 @@
         </h5>
         <div class="card-body">
             <form action="<?= url_to('appointments.store') ?>" method="post" class="row mx-auto gap-2 justify-content-center">
+                <?= csrf_field() ?>
+
                 <div class="col-md-3">
                     <label for="pet_id" class="form-label">Pet</label>
                     <select name="pet_id" id="pet_id" class="form-select <?= isset($invalidArgs['pet_id']) ? 'is-invalid' : '' ?>">
@@ -79,7 +81,7 @@
                         <?= $invalidArgs['diagnosis'] ?? '' ?>
                     </span>
                 </div>
-                
+
                 <div class="w-75">
                     <label for="prescription" class="form-label">Prescrição</label>
                     <textarea name="prescription" type="text" maxlength="1000" placeholder="Faça as anotações..." id="prescription" style="height: 200px" value=""

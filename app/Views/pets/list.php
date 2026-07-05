@@ -1,4 +1,4 @@
-<?php $errors = session()->getFlashdata('errors') ?? [] ?> 
+<?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
 <?= $this->extend('layouts/main'); ?>
 
@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                   <?php foreach ($pets as $pet): ?>
+                    <?php foreach ($pets as $pet): ?>
                         <tr>
                             <th>
                                 <?= $pet['id'] ?>
@@ -50,6 +50,8 @@
                                 <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a>
                                 <a href="<?= url_to('pets.edit', $pet['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                 <form action="<?= url_to('pets.delete', $pet['id']) ?>" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
+
                                     <input type="hidden" name="_method" value="DELETE">
 
                                     <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esse pet?')"><i class="bi bi-trash"></i></button>

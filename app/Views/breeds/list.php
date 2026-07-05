@@ -1,4 +1,4 @@
-<?php $errors = session()->getFlashdata('errors') ?? [] ?> 
+<?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
 <?= $this->extend('layouts/main'); ?>
 
@@ -16,7 +16,7 @@
             <a href="<?= url_to('breeds.create') ?>" class="btn btn-primary px-4">Nova Raça</a>
 
             <hr>
-            
+
             <table data-toggle="table" data-locale="pt-BR" data-pagination="true" data-search="true" data-page-size="5">
                 <thead>
                     <tr>
@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                   <?php foreach ($breeds as $breed): ?>
+                    <?php foreach ($breeds as $breed): ?>
                         <tr>
                             <th class="text-center"><?= $breed['id'] ?></th>
                             <td><?= $breed['specie_name'] ?></td>
@@ -39,6 +39,8 @@
                             <td class="text-center">
                                 <a href="<?= url_to('breeds.edit', $breed['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                 <form action="<?= url_to('breeds.delete', $breed['id']) ?>" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
+
                                     <input type="hidden" name="_method" value="DELETE">
 
                                     <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir essa raça?')"><i class="bi bi-trash"></i></button>
@@ -51,7 +53,7 @@
         </div>
     </div>
 
-    
+
 
 </div>
 

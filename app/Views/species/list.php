@@ -1,7 +1,7 @@
 <?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? [] ?>
 
 <!-- todo: colocar alerta para as mensagens de erro -->
-<?php $errors = session()->getFlashdata('errors') ?? [] ?> 
+<?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
 <?= $this->extend('layouts/main'); ?>
 
@@ -16,10 +16,10 @@
         <div class="card-body">
             <h5 class="card-title">Lista de <?= $title ?></h5>
             <p class="card-text">Aqui você pode criar, visualizar, editar e até deletar as espécies!</p>
-            <a href="<?=url_to('species.create')?>" class="btn btn-primary px-4">Nova Espécie</a>
-            
+            <a href="<?= url_to('species.create') ?>" class="btn btn-primary px-4">Nova Espécie</a>
+
             <hr>
-            
+
             <table data-toggle="table" data-locale="pt-BR" data-pagination="true" data-search="true" data-page-size="5">
                 <thead>
                     <tr>
@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                   <?php foreach ($species as $specie): ?>
+                    <?php foreach ($species as $specie): ?>
                         <tr>
                             <th class="text-center">
                                 <?= $specie['id'] ?>
@@ -49,8 +49,10 @@
                                 <a href="<?= url_to('species.edit', $specie['id']) ?>" class="btn btn-outline-primary btn-sm"><i
                                         class="bi bi-pencil"></i></a>
                                 <form action="<?= url_to('species.delete', $specie['id']) ?>" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
+
                                     <input type="hidden" name="_method" value="DELETE">
-            
+
                                     <button type="submit" class="btn btn-outline-danger btn-sm"
                                         onclick="return confirm('Tem certeza que deseja excluir essa raça?')"><i
                                             class="bi bi-trash"></i></button>

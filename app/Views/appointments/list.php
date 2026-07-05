@@ -61,6 +61,8 @@
                                 <a target="_blank" href="<?= url_to('appointments.export', $appointment['id']) ?>" class="btn btn-outline-secondary btn-sm"><i class="bi bi-printer-fill"></i></a>
                                 <a href="<?= url_to('appointments.edit', $appointment['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                 <form action="<?= url_to('appointments.delete', $appointment['id']) ?>" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
+
                                     <input type="hidden" name="_method" value="DELETE">
 
                                     <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir essa consulta?')"><i class="bi bi-trash"></i></button>

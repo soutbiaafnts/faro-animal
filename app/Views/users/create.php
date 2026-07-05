@@ -1,7 +1,7 @@
 <?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? [] ?>
 
 <!-- todo: colocar alerta para as mensagens de erro -->
-<?php $errors = session()->getFlashdata('errors') ?? [] ?> 
+<?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
 <?= $this->extend('layouts/main'); ?>
 
@@ -13,29 +13,31 @@
 
     <form action="<?= url_to('user.register') ?>" method="post" class="row g-2 mx-auto" style="max-width: 700px">
         <div class="col-md-6">
+            <?= csrf_field() ?>
+
             <label for="name" class="form-label">Nome</label>
-            <input name="name" type="text" id="name" placeholder="Digite seu nome" value="<?= old('name')?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>" >
+            <input name="name" type="text" id="name" placeholder="Digite seu nome" value="<?= old('name') ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
             <span class="invalid-feedback">
-               <?= $invalidArgs['name'] ?? '' ?>
+                <?= $invalidArgs['name'] ?? '' ?>
             </span>
         </div>
         <div class="col-md-6">
             <label for="email" class="form-label">E-mail</label>
-            <input name="email" type="text" id="email" placeholder="exemplo@exemplo.com" value="<?= old('email')?>" class="form-control <?= isset($invalidArgs['email']) ? 'is-invalid' : '' ?>" >
+            <input name="email" type="text" id="email" placeholder="exemplo@exemplo.com" value="<?= old('email') ?>" class="form-control <?= isset($invalidArgs['email']) ? 'is-invalid' : '' ?>">
             <span class="invalid-feedback">
                 <?= $invalidArgs['email'] ?? '' ?>
             </span>
         </div>
         <div class="col-md-6">
             <label for="password" class="form-label">Senha</label>
-            <input name="password" type="password" id="password" placeholder="Crie uma senha" class="form-control <?= isset($invalidArgs['password']) ? 'is-invalid' : '' ?>" >
+            <input name="password" type="password" id="password" placeholder="Crie uma senha" class="form-control <?= isset($invalidArgs['password']) ? 'is-invalid' : '' ?>">
             <span class="invalid-feedback">
                 <?= $invalidArgs['password'] ?? '' ?>
             </span>
         </div>
         <div class="col-md-6">
             <label for="confirmPassword" class="form-label">Confirme a senha</label>
-            <input name="confirmPassword" type="password" id="confirmPassword" placeholder="Digite a senha novamente" class="form-control <?= isset($invalidArgs['confirmPassword']) ? 'is-invalid' : '' ?>" >
+            <input name="confirmPassword" type="password" id="confirmPassword" placeholder="Digite a senha novamente" class="form-control <?= isset($invalidArgs['confirmPassword']) ? 'is-invalid' : '' ?>">
             <span class="invalid-feedback">
                 <?= $invalidArgs['confirmPassword'] ?? '' ?>
             </span>

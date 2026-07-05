@@ -17,6 +17,8 @@
             <div class="card-body">
                 <form action="<?= url_to('me.update') ?>" method="post" class="">
                     <div class="">
+                        <?= csrf_field() ?>
+
                         <label for="name" class="form-label">Nome</label>
                         <input name="name" type="text" id="name" value="<?= old('name', $user['name']) ?>" class="form-control <?= isset($invalidArgs['name']) ? 'is-invalid' : '' ?>">
                         <span class="invalid-feedback">
@@ -27,7 +29,7 @@
                         <label for="email" class="form-label">E-mail</label>
                         <input name="email" type="text" id="email" value="<?= esc($user['email']) ?>" class="form-control readonly" readonly>
                     </div>
-                
+
                     <div class="mt-4">
                         <button class="btn btn-primary w-100" type="submit">Salvar</button>
                     </div>
@@ -43,6 +45,8 @@
             <div class="card-body">
                 <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto" style="max-width: 700px">
                     <div class="">
+                        <?= csrf_field() ?>
+
                         <label for="currentPassword" class="form-label">Senha atual</label>
                         <input name="currentPassword" type="password" id="currentPassword" placeholder="Informe a senha atual"
                             class="form-control <?= isset($invalidArgs['currentPassword']) ? 'is-invalid' : '' ?>">
@@ -66,7 +70,7 @@
                             <?= $invalidArgs['confirmNewPassword'] ?? '' ?>
                         </span>
                     </div>
-                
+
                     <div class="mt-4">
                         <button class="btn btn-primary w-100" type="submit">Salvar</button>
                     </div>
@@ -74,7 +78,7 @@
             </div>
 
         </div>
-        
+
         <div class="card border-danger w-100">
             <div class="card-header bg-danger text-white">
                 Zona de Perigo
@@ -86,6 +90,8 @@
                 </p>
 
                 <form action="<?= url_to('me.delete') ?>" method="post">
+                    <?= csrf_field() ?>
+                    
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.')">
                         Excluir minha conta
                     </button>
