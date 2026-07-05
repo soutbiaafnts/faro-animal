@@ -120,6 +120,12 @@ class AppointmentService
         ];
     }
 
+    /**
+     * Summary validateUpdateData
+     *
+     * @param array $data
+     * @return array
+     */
     private function validateUpdateData(array $data): array
     {
         $validation = service('validation');
@@ -263,6 +269,36 @@ class AppointmentService
             return [
                 'success' => false,
                 'message' => 'Erro ao criar consulta: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function updateAppointment(int $id, array $data)
+    {   
+        try {
+            $validation = $this->validateUpdateData($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $this->appointmentModel->update($id, $data);
+
+            return [
+                'success' => true,
+                'message' => 'Consulta editada com sucesso!',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao editar raça:',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
