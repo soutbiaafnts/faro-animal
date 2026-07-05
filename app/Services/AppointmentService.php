@@ -240,6 +240,48 @@ class AppointmentService
     }
 
     /**
+     * Summary getAppointmentById
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getAppointmentById(int $id): array
+    {
+        try {
+            $appointmentFound = $this->appointmentModel
+                ->select('
+                appointments.*,
+                pets.name AS pet_name,
+                users.name AS user_name,
+                ')
+                ->join('pets', 'pets.id = appointments.pet_id')
+                ->join('users', 'users.id = appointments.user_id')
+                ->find($id);
+
+            if (!$appointmentFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Consulta não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            return [
+                'success' => true,
+                'data' => $appointmentFound,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar consulta: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
      * Summary createAppointment
      *
      * @param array $data

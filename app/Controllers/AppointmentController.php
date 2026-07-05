@@ -79,7 +79,7 @@ class AppointmentController extends BaseController
 
     public function edit(int $id)
     {
-        // todo: view appointment/edit
+        // todo: view appointment/edit 
     }
 
     public function update(int $id)
