@@ -17,7 +17,7 @@
                 <a href="<?= url_to('pets') ?>" class="nav-link text-body-secondary">Pets</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-body-secondary">Consultas</a>
+                <a href="<?= url_to('appointments') ?>" class="nav-link text-body-secondary">Consultas</a>
             </li>
         </ul>
         <p class="text-center text-body-secondary">© 2026 Bianca e Wanessa, DEW-II</p>
