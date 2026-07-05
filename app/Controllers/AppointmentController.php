@@ -19,7 +19,21 @@ class AppointmentController extends BaseController
 
     public function index()
     {
-        // todo: listar as consultas
+        $result = $this->appointmentService->getAllAppointments();
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
+
+        return view('appointments/list', [
+            'title' => 'Consultas',
+            'message' => $result['message'],
+            'appointments' => $result['data'],
+        ]);
     }
 
     public function create()
