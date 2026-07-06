@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Services\UserService;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class UserController extends BaseController
 {
@@ -19,14 +18,17 @@ class UserController extends BaseController
     {
         $userId = session()->get('user_id');
 
-        $user = $this->userService->getUserById($userId);
+        $result = $this->userService->getUserById($userId);
 
-        if ($user['success'] === false) {
-            return redirect()->route('users')->with('message', $user['message'])->with('errors', $user['errors']);
+        if ($result['success'] === false) {
+            return redirect()->route('users')
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
         }
 
         return view('users/me', [
-            'user' => $user['data'],
+            'user' => $result['data'],
             'title' => 'Meu perfil',
         ]);
     }
@@ -60,7 +62,7 @@ class UserController extends BaseController
                     ->with('errors', $result['errors']);
             }
 
-            return redirect()->route('login')->with('message', $result['message']);
+            return redirect()->route('login')->with('success', $result['success'])->with('message', $result['message']);
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('message', 'Erro:')->with('errors', $e->getMessage());
         }
@@ -82,7 +84,7 @@ class UserController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('me')->with('message', $result['message']);
+        return redirect()->route('me')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function updatePassword()
@@ -103,7 +105,7 @@ class UserController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('me')->with('message', $result['message']);
+        return redirect()->route('me')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function delete()
@@ -115,11 +117,12 @@ class UserController extends BaseController
         if (!$result['success']) {
             return redirect()->back()
                 ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
                 ->with('errors', $result['errors']);
         }
 
         session()->destroy();
 
-        return redirect()->route('home')->with('message', $result['message']);
+        return redirect()->route('login')->with('success', $result['success'])->with('message', $result['message']);
     }
 }

@@ -13,7 +13,7 @@ class PetService {
         $this->petModel = new PetModel();
     }
 
-    // - VALIDAÇÕES
+    // NOTE: validações
     private function validateCreatePet(array $data): array {
         $validation = service('validation');
 
@@ -173,31 +173,87 @@ class PetService {
         ];
     }
 
-    // - CRUD
+    // NOTE: crud
 
-    public function getAllPets() {
+    /**
+     * Summary of createPet
+     *
+     * @param array $data
+     * @return array
+     */
+    public function createPet(array $data): array
+    {
         try {
-            $pets = $this->petModel
-                ->select('pets.*, breeds.name AS breed_name')
-                ->join('breeds', 'breeds.id = pets.breed_id', 'left')
-                ->findAll();
+            $validation = $this->validateCreatePet($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $this->petModel->insert($data);
 
             return [
                 'success' => true,
-                'message' => 'Busca realizada com sucesso!',
-                'pets' => $pets,
+                'message' => 'Pet criado com sucesso!',
             ];
-
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao buscar pets:',
+                'message' => 'Erro ao criar pet.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
+    /**
+     * Summary of getAllPets
+     *
+     * @return array
+     */
+    public function getAllPets(): array {
+        try {
+            $pets = $this->petModel
+                ->select('pets.*, breeds.name AS breed_name')
+                ->join('breeds', 'breeds.id = pets.breed_id', 'left')
+                ->findAll();
+
+            if (!$pets) {
+                return [
+                    'success' => false,
+                    'message' => 'Nenhum pet encontrado.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Busca realizada com sucesso!',
+                'data' => $pets,
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar pets.',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of getPetById
+     *
+     * @param integer $id
+     * @return array
+     */
     public function getPetById(int $id): array {
         try {
             $petFound = $this->petModel
@@ -222,48 +278,26 @@ class PetService {
 
             return [
                 'success' => true,
-                'pet' => $petFound,
+                'data' => $petFound,
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao buscar pet: ',
+                'message' => 'Erro ao buscar pet.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function createPet(array $data) {
-        try {
-            $validation = $this->validateCreatePet($data);
-
-            if (!$validation['success']) {
-                return [
-                    'success' => false,
-                    'message' => $validation['message'],
-                    'invalidArgs' => $validation['invalidArgs'],
-                    'errors' => $validation['errors'],
-                ];
-            }
-
-            $this->petModel->insert($data);
-
-            return [
-                'success' => true,
-                'message' => 'Pet criado com sucesso!',
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao criar pet: ',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ];
-        }
-    }
-    
-    public function updatePet(int $id, array $data) {
+    /**
+     * Summary of updatePet
+     *
+     * @param integer $id
+     * @param array $data
+     * @return array
+     */
+    public function updatePet(int $id, array $data): array {
         try {
             $validation = $this->validateUpdatePet($data);
 
@@ -285,14 +319,20 @@ class PetService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao editar raça:',
+                'message' => 'Erro ao editar raça.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function deletePet(int $id) {
+    /**
+     * Summary of deletePet
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function deletePet(int $id): array {
         try {
             $pet = $this->petModel->find($id);
 
@@ -314,7 +354,7 @@ class PetService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao excluir pet',
+                'message' => 'Erro ao excluir pet.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];

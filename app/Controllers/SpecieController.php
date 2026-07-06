@@ -29,7 +29,7 @@ class SpecieController extends BaseController
         return view('species/list', [
             'title' => 'Espécies',
             'message' => $species['message'],
-            'species' => $species['species'],
+            'species' => $species['data'],
         ]);
     }
 
@@ -74,7 +74,7 @@ class SpecieController extends BaseController
 
         return view('species/edit', [
             'title' => 'Editar Espécie',
-            'specie' => $specie['specie'],
+            'specie' => $specie['data'],
         ]);
     }
 

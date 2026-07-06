@@ -18,14 +18,8 @@ class AppointmentService
         $this->petService = service('pet');
     }
 
-    // NOTE: Validações
+    // NOTE: validações
 
-    /**
-     * Summary validateCreateData
-     *
-     * @param array $data
-     * @return array
-     */
     private function validateCreateData(array $data): array
     {
         $validation = service('validation');
@@ -120,13 +114,6 @@ class AppointmentService
         ];
     }
 
-    /**
-     * Summary validateUpdateData
-     *
-     * @param integer $id
-     * @param array $data
-     * @return array
-     */
     private function validateUpdateData(int $id, array $data): array
     {
         $validation = service('validation');
@@ -231,7 +218,48 @@ class AppointmentService
 
     // NOTE: CRUD
 
-    public function getAllAppointments()
+    /**
+     * Summary createAppointment
+     *
+     * @param array $data
+     * @return array
+     */
+    public function createAppointment(array $data): array
+    {
+        try {
+            $validation = $this->validateCreateData($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $this->appointmentModel->insert($data);
+
+            return [
+                'success' => true,
+                'message' => 'Consulta criada com sucesso!',
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao criar consulta: ',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of getAllAppointments
+     *
+     * @return array
+     */
+    public function getAllAppointments(): array
     {
         try {
             $appointments = $this->appointmentModel
@@ -293,42 +321,6 @@ class AppointmentService
             return [
                 'success' => false,
                 'message' => 'Erro ao buscar consulta: ',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ];
-        }
-    }
-
-    /**
-     * Summary createAppointment
-     *
-     * @param array $data
-     * @return array
-     */
-    public function createAppointment(array $data): array
-    {
-        try {
-            $validation = $this->validateCreateData($data);
-
-            if (!$validation['success']) {
-                return [
-                    'success' => false,
-                    'message' => $validation['message'],
-                    'invalidArgs' => $validation['invalidArgs'],
-                    'errors' => $validation['errors'],
-                ];
-            }
-
-            $this->appointmentModel->insert($data);
-
-            return [
-                'success' => true,
-                'message' => 'Consulta criada com sucesso!',
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao criar consulta: ',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];

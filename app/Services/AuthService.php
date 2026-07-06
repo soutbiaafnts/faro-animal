@@ -15,6 +15,8 @@ class AuthService
         $this->userModel = new UserModel();
     }
 
+    // NOTE: Validações
+
     private function validateAuthData(array $data): array
     {
         $validation = service('validation');
@@ -24,11 +26,11 @@ class AuthService
             'password' => 'required',
         ], [
             'email' => [
-                'required' => 'O campo e-mail é obrigatório.',
+                'required' => 'Este campo é obrigatório.',
                 'valid_email' => 'E-mail inválido.',
             ],
             'password' => [
-                'required' => 'O campo senha é obrigatório.',
+                'required' => 'Este campo é obrigatório.',
             ],
         ]);
 
@@ -83,7 +85,7 @@ class AuthService
 
             return [
                 'success' => true,
-                'user' => $userFound,
+                'data' => $userFound,
             ];
         } catch (\Exception $e) {
             return [
@@ -95,10 +97,42 @@ class AuthService
         }
     }
 
+    private function validateNewPassword(array $data): array
+    {
+        $validation = service('validation');
+        $validation->setRules([
+            'password' => 'required|min_length[8]|matches[confirmPass]',
+            'confirmPass' => 'required',
+        ], [
+            'password' => [
+                'required' => 'Defina uma nova senha.',
+                'min_length' => 'A nova senha deve possuir pelo menos 8 caracteres',
+                'matches' => 'As senhas não coincidem.',
+            ],
+            'confirmPass' => [
+                'required' => 'Confirme a senha.'
+            ],
+        ]);
+
+        if (!$validation->run($data)) {
+            return [
+                'success' => false,
+                'message' => 'Verifique os campos.',
+                'invalidArgs' => $validation->getErrors(),
+                'errors' => null,
+            ];
+        }
+
+        return ['success' => true];
+    }
+
+    // NOTE: lógica de autenticação
+
     /**
      * Summary of auth
+     *
      * @param array $data
-     * @return array|array{errors: null, invalidArgs: array{email: string, message: string, success: bool}|array{success: bool, user: array<bool|float|int|object|string|null>|object}}
+     * @return array
      */
     public function auth(array $data): array
     {
@@ -108,7 +142,6 @@ class AuthService
             return $validation;
         }
 
-        // validação do usuário
         $userFound = $this->userModel
             ->where('email', $data['email'])
             ->first();
@@ -160,7 +193,7 @@ class AuthService
     /**
      * Summary of createResetToken
      * @param array $user
-     * @return array{errors: string, invalidArgs: array, message: string, success: bool|array{expires: DateTime, success: bool, token: string}}
+     * @return array
      */
     public function createResetToken(array $user): array
     {
@@ -193,7 +226,7 @@ class AuthService
     /**
      * Summary of sendTokenLink
      * @param array $data
-     * @return array{errors: mixed, invalidArgs: mixed, message: mixed, success: bool|array{errors: null, invalidArgs: array, message: string, success: bool}|array{errors: string, invalidArgs: array, message: string, success: bool}|array{message: string, success: bool}}
+     * @return array
      */
     public function sendTokenLink(array $data): array
     {
@@ -208,7 +241,7 @@ class AuthService
             ];
         }
 
-        $userFound = $validation['user'];
+        $userFound = $validation['data'];
 
         $resetToken = $this->createResetToken($userFound);
 
@@ -260,7 +293,7 @@ class AuthService
     /**
      * Summary of sendToken
      * @param string $resetToken
-     * @return array{errors: null, invalidArgs: array, message: string, success: bool|array{errors: string, invalidArgs: array, message: string, success: bool}|array{success: bool}}
+     * @return array
      */
     public function sendToken(string $resetToken)
     {
@@ -308,37 +341,10 @@ class AuthService
         }
     }
 
-    private function validateNewPassword(array $data): array
-    {
-        $validation = service('validation');
-        $validation->setRules([
-            'password' => 'required|min_length[8]|matches[confirmPass]',
-            'confirmPass' => 'required',
-        ], [
-            'password' => [
-                'required' => 'Defina uma nova senha.',
-                'min_length' => 'A nova senha deve possuir pelo menos 8 caracteres',
-                'matches' => 'As senhas não coincidem.',
-            ],
-            'confirmPass' => [
-                'required' => 'Confirme a senha.'
-            ],
-        ]);
-
-        if (!$validation->run($data)) {
-            return [
-                'success' => false,
-                'message' => 'Verifique os campos.',
-                'invalidArgs' => $validation->getErrors(),
-                'errors' => null,
-            ];
-        }
-
-        return ['success' => true];
-    }
+    
 
     /**
-     * Undocumented function
+     * Summary of updatePassword
      *
      * @param string $resetToken
      * @param string $newPassword
@@ -382,7 +388,7 @@ class AuthService
             if (!$userUpdated) {
                 return [
                     'success' => false,
-                    'message' => 'Erro ao atualizar a senha.',
+                    'message' => 'Erro ao redefinir a senha.',
                     'invalidArgs' => [],
                     'errors' => null,
                 ];
@@ -390,12 +396,12 @@ class AuthService
 
             return [
                 'success' => true,
-                'message' => 'Senha atualizada com sucesso',
+                'message' => 'Senha redefinida com sucesso',
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao atualizar a senha.',
+                'message' => 'Erro ao redefinir a senha.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];

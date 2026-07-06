@@ -11,7 +11,7 @@ class UserService {
         $this->userModel = new UserModel();
     }
 
-    // ------- VALIDAÇÕES
+    // NOTE: validações
     private function validateCreateUser(array $data): array {
         $validation = service('validation');
 
@@ -155,8 +155,57 @@ class UserService {
     }
 
 
-    // ------- CRUD
-    public function getUserById(int $id) {
+    // NOTE: crud
+
+    /**
+     * Summary of createUser
+     *
+     * @param array $data
+     * @return array
+     */
+    public function createUser(array $data): array
+    {
+        try {
+            $validation = $this->validateCreateUser($data);
+
+            if (!$validation['success']) {
+                return [
+                    'success' => false,
+                    'message' => $validation['message'],
+                    'invalidArgs' => $validation['invalidArgs'],
+                    'errors' => $validation['errors'],
+                ];
+            }
+
+            $newUser = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+            ];
+
+            $this->userModel->insert($newUser);
+
+            return [
+                'success' => true,
+                'message' => 'Usuário criado com sucesso. Faça o login!'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao criar usuário.',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of getUserById
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getUserById(int $id): array {
         try {
             $user = $this->userModel->find($id);
 
@@ -182,50 +231,21 @@ class UserService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao buscar usuário: ',
+                'message' => 'Erro ao buscar usuário.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function createUser(array $data) {
-        try {
-            $validation = $this->validateCreateUser($data);
-
-            if (!$validation['success']) {
-                return [
-                    'success' => false,
-                    'message' => $validation['message'],
-                    'invalidArgs' => $validation['invalidArgs'],
-                    'errors' => $validation['errors'],
-                ];
-            }
-
-            $newUser = [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => $data['password'],
-            ];
-
-            $this->userModel->insert($newUser);
-
-            return [
-                'success' => true,
-                'message' => 'Usuário criado com sucesso!'
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao criar usuário: ',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ];
-        }
-    }
-
-    public function updateProfile(int $id, array $data) {
+    /**
+     * Summary of updateProfile
+     *
+     * @param integer $id
+     * @param array $data
+     * @return array
+     */
+    public function updateProfile(int $id, array $data): array {
         try {
             $validation = $this->validateProfileUpdate($data);
 
@@ -249,14 +269,21 @@ class UserService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao atualizar usuário: ',
+                'message' => 'Erro ao atualizar usuário.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function updatePassword(int $id, array $data) {
+    /**
+     * Summary of updatePassword
+     *
+     * @param integer $id
+     * @param array $data
+     * @return array
+     */
+    public function updatePassword(int $id, array $data): array {
         try {
             
             $validation = $this->validatePasswordUpdate($id, $data);
@@ -281,14 +308,20 @@ class UserService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao atualizar usuário: ',
+                'message' => 'Erro ao atualizar usuário.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function deleteUser(int $id) {
+    /**
+     * Summary of deleteUser
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function deleteUser(int $id): array {
         try {
             $user = $this->userModel->find($id);
 
@@ -305,12 +338,12 @@ class UserService {
 
             return [
                 'success' => true,
-                'message' => 'Conta excluída com sucesso',
+                'message' => 'Usuário excluído com sucesso.',
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao excluir usuário',
+                'message' => 'Erro ao excluir usuário.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];

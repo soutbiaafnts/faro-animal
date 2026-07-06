@@ -11,95 +11,10 @@ class BreedService {
         $this->breedModel = new BreedModel();
     }
 
-    public function getAllBreeds() {
-        try {
-            $breeds = $this->breedModel
-                ->select('breeds.*, species.name AS specie_name')
-                ->join('species', 'species.id = breeds.species_id', 'left')
-                ->findAll();
+    // NOTE: validações
 
-            return [
-                'success' => true,
-                'message' => 'Busca realizada com sucesso!',
-                'breeds' => $breeds,
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao buscar raças.',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ];
-        }
-    }
-
-    public function getBreedById(int $id): array {
-        try {
-            $breedFound = $this->breedModel
-                ->select('breeds.*, species.name as specie_name')
-                ->join('species', 'species_id = breeds.species_id')
-                ->find($id);
-
-            if (!$breedFound) {
-                return [
-                    'success' => false,
-                    'message' => 'Raça não encontrada.',
-                    'invalidArgs' => [],
-                    'errors' => null,
-                ];
-            }
-
-            $breed = [
-                'id' => $breedFound['id'],
-                'name' => $breedFound['name'],
-                'species_id' => $breedFound['species_id'],
-                'specie_name' => $breedFound['specie_name'],
-            ];
-
-            return [
-                'success' => true,
-                'breed' => $breed,
-            ];
-       } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao buscar espécie: ',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ]; 
-       }
-    }
-
-    public function getBreedsBySpecie($specieId) {
-        try {
-            $breedsFound = $this->breedModel->select('id, name')->where('species_id', $specieId)->findAll();
-
-            if (!$breedsFound) {
-                return [
-                    'success' => false,
-                    'message' => 'Nenhuma raça encontrada',
-                    'invalidArgs' => [],
-                    'errors' => null,
-                ];
-            }
-            
-            return [
-                'success' => true,
-                'message' => 'Busca realizada com sucesso!',
-                'breeds' => $breedsFound,
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao buscar raças',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ];
-        }
-    }
-
-    // - VALIDAÇÕES
-    private function validateCreateBreed(array $data): array {
+    private function validateCreateBreed(array $data): array
+    {
         $validation = service('validation');
 
         $validation->setRules([
@@ -108,7 +23,7 @@ class BreedService {
         ], [
             'species_id' => [
                 'required' => 'Este campo obrigatório.',
-                'integer' => 'A raça precisa ser um número inteiro.',
+                'integer' => 'o id da raça precisa ser um número inteiro.',
             ],
             'name' => [
                 'required' => 'Este campo obrigatório.',
@@ -144,11 +59,18 @@ class BreedService {
 
         return [
             'success' => true,
-            'message' => 'Raça cadastrada com sucesso!',
         ];
     }
 
-    public function createBreed(array $data)
+    // NOTE: crud
+
+    /**
+     * Summary of createBreed
+     *
+     * @param array $data
+     * @return array
+     */
+    public function createBreed(array $data): array
     {
         try {
             $validation = $this->validateCreateBreed($data);
@@ -171,19 +93,139 @@ class BreedService {
 
             return [
                 'success' => true,
-                'message' => $validation['message'],
+                'message' => 'Raça cadastrada com sucesso!',
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao criar raça: ',
+                'message' => 'Erro ao criar raça.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function updateBreed(int $id, array $data) {
+    /**
+     * Summary of getAllBreeds
+     *
+     * @return array
+     */
+    public function getAllBreeds(): array {
+        try {
+            $breeds = $this->breedModel
+                ->select('breeds.*, species.name AS specie_name')
+                ->join('species', 'species.id = breeds.species_id', 'left')
+                ->findAll();
+
+            if (!$breeds) {
+                return [
+                    'success' => false,
+                    'message' => 'Nenhuma raça encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Busca realizada com sucesso!',
+                'data' => $breeds,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar raças.',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of getBreedById
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getBreedById(int $id): array {
+        try {
+            $breedFound = $this->breedModel
+                ->select('breeds.*, species.name as specie_name')
+                ->join('species', 'species_id = breeds.species_id')
+                ->find($id);
+
+            if (!$breedFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Raça não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $breed = [
+                'id' => $breedFound['id'],
+                'name' => $breedFound['name'],
+                'species_id' => $breedFound['species_id'],
+                'specie_name' => $breedFound['specie_name'],
+            ];
+
+            return [
+                'success' => true,
+                'data' => $breed,
+            ];
+       } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar espécie.',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ]; 
+       }
+    }
+
+    /**
+     * Summary of getBreedBySpecie
+     *
+     * @param integer $specieId
+     * @return array
+     */
+    public function getBreedsBySpecie(int $specieId): array {
+        try {
+            $breedsFound = $this->breedModel->select('id, name')->where('species_id', $specieId)->findAll();
+
+            if (!$breedsFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Nenhuma raça encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+            
+            return [
+                'success' => true,
+                'message' => 'Busca realizada com sucesso!',
+                'data' => $breedsFound,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar raças.',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of updateBreed
+     *
+     * @param integer $id
+     * @param array $data
+     * @return array
+     */
+    public function updateBreed(int $id, array $data): array {
         try {
             $validation = $this->validateCreateBreed($data);
 
@@ -208,21 +250,27 @@ class BreedService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao editar raça:',
+                'message' => 'Erro ao editar raça.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function deleteBreed(int $id) {
+    /**
+     * Summary of deleteBreed
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function deleteBreed(int $id): array {
         try {
             $breed = $this->breedModel->find($id);
 
             if (!$breed) {
                 return [
                     'success' => false,
-                    'message' => 'Espécie não encontrada.',
+                    'message' => 'Raça não encontrada.',
                     'invalidArgs' => [],
                     'errors' => null,
                 ];
@@ -238,7 +286,7 @@ class BreedService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao excluir raça',
+                'message' => 'Erro ao excluir raça.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
