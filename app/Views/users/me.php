@@ -7,9 +7,12 @@
 <?= $this->section('content'); ?>
 
 <div class="container py-4">
-    <h2>Olá, <?= esc($user['name']) ?></h2>
-    <div class="d-flex flex-col gap-2 w-100">
-        <div class="card w-100">
+    <h1 class="display-6 fw-bold text-primary text-center">Olá, <?= esc($user['name']) ?></h1>
+    <p class="lead text-secondary text-center mb-4">Gerencie seu perfil.</p>
+
+    <div class="d-flex flex-wrap gap-3 w-100 justify-content-center">
+
+        <div class="card w-100" style="max-width: 500px">
             <div class="card-header">
                 Dados do perfil
             </div>
@@ -37,13 +40,13 @@
             </div>
         </div>
 
-        <div class="card w-100">
+        <div class="card w-100" style="max-width: 500px">
             <div class="card-header">
                 Alterar Senha
             </div>
 
             <div class="card-body">
-                <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto" style="max-width: 700px">
+                <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto">
                     <div class="">
                         <?= csrf_field() ?>
 
@@ -79,7 +82,7 @@
 
         </div>
 
-        <div class="card border-danger w-100">
+        <div class="card border-danger w-100" style="max-width: 500px">
             <div class="card-header bg-danger text-white">
                 Zona de Perigo
             </div>
@@ -91,7 +94,7 @@
 
                 <form action="<?= url_to('me.delete') ?>" method="post">
                     <?= csrf_field() ?>
-                    
+
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.')">
                         Excluir minha conta
                     </button>
