@@ -12,42 +12,152 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/bootstrap-table.min.css">
+    <style>
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            src: url('<?= FCPATH ?>assets/fonts/Poppins-Regular.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            src: url('<?= FCPATH ?>assets/fonts/Poppins-Bold.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            color: #333;
+            margin: 30px;
+            line-height: 1.5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0d6efd;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            background: #0d6efd;
+            color: white;
+            padding: 8px 12px;
+            font-size: 15px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 13px;
+            color: #0d6efd;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin: 4px 0 10px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        .label {
+            font-weight: bold;
+            width: 30%;
+            background: #f2f2f2;
+        }
+
+        .content {
+            border: 1px solid #ddd;
+            padding: 10px;
+            min-height: 50px;
+            background: #fafafa;
+        }
+    </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
     <h1>Ficha de Consulta</h1>
+    <p class="subtitle">Documento gerado pelo sistema Faro Animal</p>
 
-    <hr>
+    <h2>Dados da Consulta</h2>
 
-    <h2>Dados</h2>
-    <p>Nome do pet: <?= esc($appointment['pet_name']) ?> | Nome do tutor: <?= esc($appointment['owner_name']) ?></p>
-    <p>Nome do veterinário: <?= esc($appointment['user_name']) ?> | Data/Horário: <?= esc($appointment['appointment_date']) ?></p>
-    <p>Status: <?= esc($appointment['status']) ?></p>
+    <table>
+        <tr>
+            <td class="label">Pet</td>
+            <td><?= esc($appointment['pet_name']) ?></td>
+        </tr>
+        <tr>
+            <td class="label">Tutor</td>
+            <td><?= esc($appointment['owner_name']) ?></td>
+        </tr>
+        <tr>
+            <td class="label">Veterinário</td>
+            <td><?= esc($appointment['user_name']) ?></td>
+        </tr>
+        <tr>
+            <td class="label">Data/Horário</td>
+            <td><?= esc($appointment['appointment_date']) ?></td>
+        </tr>
+        <tr>
+            <td class="label">Status</td>
+            <td><?php if ($appointment['status'] == 'scheduled') {
+                    echo 'Agendada';
+                } elseif ($appointment['status'] == 'completed') {
+                    echo 'Realizada';
+                } else {
+                    echo 'Cancelada';
+                } ?></td>
+        </tr>
+    </table>
 
-    <hr>
+    <h2>Informações da Consulta</h2>
 
-    <h2>Informações</h2>
-    <h3>Razão da consulta:</h3>
-    <p><?= esc($appointment['reason']) ?></p>
+    <h3>Razão da consulta</h3>
+    <div class="content">
+        <?= nl2br(esc($appointment['reason'])) ?>
+    </div>
 
-    <h3>Diagnóstico:</h3>
-    <p><?= esc($appointment['diagnosis']) ?></p> 
-    
-    <h3>Prescrição:</h3>
-    <p><?= esc($appointment['prescription']) ?></p>
-    
-    <h3>Anotações:</h3>
-    <p><?= esc($appointment['notes']) ?></p>
+    <h3>Diagnóstico</h3>
+    <div class="content">
+        <?= nl2br(esc($appointment['diagnosis'])) ?>
+    </div>
 
+    <h3>Prescrição</h3>
+    <div class="content">
+        <?= nl2br(esc($appointment['prescription'])) ?>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/bootstrap-table.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.27.3/dist/locale/bootstrap-table-pt-BR.min.js"></script>
+    <h3>Anotações</h3>
+    <div class="content">
+        <?= nl2br(esc($appointment['notes'])) ?>
+    </div>
 </body>
 
 </html>
