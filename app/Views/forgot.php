@@ -9,6 +9,10 @@
 
 <div class="container py-5" style="max-width: 700px">
 
+    <h1 class="display-4 fw-bold text-primary text-center">Esqueci a senha</h1>
+    <p class="lead text-secondary text-center mb-4">Insira seu endereço de e-mail e lhe enviaremos as instruções para redefinir sua
+        senha.</p>
+
     <?php if ($message && !$success): ?>
         <div class="alert alert-danger text-center" role="alert">
             <i class="bi bi-exclamation-triangle-fill"></i>
@@ -26,11 +30,6 @@
         </div>
     <?php endif; ?>
 
-    <h2 class="text-center mb-4">Esqueci a senha</h2>
-
-    <p class="caption text-center">Insira seu endereço de e-mail e lhe enviaremos as instruções para redefinir sua
-        senha.</p>
-
     <form action="<?= url_to('forgot.send') ?>" method="post" class="row g-2 mx-auto justify-content-center"
         style="max-width: 700px">
         <?= csrf_field() ?>
@@ -38,7 +37,7 @@
         <div class="col-md-8 w-100">
             <label for="email" class="form-label">E-mail</label>
             <input type="text" name="email" id="email" placeholder="Digite seu e-mail"
-                value="<?=  esc(old('email')) ?>"
+                value="<?= esc(old('email')) ?>"
                 class="form-control <?php echo isset($invalidArgs['email']) ? 'is-invalid' : ''; ?>">
             <span class="invalid-feedback">
                 <?php echo $invalidArgs['email'] ?? ''; ?>

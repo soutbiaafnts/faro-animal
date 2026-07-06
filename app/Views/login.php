@@ -1,4 +1,6 @@
 <?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
+<?php $message = session()->getFlashdata('message') ?? ''; ?>
+<?php $success = session()->getFlashdata('success'); ?>
 
 <?php echo $this->extend('layouts/main'); ?>
 
@@ -6,7 +8,28 @@
 
 <div class="container py-5">
 
-    <h2 class="text-center mb-4">Faça o login</h2>
+    <h1 class="display-4 fw-bold text-primary text-center">Faça o login</h1>
+    <p class="lead text-secondary text-center mb-4">Acesse as informações da clínica.</p>
+
+    <?php if ($message && !$success): ?>
+        <div class="alert alert-danger text-center mx-auto" style="max-width: 700px" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <h4 class="alert-heading">Erro!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php elseif ($message && $success): ?>
+        <div class="alert alert-success text-center mx-auto" style="max-width: 700px" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <h4 class="alert-heading">Sucesso!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php endif; ?>
 
     <form action="<?php echo url_to('auth'); ?>" method="post" class="row g-2 mx-auto justify-content-center"
         style="max-width: 700px">

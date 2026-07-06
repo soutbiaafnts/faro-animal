@@ -1,15 +1,39 @@
-<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? [] ?>
-<?php $message = session()->getFlashdata('message') ?? [] ?>
-<?php $errors = session()->getFlashdata('errors') ?? [] ?>
+<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
+<?php $message = session()->getFlashdata('message') ?? ''; ?>
+<?php $success = session()->getFlashdata('success'); ?>
 
 <?= $this->extend('layouts/main'); ?>
 
 <?= $this->section('content'); ?>
 
-<div class="container py-4">
-    <h2>Olá, <?= esc($user['name']) ?></h2>
-    <div class="d-flex flex-col gap-2 w-100">
-        <div class="card w-100">
+<div class="container py-5">
+
+    <h1 class="display-6 fw-bold text-primary text-center">Olá, <?= esc($user['name']) ?></h1>
+    <p class="lead text-secondary text-center mb-4">Gerencie seu perfil.</p>
+
+    <?php if ($message && !$success): ?>
+        <div class="alert alert-danger text-center mx-auto" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <h4 class="alert-heading">Erro!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php elseif ($message && $success): ?>
+        <div class="alert alert-success text-center mx-auto" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <h4 class="alert-heading">Sucesso!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php endif; ?>
+
+    <div class="d-flex flex-column flex-lg-row justify-content-center gap-4">
+
+        <div class="card w-100 w-lg-100">
             <div class="card-header">
                 Dados do perfil
             </div>
@@ -37,13 +61,13 @@
             </div>
         </div>
 
-        <div class="card w-100">
+        <div class="card w-100 w-lg-100">
             <div class="card-header">
                 Alterar Senha
             </div>
 
             <div class="card-body">
-                <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto" style="max-width: 700px">
+                <form action="<?= url_to('me.password') ?>" method="post" class="g-2 mx-auto">
                     <div class="">
                         <?= csrf_field() ?>
 
@@ -79,7 +103,7 @@
 
         </div>
 
-        <div class="card border-danger w-100">
+        <div class="card w-100 w-lg-100 border-danger">
             <div class="card-header bg-danger text-white">
                 Zona de Perigo
             </div>
@@ -91,7 +115,7 @@
 
                 <form action="<?= url_to('me.delete') ?>" method="post">
                     <?= csrf_field() ?>
-                    
+
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.')">
                         Excluir minha conta
                     </button>

@@ -3,18 +3,18 @@
 <?= $this->section('content'); ?>
 <div class="container py-5">
 
-    <div class="d-flex align-items-center justify-content-between gap-5">
+    <div class="d-flex flex-column flex-lg-row align-items-center gap-5">
 
-        <div class="w-50">
+        <div class="w-100 w-lg-50">
             <h1 class="display-2 fw-bold text-primary">Faro Animal</h1>
             <h3 class="fw-bold text-secondary mb-4">Cuidando de quem faz parte da família</h3>
 
             <p class="lead text-secondary mb-4">Um sistema desenvolvido para facilitar o gerenciamento da nossa clínica veterinária, oferecendo praticidade no cadastro de espécies, raças, pets e consultas.</p>
 
-            <a id="" class="btn btn-primary w-25 fw-bold" href="#about" role="button">Saiba mais</a>
+            <a id="" class="btn btn-primary fw-bold" href="#about" role="button">Saiba mais</a>
         </div>
 
-        <div class="w-50 text-center">
+        <div class="w-100 w-lg-50 text-center">
             <img src="<?= base_url('assets/img/pets-hero.webp') ?>" class="img-fluid w-100" alt="5 cachorros e 1 gato">
         </div>
 
@@ -76,13 +76,13 @@
 
     </div>
 
-    <div class="d-flex align-items-center justify-content-between gap-5 py-5">
+    <div class="d-flex flex-column flex-lg-row align-items-center gap-5 py-5">
 
-        <div class="w-50 text-center">
+        <div class="w-100 w-lg-50 text-center">
             <img src="<?= base_url('assets/img/system.png') ?>" class="img-fluid w-100" alt="5 cachorros e 1 gato">
         </div>
 
-        <div class="w-50">
+        <div class="w-100 w-lg-50">
             <h1 id="about" class="display-4 fw-bold text-primary">Sobre o sistema</h1>
 
             <p class="lead text-secondary mt-4">O Faro Animal é um sistema web desenvolvido para auxiliar o gerenciamento interno de uma clínica veterinária.</p>

@@ -1,15 +1,17 @@
 <?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
 <?php $message = session()->getFlashdata('message') ?? ''; ?>
 <?php $success = session()->getFlashdata('success'); ?>
+
 <?php /** @var string $token */ ?>
-<!-- todo: colocar alerta para as mensagens de erro -->
-<?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
 <?= $this->extend('layouts/main'); ?>
 
 <?= $this->section('content'); ?>
 
 <div class="container py-5" style="max-width: 700px">
+
+    <h1 class="display-4 fw-bold text-primary text-center">Crie uma nova senha</h1>
+    <p class="lead text-secondary text-center mb-4">Defina uma nova senha para a sua conta.</p>
 
     <?php if ($message && !$success): ?>
         <div class="alert alert-danger text-center" role="alert">
@@ -30,8 +32,6 @@
             </p>
         </div>
     <?php endif; ?>
-
-    <h2 class="text-center mb-4">Crie uma nova senha</h2>
 
     <form action="<?= url_to('forgot.update', $token) ?>" method="post" class="row g-2 mx-auto"
         style="max-width: 700px">
