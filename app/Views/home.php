@@ -36,7 +36,7 @@
         <div class="d-flex justify-content-center gap-4 flex-wrap">
 
             <div class="card" style="width: 18rem;">
-                <img src="<?= base_url('assets/img/new-specie.webp') ?>" class="card-img-top" alt="">
+                <img src="<?= base_url('assets/img/new-specie.png') ?>" class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold"><i class="bi bi-diagram-3-fill"></i> Espécies</h5>
                     <p class="card-text text-secondary">Cadastre todas as espécies que a clínica atende.</p>
@@ -45,7 +45,7 @@
             </div>
 
             <div class="card" style="width: 18rem;">
-                <img src="<?= base_url('assets/img/new-breed.webp') ?>" class="card-img-top" alt="">
+                <img src="<?= base_url('assets/img/new-breed.png') ?>" class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold"><i class="bi bi-tags-fill"></i> Raças</h5>
                     <p class="card-text text-secondary">Organize todas as raças de cada espécie.</p>
@@ -54,7 +54,7 @@
             </div>
 
             <div class="card" style="width: 18rem;">
-                <img src="<?= base_url('assets/img/new-pet.webp') ?>" class="card-img-top" alt="">
+                <img src="<?= base_url('assets/img/new-pet.png') ?>" class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold"><i class="bi bi-heart-fill"></i> Pets</h5>
                     <p class="card-text text-secondary">Mantenha todas as informações dos pacientes.</p>
@@ -63,7 +63,7 @@
             </div>
 
             <div class="card" style="width: 18rem;">
-                <img src="<?= base_url('assets/img/new-appointment.webp') ?>" class="card-img-top" alt="">
+                <img src="<?= base_url('assets/img/new-appointment.png') ?>" class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title text-primary fw-bold"><i class="bi bi-calendar-fill"></i> Consultas</h5>
                     <p class="card-text text-secondary">Mantenha todas as informações dos pacientes.</p>
