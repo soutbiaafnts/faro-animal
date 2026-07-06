@@ -187,23 +187,33 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        const success = data.success;
-                        const message = data.message;
-                        const breeds = data.breeds;
+                        breedSelect.innerHTML = '';
 
-                        for (const breed of breeds) {
+                        if (!data.success) {
+                            breedSelect.innerHTML =
+                                '<option value="">Nenhuma raça encontrada</option>';
+                            breedSelect.disabled = true;
+                            return;
+                        }
+
+                        breedSelect.disabled = false;
+
+                        breedSelect.innerHTML =
+                            '<option value="">Selecione uma raça</option>';
+
+                        data.data.forEach(breed => {
                             const option = document.createElement('option');
                             option.value = breed.id;
                             option.textContent = breed.name;
                             breedSelect.appendChild(option);
-                        }
+                        });
                     })
                     .catch(error => console.error('Erro ao carregar raças:', error));
             }
         });
     });
 
-    // - contador de caracteres da anotação
+    // NOTE: contador de caracteres da anotação
     const textarea = document.getElementById('notes');
     const count = document.getElementById('count');
     const maxLength = textarea.getAttribute('maxLength');

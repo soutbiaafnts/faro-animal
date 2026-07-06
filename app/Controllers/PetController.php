@@ -46,7 +46,7 @@ class PetController extends BaseController
 
         return view('pets/create', [
             'title' => 'Novo Pet',
-            'species' => $result['species'],
+            'species' => $result['data'],
         ]);
     }
 
@@ -70,7 +70,7 @@ class PetController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('pets')->with('message', $result['message']);
+        return redirect()->route('pets')->with('success', $result['success'])->with('message', $result['message']);
     }     
 
     public function edit(int $id)
@@ -111,7 +111,7 @@ class PetController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('pets')->with('message', $result['message']);
+        return redirect()->route('pets')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function delete(int $id) {
@@ -123,6 +123,6 @@ class PetController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('pets')->with('message', $result['message']);
+        return redirect()->route('pets')->with('success', $result['success'])->with('message', $result['message']);
     }
 }
