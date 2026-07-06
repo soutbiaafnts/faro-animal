@@ -40,7 +40,6 @@ class UserController extends BaseController
 
     public function store()
     {
-        try {
             $password = $this->request->getPost('password');
             $confirmPassword = $this->request->getPost('confirmPassword');
 
@@ -63,9 +62,6 @@ class UserController extends BaseController
             }
 
             return redirect()->route('login')->with('success', $result['success'])->with('message', $result['message']);
-        } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('message', 'Erro:')->with('errors', $e->getMessage());
-        }
     }
 
     public function update()
