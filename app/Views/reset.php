@@ -10,6 +10,9 @@
 
 <div class="container py-5" style="max-width: 700px">
 
+    <h1 class="display-4 fw-bold text-primary text-center">Crie uma nova senha</h1>
+    <p class="lead text-secondary text-center mb-4">Defina uma nova senha para a sua conta.</p>
+
     <?php if ($message && !$success): ?>
         <div class="alert alert-danger text-center" role="alert">
             <i class="bi bi-exclamation-triangle-fill"></i>
@@ -29,10 +32,6 @@
             </p>
         </div>
     <?php endif; ?>
-
-    <h1 class="display-4 fw-bold text-primary text-center">Crie uma nova senha</h1>
-    <p class="lead text-secondary text-center mb-4">Defina uma nova senha para a sua conta.</p>
-
 
     <form action="<?= url_to('forgot.update', $token) ?>" method="post" class="row g-2 mx-auto"
         style="max-width: 700px">

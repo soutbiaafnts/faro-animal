@@ -12,7 +12,7 @@
     <p class="lead text-secondary text-center mb-4">Acesse as informações da clínica.</p>
 
     <?php if ($message && !$success): ?>
-        <div class="alert alert-danger text-center" role="alert">
+        <div class="alert alert-danger text-center mx-auto" style="max-width: 700px" role="alert">
             <i class="bi bi-exclamation-triangle-fill"></i>
             <h4 class="alert-heading">Erro!</h4>
             <hr>
@@ -21,7 +21,7 @@
             </p>
         </div>
     <?php elseif ($message && $success): ?>
-        <div class="alert alert-success text-center" role="alert">
+        <div class="alert alert-success text-center mx-auto" style="max-width: 700px" role="alert">
             <i class="bi bi-check-circle-fill"></i>
             <h4 class="alert-heading">Sucesso!</h4>
             <hr>
