@@ -6,7 +6,9 @@
 
 <div class="container py-5">
 
-    <h2 class="text-center mb-4">Faça o login</h2>
+    <h1 class="display-4 fw-bold text-primary text-center">Faça o login</h1>
+    <h3 class="fw-bold text-secondary text-center mb-4">Acesse as informações da clínica</h3>
+
 
     <form action="<?php echo url_to('auth'); ?>" method="post" class="row g-2 mx-auto justify-content-center"
         style="max-width: 700px">
