@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Services\BreedService;
 use App\Services\SpecieService;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class BreedController extends BaseController
 {
@@ -29,7 +28,6 @@ class BreedController extends BaseController
 
         return view('breeds/list', [
             'title' => 'Raças',
-            'message' => $result['message'],
             'breeds' => $result['data'],
         ]);
     }
@@ -46,7 +44,7 @@ class BreedController extends BaseController
 
         return view('breeds/create', [
             'title' => 'Nova Raça',
-            'species' => $result['species'],
+            'species' => $result['data'],
         ]);
     }
 
@@ -65,7 +63,7 @@ class BreedController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('breeds')->with('message', $result['message']);
+        return redirect()->route('breeds')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function edit(int $id)
@@ -101,7 +99,7 @@ class BreedController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('breeds')->with('message', $result['message']);
+        return redirect()->route('breeds')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function delete(int $id)
@@ -114,10 +112,10 @@ class BreedController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('breeds')->with('message', $result['message']);
+        return redirect()->route('breeds')->with('success', $result['success'])->with('message', $result['message']);
     }
 
-    public function getBySpecie($specieId) {
+    public function getBySpecie(int $specieId) {
         if (!$this->request->isAJAX()) {
             return $this->response->setStatusCode(403)->setBody('Acesso não autorizado.');
         }
