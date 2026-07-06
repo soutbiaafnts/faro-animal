@@ -1,7 +1,6 @@
-<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? [] ?>
-
-<!-- todo: colocar alerta para as mensagens de erro -->
-<?php $errors = session()->getFlashdata('errors') ?? [] ?>
+<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
+<?php $message = session()->getFlashdata('message') ?? ''; ?>
+<?php $success = session()->getFlashdata('success'); ?>
 
 <?= $this->extend('layouts/main'); ?>
 
@@ -12,6 +11,25 @@
     <h1 class="display-4 fw-bold text-primary text-center">Cadastre-se</h1>
     <p class="lead text-secondary text-center mb-4">É um novo veterinário? Crie aqui sua conta.</p>
 
+    <?php if ($message && !$success): ?>
+        <div class="alert alert-danger text-center mx-auto" style="max-width: 700px" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <h4 class="alert-heading">Erro!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php elseif ($message && $success): ?>
+        <div class="alert alert-success text-center mx-auto" style="max-width: 700px" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <h4 class="alert-heading">Sucesso!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php endif; ?>
 
     <form action="<?= url_to('user.register') ?>" method="post" class="row g-2 mx-auto" style="max-width: 700px">
         <div class="col-md-6">

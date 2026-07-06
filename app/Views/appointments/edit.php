@@ -1,7 +1,6 @@
-<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? [] ?>
-
-<!-- // [] colocar alerta para as mensagens de erro -->
-<?php $errors = session()->getFlashdata('errors') ?? [] ?>
+<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
+<?php $message = session()->getFlashdata('message') ?? ''; ?>
+<?php $success = session()->getFlashdata('success'); ?>
 
 <?= $this->extend('layouts/main'); ?>
 
@@ -14,6 +13,26 @@
 ?>
 
 <div class="container py-5">
+
+    <?php if ($message && !$success): ?>
+        <div class="alert alert-danger text-center mx-auto" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <h4 class="alert-heading">Erro!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php elseif ($message && $success): ?>
+        <div class="alert alert-success text-center mx-auto" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <h4 class="alert-heading">Sucesso!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php endif; ?>
 
     <div class="card">
         <h5 class="card-header">

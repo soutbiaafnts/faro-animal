@@ -1,14 +1,35 @@
-<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? [] ?>
-<?php $message = session()->getFlashdata('message') ?? [] ?>
-<?php $errors = session()->getFlashdata('errors') ?? [] ?>
+<?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
+<?php $message = session()->getFlashdata('message') ?? ''; ?>
+<?php $success = session()->getFlashdata('success'); ?>
 
 <?= $this->extend('layouts/main'); ?>
 
 <?= $this->section('content'); ?>
 
 <div class="container py-5">
+
     <h1 class="display-6 fw-bold text-primary text-center">Olá, <?= esc($user['name']) ?></h1>
     <p class="lead text-secondary text-center mb-4">Gerencie seu perfil.</p>
+
+    <?php if ($message && !$success): ?>
+        <div class="alert alert-danger text-center mx-auto" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <h4 class="alert-heading">Erro!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php elseif ($message && $success): ?>
+        <div class="alert alert-success text-center mx-auto" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <h4 class="alert-heading">Sucesso!</h4>
+            <hr>
+            <p class="mb-0">
+                <?= $message ?>
+            </p>
+        </div>
+    <?php endif; ?>
 
     <div class="d-flex flex-column flex-lg-row justify-content-center gap-4">
 
