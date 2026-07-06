@@ -187,7 +187,7 @@ class UserService {
 
             return [
                 'success' => true,
-                'message' => 'Usuário criado com sucesso!'
+                'message' => 'Usuário criado com sucesso. Faça o login!'
             ];
         } catch (\Exception $e) {
             return [
@@ -237,8 +237,6 @@ class UserService {
             ];
         }
     }
-
-    
 
     /**
      * Summary of updateProfile
