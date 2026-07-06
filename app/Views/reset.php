@@ -1,9 +1,8 @@
 <?php $invalidArgs = session()->getFlashdata('invalidArgs') ?? []; ?>
 <?php $message = session()->getFlashdata('message') ?? ''; ?>
 <?php $success = session()->getFlashdata('success'); ?>
+
 <?php /** @var string $token */ ?>
-<!-- todo: colocar alerta para as mensagens de erro -->
-<?php $errors = session()->getFlashdata('errors') ?? [] ?>
 
 <?= $this->extend('layouts/main'); ?>
 
