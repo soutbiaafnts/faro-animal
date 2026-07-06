@@ -40,28 +40,28 @@ class UserController extends BaseController
 
     public function store()
     {
-            $password = $this->request->getPost('password');
-            $confirmPassword = $this->request->getPost('confirmPassword');
+        $password = $this->request->getPost('password');
+        $confirmPassword = $this->request->getPost('confirmPassword');
 
-            if ($password != $confirmPassword) {
-                return redirect()->back()->withInput()->with('invalidArgs', ['confirmPassword' => 'As senhas não coincidem.']);
-            }
+        if ($password != $confirmPassword) {
+            return redirect()->back()->withInput()->with('invalidArgs', ['confirmPassword' => 'As senhas não coincidem.']);
+        }
 
-            $result = $this->userService->createUser([
-                'name' => $this->request->getPost('name'),
-                'email' => $this->request->getPost('email'),
-                'password' => $this->request->getPost('password'),
-            ]);
+        $result = $this->userService->createUser([
+            'name' => $this->request->getPost('name'),
+            'email' => $this->request->getPost('email'),
+            'password' => $this->request->getPost('password'),
+        ]);
 
-            if (!$result['success']) {
-                return redirect()->back()
-                    ->withInput()
-                    ->with('message', $result['message'])
-                    ->with('invalidArgs', $result['invalidArgs'])
-                    ->with('errors', $result['errors']);
-            }
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withInput()
+                ->with('message', $result['message'])
+                ->with('invalidArgs', $result['invalidArgs'])
+                ->with('errors', $result['errors']);
+        }
 
-            return redirect()->route('login')->with('success', $result['success'])->with('message', $result['message']);
+        return redirect()->route('login')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function update()
