@@ -7,7 +7,7 @@
 
         <div class="w-50">
             <h1 class="display-2 fw-bold text-primary">Faro Animal</h1>
-            <h2 class="fw-bold text-secondary mb-4">Cuidando de quem faz parte da família</h2>
+            <h3 class="fw-bold text-secondary mb-4">Cuidando de quem faz parte da família</h3>
 
             <p class="lead text-secondary mb-4">Um sistema desenvolvido para facilitar o gerenciamento da nossa clínica veterinária, oferecendo praticidade no cadastro de espécies, raças, pets e consultas.</p>
 
