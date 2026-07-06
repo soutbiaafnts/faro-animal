@@ -31,7 +31,9 @@
         </div>
     <?php endif; ?>
 
-    <h2 class="text-center mb-4">Crie uma nova senha</h2>
+    <h1 class="display-4 fw-bold text-primary text-center">Crie uma nova senha</h1>
+    <p class="lead text-secondary text-center mb-4">Defina uma nova senha para a sua conta.</p>
+
 
     <form action="<?= url_to('forgot.update', $token) ?>" method="post" class="row g-2 mx-auto"
         style="max-width: 700px">
