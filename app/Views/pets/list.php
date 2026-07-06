@@ -47,7 +47,6 @@
                             <td><?= $pet['owner_phone'] ?></td>
                             <td><?= $pet['notes'] ?></td>
                             <td class="text-center">
-                                <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye"></i></a>
                                 <a href="<?= url_to('pets.edit', $pet['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
                                 <form action="<?= url_to('pets.delete', $pet['id']) ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
