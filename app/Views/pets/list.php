@@ -6,6 +6,12 @@
 
 <?= $this->section('content'); ?>
 
+<?php /**
+ *  @var string $title 
+ *  @var array $pets
+ * */
+?>
+
 <div class="container py-5">
 
     <?php if ($message && !$success): ?>

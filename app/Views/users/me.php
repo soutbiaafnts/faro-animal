@@ -6,6 +6,11 @@
 
 <?= $this->section('content'); ?>
 
+<?php /**
+ *  @var array $user
+ * */
+?>
+
 <div class="container py-5">
 
     <h1 class="display-6 fw-bold text-primary text-center">Olá, <?= esc($user['name']) ?></h1>

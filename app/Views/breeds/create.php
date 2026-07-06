@@ -6,8 +6,14 @@
 
 <?= $this->section('content'); ?>
 
+<?php /**
+ *  @var string $title 
+ *  @var array $species
+ * */
+?>
+
 <div class="container py-5">
-    
+
     <?php if ($message && !$success): ?>
         <div class="alert alert-danger text-center mx-auto" role="alert">
             <i class="bi bi-exclamation-triangle-fill"></i>

@@ -6,6 +6,11 @@
 
 <?= $this->section('content'); ?>
 
+<?php /**
+ *  @var string $title 
+ * */
+?>
+
 <div class="container py-5">
 
     <?php if ($message && !$success): ?>
