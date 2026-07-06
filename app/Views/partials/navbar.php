@@ -1,6 +1,6 @@
 <?php $logged = session()->has('user_id'); ?>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
     <div class="container justify-content-between">
         <a class="navbar-brand" href="<?= url_to('home') ?>">
             <img src="<?= base_url('assets/logo_total.png') ?>" alt="Bootstrap" height="30">

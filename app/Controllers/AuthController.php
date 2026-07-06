@@ -35,7 +35,7 @@ class AuthController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     }
 
     public function logout()
