@@ -9,7 +9,9 @@
 
 <div class="container py-5">
 
-    <h2 class="text-center mb-4">Cadastre-se</h2>
+    <h1 class="display-4 fw-bold text-primary text-center">Cadastre-se</h1>
+    <p class="lead text-secondary text-center mb-4">É um novo veterinário? Crie aqui sua conta.</p>
+
 
     <form action="<?= url_to('user.register') ?>" method="post" class="row g-2 mx-auto" style="max-width: 700px">
         <div class="col-md-6">
