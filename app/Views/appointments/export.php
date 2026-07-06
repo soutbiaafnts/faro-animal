@@ -13,22 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
-        @font-face {
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 400;
-            src: url('<?= FCPATH ?>assets/fonts/Poppins-Regular.ttf') format('truetype');
-        }
-
-        @font-face {
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 700;
-            src: url('<?= FCPATH ?>assets/fonts/Poppins-Bold.ttf') format('truetype');
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 12px;
             color: #333;
             margin: 30px;
