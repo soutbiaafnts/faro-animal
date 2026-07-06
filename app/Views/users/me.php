@@ -6,13 +6,13 @@
 
 <?= $this->section('content'); ?>
 
-<div class="container py-4">
+<div class="container py-5">
     <h1 class="display-6 fw-bold text-primary text-center">Olá, <?= esc($user['name']) ?></h1>
     <p class="lead text-secondary text-center mb-4">Gerencie seu perfil.</p>
 
-    <div class="d-flex flex-wrap gap-3 w-100 justify-content-center">
+    <div class="d-flex flex-column flex-lg-row justify-content-center gap-4">
 
-        <div class="card w-100" style="max-width: 500px">
+        <div class="card w-100 w-lg-100">
             <div class="card-header">
                 Dados do perfil
             </div>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="card w-100" style="max-width: 500px">
+        <div class="card w-100 w-lg-100">
             <div class="card-header">
                 Alterar Senha
             </div>
@@ -82,7 +82,7 @@
 
         </div>
 
-        <div class="card border-danger w-100" style="max-width: 500px">
+        <div class="card w-100 w-lg-100 border-danger">
             <div class="card-header bg-danger text-white">
                 Zona de Perigo
             </div>
