@@ -30,7 +30,7 @@ class PetController extends BaseController
         return view('pets/list', [
             'title' => 'Pets',
             'message' => $result['message'],
-            'pets' => $result['pets'],
+            'pets' => $result['data'],
         ]);
     }
 
@@ -87,7 +87,7 @@ class PetController extends BaseController
 
         return view('pets/edit', [
             'title' => 'Editar Pet',
-            'pet' => $result['pet'],
+            'pet' => $result['data'],
         ]);
     }
 

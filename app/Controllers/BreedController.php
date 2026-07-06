@@ -30,7 +30,7 @@ class BreedController extends BaseController
         return view('breeds/list', [
             'title' => 'Raças',
             'message' => $result['message'],
-            'breeds' => $result['breeds'],
+            'breeds' => $result['data'],
         ]);
     }
 
@@ -82,7 +82,7 @@ class BreedController extends BaseController
 
         return view('breeds/edit', [
             'title' => 'Editar Raça',
-            'breed' => $breed['breed'],
+            'breed' => $breed['data'],
         ]);
     }
 

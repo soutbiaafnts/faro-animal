@@ -120,7 +120,7 @@ class BreedService {
             return [
                 'success' => true,
                 'message' => 'Busca realizada com sucesso!',
-                'breeds' => $breeds,
+                'data' => $breeds,
             ];
         } catch (\Exception $e) {
             return [
@@ -163,7 +163,7 @@ class BreedService {
 
             return [
                 'success' => true,
-                'breed' => $breed,
+                'data' => $breed,
             ];
        } catch (\Exception $e) {
             return [
@@ -197,7 +197,7 @@ class BreedService {
             return [
                 'success' => true,
                 'message' => 'Busca realizada com sucesso!',
-                'breeds' => $breedsFound,
+                'data' => $breedsFound,
             ];
         } catch (\Exception $e) {
             return [

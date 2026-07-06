@@ -235,7 +235,7 @@ class PetService {
             return [
                 'success' => true,
                 'message' => 'Busca realizada com sucesso!',
-                'pets' => $pets,
+                'data' => $pets,
             ];
 
         } catch (\Exception $e) {
@@ -278,7 +278,7 @@ class PetService {
 
             return [
                 'success' => true,
-                'pet' => $petFound,
+                'data' => $petFound,
             ];
         } catch (\Exception $e) {
             return [
