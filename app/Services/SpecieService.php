@@ -107,15 +107,6 @@ class SpecieService {
         try {
             $species = $this->specieModel->findAll();
 
-            if (!$species) {
-                return [
-                    'success' => false,
-                    'message' => 'Nenhuma espécie encontrada.',
-                    'invalidArgs' => [],
-                    'errors' => null,
-                ];
-            }
-
             return [
                 'success' => true,
                 'message' => 'Busca realizada com sucesso!',

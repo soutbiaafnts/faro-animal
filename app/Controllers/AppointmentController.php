@@ -38,40 +38,6 @@ class AppointmentController extends BaseController
         ]);
     }
 
-    public function export(int $id)
-    {
-        $result = $this->appointmentService->getAppointmentById($id);
-
-        if (!$result['success']) {
-            return redirect()->back()
-                ->with('error', $result['message']);
-        }
-
-        $appointment = $result['data'];
-
-        $html = view('appointments/export', [
-            'appointment' => $appointment,
-        ]);
-
-        $options = new Options();
-
-        $dompdf = new Dompdf($options);
-
-        $dompdf->loadHtml($html);
-
-        $dompdf->setPaper('A4', 'portrait');
-
-        $dompdf->render();
-
-        $dompdf->stream(
-            'consulta-'.$appointment['id'].'.pdf',
-            [
-                'Attachment' => false,
-            ]
-        );
-
-    }
-
     public function create()
     {
         $result = $this->petService->getAllPets();
@@ -85,7 +51,7 @@ class AppointmentController extends BaseController
 
         return view('appointments/create', [
             'title' => 'Nova Consulta',
-            'pets' => $result['pets'],
+            'pets' => $result['data'],
         ]);;
     }
 
@@ -110,7 +76,7 @@ class AppointmentController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('appointments')->with('message', $result['message']);
+        return redirect()->route('appointments')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function edit(int $id)
@@ -150,7 +116,7 @@ class AppointmentController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('appointments')->with('message', $result['message']);
+        return redirect()->route('appointments')->with('success', $result['success'])->with('message', $result['message']);
     }
 
     public function delete(int $id)
@@ -163,6 +129,39 @@ class AppointmentController extends BaseController
                 ->with('errors', $result['errors']);
         }
 
-        return redirect()->route('appointments')->with('message', $result['message']);
+        return redirect()->route('appointments')->with('success', $result['success'])->with('message', $result['message']);
+    }
+
+    public function export(int $id)
+    {
+        $result = $this->appointmentService->getAppointmentById($id);
+
+        if (!$result['success']) {
+            return redirect()->back()
+                ->with('error', $result['message']);
+        }
+
+        $appointment = $result['data'];
+
+        $html = view('appointments/export', [
+            'appointment' => $appointment,
+        ]);
+
+        $options = new Options();
+
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+        $dompdf->stream(
+            'consulta-' . $appointment['id'] . '.pdf',
+            [
+                'Attachment' => false,
+            ]
+        );
     }
 }

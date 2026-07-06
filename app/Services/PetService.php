@@ -223,15 +223,6 @@ class PetService {
                 ->join('breeds', 'breeds.id = pets.breed_id', 'left')
                 ->findAll();
 
-            if (!$pets) {
-                return [
-                    'success' => false,
-                    'message' => 'Nenhum pet encontrado.',
-                    'invalidArgs' => [],
-                    'errors' => null,
-                ];
-            }
-
             return [
                 'success' => true,
                 'message' => 'Busca realizada com sucesso!',
