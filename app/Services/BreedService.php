@@ -117,6 +117,15 @@ class BreedService {
                 ->join('species', 'species.id = breeds.species_id', 'left')
                 ->findAll();
 
+            if (!$breeds) {
+                return [
+                    'success' => false,
+                    'message' => 'Nenhuma raça encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
             return [
                 'success' => true,
                 'message' => 'Busca realizada com sucesso!',

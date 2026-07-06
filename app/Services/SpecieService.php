@@ -11,7 +11,8 @@ class SpecieService {
         $this->specieModel = new SpecieModel();
     }
 
-    // ------- VALIDAÇÕES
+    // NOTE: validações
+
     private function validateSpecieData(array $data): array {
         $validation = service('validation');
 
@@ -52,65 +53,19 @@ class SpecieService {
 
         return [
             'success' => true,
-            'message' => 'Espécie criada com sucesso!',
         ];
     }
 
-    // ------- CRUD
-    public function getAllSpecies() {
-        try {
-            $species = $this->specieModel->findAll();
+    // NOTE: crud
 
-            return [
-                'success' => true,
-                'message' => 'Busca realizada com sucesso!',
-                'species' => $species,
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao buscar espécies:',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ];
-        }
-    }
-
-    public function getSpecieById(int $id): array {
-        try {
-            $specieFound = $this->specieModel->find($id);
-
-            if (!$specieFound) {
-                return [
-                    'success' => false,
-                    'message' => 'Espécie não encontrada.',
-                    'invalidArgs' => [],
-                    'errors' => null,
-                ];
-            }
-
-            $specie = [
-                'id' => $specieFound['id'],
-                'name' => $specieFound['name'],
-            ];
-
-            return [
-                'success' => true,
-                'specie' => $specie,
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao buscar espécie: ',
-                'invalidArgs' => [],
-                'errors' => $e->getMessage(),
-            ];
-        }
-    }
-
-    public function createSpecie(array $data) {
+    /**
+     * Summary of createSpecie
+     *
+     * @param array $data
+     * @return array
+     */
+    public function createSpecie(array $data): array
+    {
         try {
             $validation = $this->validateSpecieData($data);
 
@@ -131,20 +86,99 @@ class SpecieService {
 
             return [
                 'success' => true,
-                'message' => $validation['message'],
+                'message' => 'Espécie criada com sucesso!',
             ];
-
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao criar espécie: ',
+                'message' => 'Erro ao criar espécie.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function updateSpecie(int $id, array $data) {
+    /**
+     * Summary of getAllSpecies
+     *
+     * @return array
+     */
+    public function getAllSpecies(): array {
+        try {
+            $species = $this->specieModel->findAll();
+
+            if (!$species) {
+                return [
+                    'success' => false,
+                    'message' => 'Nenhuma espécie encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Busca realizada com sucesso!',
+                'data' => $species,
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar espécies.',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of getSpecieById
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getSpecieById(int $id): array {
+        try {
+            $specieFound = $this->specieModel->find($id);
+
+            if (!$specieFound) {
+                return [
+                    'success' => false,
+                    'message' => 'Espécie não encontrada.',
+                    'invalidArgs' => [],
+                    'errors' => null,
+                ];
+            }
+
+            $specie = [
+                'id' => $specieFound['id'],
+                'name' => $specieFound['name'],
+            ];
+
+            return [
+                'success' => true,
+                'data' => $specie,
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Erro ao buscar espécie.',
+                'invalidArgs' => [],
+                'errors' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Summary of updateSpecie
+     *
+     * @param integer $id
+     * @param array $data
+     * @return array
+     */ 
+    public function updateSpecie(int $id, array $data): array {
         try {
             $validation = $this->validateSpecieData($data);
 
@@ -168,14 +202,20 @@ class SpecieService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao editar espécie: ',
+                'message' => 'Erro ao editar espécie.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
         }
     }
 
-    public function deleteSpecie(int $id) {
+    /**
+     * Summary of deleteSpecie
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function deleteSpecie(int $id): array {
         try {
             $specie = $this->specieModel->find($id);
 
@@ -198,7 +238,7 @@ class SpecieService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao excluir espécie',
+                'message' => 'Erro ao excluir espécie.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];

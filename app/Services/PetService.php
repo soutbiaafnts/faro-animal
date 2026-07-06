@@ -226,7 +226,7 @@ class PetService {
             if (!$pets) {
                 return [
                     'success' => false,
-                    'message' => 'Nenhum pet encontrado',
+                    'message' => 'Nenhum pet encontrado.',
                     'invalidArgs' => [],
                     'errors' => null,
                 ];
@@ -354,7 +354,7 @@ class PetService {
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Erro ao excluir pet',
+                'message' => 'Erro ao excluir pet.',
                 'invalidArgs' => [],
                 'errors' => $e->getMessage(),
             ];
