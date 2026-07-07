@@ -38,7 +38,7 @@ O sistema foi desenvolvido utilizando o framework **CodeIgniter 4** e segue a ar
 
 ## Requisitos do trabalho
 
-- **Requisito 01:** A aplicação deverá ser desenvolvida utilizando HTML, CSS, JavaScript e PHP, com utilização do framwork CodeIgniter 4.
+- **Requisito 01:** A aplicação deverá ser desenvolvida utilizando HTML, CSS, JavaScript e PHP, com utilização do framework CodeIgniter 4.
 - **Requisito 02:** O sistema deverá seguir uma arquitetura em camadas utilizando o padrão MCV (Model-View-Controller), com utilização de classes de serviço (Services) para centralização das regras de negócio.
 - **Requisito 03:** As views da aplicação deverão ser organizadas utilizando o conceito de layouts do CodeIgniter, promovendo reutilização de estruturas visuais e padronização das páginas do sistema.
 - **Requisito 04:**  Deverá ser utilizado pelo menos um framework front-end, como o Bootstrap, para auxiliar na construção da interface gráfica do sistema.
@@ -55,7 +55,7 @@ O sistema foi desenvolvido utilizando o framework **CodeIgniter 4** e segue a ar
 
 > A entrega deverá incluir o código-fonte completo do sistema, o banco de dados utilizado, um relatório e um vídeo de apresentação, ambos explicando como cada requisito foi atendido e quais não foram, indicando as limitações encontradas e as principais dificuldades enfrentadas pela equipe.
 
-Um relatório detalhado, com prints e texto explicando como cada requisito acima foi atendido no código, está disponível em [`docs/relatorio-faro-animal.pdf`](docs/relatorio-faro-animal.pdf). O roteiro utilizado para a gravação do vídeo de apresentação está em [`docs/roteiro-video-faro-animal.md`](docs/roteiro-video-faro-animal.md).
+Um relatório detalhado, com prints e texto explicando como cada requisito acima foi atendido no código, está disponível em [`docs/relatorio-faro-animal.pdf`](docs/relatorio-faro-animal.pdf).
 
 ---
 
@@ -254,7 +254,7 @@ EMAIL_PORT = 587
 
 ## Banco de Dados
 
-Execute o arquivo `faro_animal.sql`, que se encontra em `public/assets/sql/faro_animal.sql`, no seu servidor MySQL para criar as tabelas necessárias (`users`, `species`, `breeds`, `pets` e `appointments`).
+Execute o arquivo `faro_animal.sql`, que se encontra em [`public/assets/sql/faro_animal.sql`](public/assets/sql/faro_animal.sql), no seu servidor MySQL para criar as tabelas necessárias (`users`, `species`, `breeds`, `pets` e `appointments`).
 
 ---
 
@@ -296,9 +296,9 @@ Conforme detalhado no relatório, alguns pontos ficaram fora do escopo desta ver
 Conforme solicitado, a entrega deste trabalho é composta por:
 
 1. **Código-fonte** completo do sistema (este repositório);
-2. **Script do banco de dados** — `public/assets/sql/faro_animal.sql`;
-3. **Relatório** — `docs/relatorio-faro-animal.pdf`;
-4. **Vídeo de apresentação** (gravação de tela, 1080p a 60 FPS, com o compartilhamento de tela visível) — link a ser incluído aqui: `[link do vídeo]`.
+2. **Script do banco de dados** — [`public/assets/sql/faro_animal.sql`](public/assets/sql/faro_animal.sql);
+3. **Relatório** — [`docs/relatorio-faro-animal.pdf`](docs/relatorio-faro-animal.pdf);
+4. **Vídeo de apresentação** (gravação de tela, 1080p a 60 FPS, com o compartilhamento de tela visível) — link a ser incluído aqui: [`link do vídeo`](https://youtu.be/ZK3Sbfs6Ae4).
 
 ---
 
