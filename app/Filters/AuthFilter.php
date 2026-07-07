@@ -28,7 +28,8 @@ class AuthFilter implements FilterInterface
         if (!session()->get('auth')) {
             return redirect()
                 ->route('login')
-                ->with('error', 'Faça login para acessar esta página.');
+                ->with('success', false)
+                ->with('message', 'Faça login para acessar esta página.');
         }
     }
 
