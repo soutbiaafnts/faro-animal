@@ -297,7 +297,7 @@ Conforme solicitado, a entrega deste trabalho é composta por:
 
 1. **Código-fonte** completo do sistema (este repositório);
 2. **Script do banco de dados** — `public/assets/sql/faro_animal.sql`;
-3. **Relatório** — `docs/relatorio-faro-animal.docx`;
+3. **Relatório** — `docs/relatorio-faro-animal.pdf`;
 4. **Vídeo de apresentação** (gravação de tela, 1080p a 60 FPS, com o compartilhamento de tela visível) — link a ser incluído aqui: `[link do vídeo]`.
 
 ---
