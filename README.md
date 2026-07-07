@@ -254,7 +254,7 @@ EMAIL_PORT = 587
 
 ## Banco de Dados
 
-Execute o arquivo `faro_animal.sql`, que se encontra em [`public/assets/sql/faro_animal.sql`](public/assets/sql/faro_animal.sql), no seu servidor MySQL para criar as tabelas necessárias (`users`, `species`, `breeds`, `pets` e `appointments`).
+Execute o arquivo `faro_animal.sql`, que se encontra em [`public/assets/sql/farol_animal.sql`](public/assets/sql/farol_animal.sql), no seu servidor MySQL para criar as tabelas necessárias (`users`, `species`, `breeds`, `pets` e `appointments`).
 
 ---
 
@@ -296,7 +296,7 @@ Conforme detalhado no relatório, alguns pontos ficaram fora do escopo desta ver
 Conforme solicitado, a entrega deste trabalho é composta por:
 
 1. **Código-fonte** completo do sistema (este repositório);
-2. **Script do banco de dados** — [`public/assets/sql/faro_animal.sql`](public/assets/sql/faro_animal.sql);
+2. **Script do banco de dados** — [`public/assets/sql/farol_animal.sql`](public/assets/sql/farol_animal.sql);
 3. **Relatório** — [`docs/relatorio-faro-animal.pdf`](docs/relatorio-faro-animal.pdf);
 4. **Vídeo de apresentação** (gravação de tela, 1080p a 60 FPS, com o compartilhamento de tela visível) — link a ser incluído aqui: [`link do vídeo`](https://youtu.be/ZK3Sbfs6Ae4).
 
