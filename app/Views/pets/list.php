@@ -64,19 +64,19 @@
                     <?php foreach ($pets as $pet): ?>
                         <tr>
                             <th>
-                                <?= $pet['id'] ?>
+                                <?= esc($pet['id']) ?>
                             </th>
-                            <td><?= $pet['name'] ?></td>
-                            <td><?= $pet['breed_name'] ?></td>
-                            <td><?= $pet['sex'] ?></td>
-                            <td><?= $pet['birth_date'] ?></td>
-                            <td><?= $pet['weight'] ?></td>
-                            <td><?= $pet['owner_name'] ?></td>
-                            <td><?= $pet['owner_phone'] ?></td>
-                            <td><?= $pet['notes'] ?></td>
+                            <td><?= esc($pet['name']) ?></td>
+                            <td><?= esc($pet['breed_name']) ?></td>
+                            <td><?= esc($pet['sex']) ?></td>
+                            <td><?= esc($pet['birth_date']) ?></td>
+                            <td><?= esc($pet['weight']) ?></td>
+                            <td><?= esc($pet['owner_name']) ?></td>
+                            <td><?= esc($pet['owner_phone']) ?></td>
+                            <td><?= esc($pet['notes'])?></td>
                             <td class="text-center">
-                                <a href="<?= url_to('pets.edit', $pet['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                                <form action="<?= url_to('pets.delete', $pet['id']) ?>" method="post" class="d-inline">
+                                <a href="<?= url_to('pets.edit', esc($pet['id'])) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                <form action="<?= url_to('pets.delete', esc($pet['id'])) ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
 
                                     <input type="hidden" name="_method" value="DELETE">

@@ -59,21 +59,21 @@
                     <?php foreach ($species as $specie): ?>
                         <tr>
                             <th class="text-center">
-                                <?= $specie['id'] ?>
+                                <?= esc($specie['id']) ?>
                             </th>
                             <td>
-                                <?= $specie['name'] ?>
+                                <?= esc($specie['name']) ?>
                             </td>
                             <td>
-                                <?= $specie['created_at'] ?>
+                                <?= esc($specie['created_at']) ?>
                             </td>
                             <td>
-                                <?= $specie['updated_at'] ?>
+                                <?= esc($specie['updated_at']) ?>
                             </td>
                             <td class="text-center">
-                                <a href="<?= url_to('species.edit', $specie['id']) ?>" class="btn btn-outline-primary btn-sm"><i
+                                <a href="<?= url_to('species.edit', esc($specie['id'])) ?>" class="btn btn-outline-primary btn-sm"><i
                                         class="bi bi-pencil"></i></a>
-                                <form action="<?= url_to('species.delete', $specie['id']) ?>" method="post" class="d-inline">
+                                <form action="<?= url_to('species.delete', esc($specie['id'])) ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
 
                                     <input type="hidden" name="_method" value="DELETE">

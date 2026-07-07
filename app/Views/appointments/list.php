@@ -63,26 +63,26 @@
                     <?php foreach ($appointments as $appointment): ?>
                         <tr>
                             <th>
-                                <?= $appointment['id'] ?>
+                                <?= esc($appointment['id']) ?>
                             </th>
-                            <td><?= $appointment['pet_name'] ?></td>
-                            <td><?= $appointment['user_name'] ?></td>
-                            <td><?= $appointment['appointment_date'] ?></td>
-                            <td><?php if ($appointment['status'] == 'scheduled') {
+                            <td><?= esc($appointment['pet_name']) ?></td>
+                            <td><?= esc($appointment['user_name']) ?></td>
+                            <td><?= esc($appointment['appointment_date']) ?></td>
+                            <td><?php if (esc($appointment['status']) == 'scheduled') {
                                     echo 'Agendada';
-                                } elseif ($appointment['status'] == 'completed') {
+                                } elseif (esc($appointment['status'])== 'completed') {
                                     echo 'Realizada';
                                 } else {
                                     echo 'Cancelada';
                                 } ?></td>
-                            <td><?= $appointment['reason'] ?></td>
-                            <td><?= $appointment['diagnosis'] ?></td>
-                            <td><?= $appointment['prescription'] ?></td>
-                            <td><?= $appointment['notes'] ?></td>
+                            <td><?= esc($appointment['reason']) ?></td>
+                            <td><?= esc($appointment['diagnosis']) ?></td>
+                            <td><?= esc($appointment['prescription']) ?></td>
+                            <td><?= esc($appointment['notes']) ?></td>
                             <td class="text-center">
-                                <a target="_blank" href="<?= url_to('appointments.export', $appointment['id']) ?>" class="btn btn-outline-secondary btn-sm"><i class="bi bi-printer-fill"></i></a>
-                                <a href="<?= url_to('appointments.edit', $appointment['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                                <form action="<?= url_to('appointments.delete', $appointment['id']) ?>" method="post" class="d-inline">
+                                <a target="_blank" href="<?= url_to('appointments.export', esc($appointment['id'])) ?>" class="btn btn-outline-secondary btn-sm"><i class="bi bi-printer-fill"></i></a>
+                                <a href="<?= url_to('appointments.edit', esc($appointment['id'])) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                <form action="<?= url_to('appointments.delete', esc($appointment['id'])) ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
 
                                     <input type="hidden" name="_method" value="DELETE">

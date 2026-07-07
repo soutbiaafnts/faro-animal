@@ -49,8 +49,8 @@
                 <thead>
                     <tr>
                         <th data-field="id" class="text-center">#</th>
-                        <th data-field="specie_name">Espécie</th>
                         <th data-field="name">Nome</th>
+                        <th data-field="specie_name">Espécie</th>
                         <th data-field="created_at">Data de Criação</th>
                         <th data-field="updated_at">Data de Atualização</th>
                         <th class="text-center">Ações</th>
@@ -59,14 +59,14 @@
                 <tbody>
                     <?php foreach ($breeds as $breed): ?>
                         <tr>
-                            <th class="text-center"><?= $breed['id'] ?></th>
-                            <td><?= $breed['specie_name'] ?></td>
-                            <td><?= $breed['name'] ?></td>
-                            <td><?= $breed['created_at'] ?></td>
-                            <td><?= $breed['updated_at'] ?></td>
+                            <th class="text-center"><?= esc($breed['id']) ?></th>
+                            <td><?= esc($breed['name']) ?></td>
+                            <td><?= esc($breed['specie_name']) ?></td>
+                            <td><?= esc($breed['created_at']) ?></td>
+                            <td><?= esc($breed['updated_at']) ?></td>
                             <td class="text-center">
-                                <a href="<?= url_to('breeds.edit', $breed['id']) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                                <form action="<?= url_to('breeds.delete', $breed['id']) ?>" method="post" class="d-inline">
+                                <a href="<?= url_to('breeds.edit', esc($breed['id'])) ?>" class="btn btn-outline-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                <form action="<?= url_to('breeds.delete', esc($breed['id'])) ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
 
                                     <input type="hidden" name="_method" value="DELETE">
